@@ -1,1 +1,4 @@
 .vs/
+AnonyIsland/*.csproj.user
+AnonyIsland/obj
+AnonyIsland/bin
