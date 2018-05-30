@@ -30,7 +30,7 @@ namespace AnonyIsland
         public MainPage()
         {
             this.InitializeComponent();
-            initializeFrostedGlass(rootGrid);
+            initializeFrostedGlass(bgGrid);
         }
 
         private void initializeFrostedGlass(UIElement glassHost)
@@ -54,7 +54,7 @@ namespace AnonyIsland
                 }
             };
             var effectFactory = compositor.CreateEffectFactory(glassEffect);
-            var backdropBrush = compositor.CreateBackdropBrush();
+            var backdropBrush = compositor.CreateHostBackdropBrush();
             var effectBrush = effectFactory.CreateBrush();
             effectBrush.SetSourceParameter("backdropBrush", backdropBrush);
             var glassVisual = compositor.CreateSpriteVisual();

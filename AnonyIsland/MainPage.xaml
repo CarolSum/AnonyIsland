@@ -8,9 +8,21 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d">
 
-    <Grid x:Name="rootGrid">
-        <Image Source="Assets/adam.jpg"/>
-        <Grid x:Name="GlassHost" Width="400" Height="800" HorizontalAlignment="Right"/>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <Grid Grid.RowSpan="2" x:Name="bgGrid" Canvas.ZIndex="-1"></Grid>
+        <TextBlock x:Name="AppTitle" Text="AnonyIsland" FontSize="56" FontStyle="Italic" Foreground="White"  Padding="100,50,50,20" Canvas.ZIndex="1"></TextBlock>
+
+        <ScrollViewer Grid.Row="1" Canvas.ZIndex="1"
+                      HorizontalScrollMode="Enabled" MinHeight="700" HorizontalScrollBarVisibility="Visible" VerticalAlignment="Top">
+            <StackPanel >
+                <TextBlock Text="最新" Foreground="White" FontSize="30" Padding="100,0,0,0"></TextBlock>
+                <Image Source="Assets/nathan.jpg" />
+            </StackPanel>
+            
+        </ScrollViewer>
     </Grid>
-       
 </Page>
