@@ -20,7 +20,7 @@
                       HorizontalScrollMode="Enabled" MinHeight="700" HorizontalScrollBarVisibility="Visible" VerticalAlignment="Top">
             <StackPanel >
                 <TextBlock Text="最新" Foreground="White" FontSize="30" Padding="100,0,0,0"></TextBlock>
-                <Image Source="Assets/nathan.jpg" />
+                <ListView x:ConnectionId='3' x:Name="myBlogLists" />
             </StackPanel>
             
         </ScrollViewer>

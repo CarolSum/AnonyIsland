@@ -39,9 +39,7 @@
     <RootType FullName="Windows.UI.Xaml.Controls.StackPanel">
       <RootProperty Name="Children" />
     </RootType>
-    <RootType FullName="Windows.UI.Xaml.Controls.Image">
-      <RootProperty Name="Source" />
-    </RootType>
+    <RootType FullName="Windows.UI.Xaml.Controls.ListView" />
     <RootType FullName="AnonyIsland.MainPage" />
   </Roots.RootTypes>
 </Roots>

@@ -7,6 +7,16 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d">
+    <Page.Resources>
+
+        <!--横向布局-->
+        <ItemsPanelTemplate x:Key="HorizontalItemsPanelTemplate">
+            <VirtualizingStackPanel Orientation="Horizontal"
+                VerticalAlignment="Top"
+                ScrollViewer.HorizontalScrollMode="Enabled"
+                ScrollViewer.VerticalScrollMode="Disabled"/>
+        </ItemsPanelTemplate>
+    </Page.Resources>
 
     <Grid>
         <Grid.RowDefinitions>
@@ -20,7 +30,7 @@
                       HorizontalScrollMode="Enabled" MinHeight="700" HorizontalScrollBarVisibility="Visible" VerticalAlignment="Top">
             <StackPanel >
                 <TextBlock Text="最新" Foreground="White" FontSize="30" Padding="100,0,0,0"></TextBlock>
-                <Image Source="Assets/nathan.jpg" />
+                <ListView ItemsPanel="{StaticResource HorizontalItemsPanelTemplate}" x:Name="myBlogLists" />
             </StackPanel>
             
         </ScrollViewer>
