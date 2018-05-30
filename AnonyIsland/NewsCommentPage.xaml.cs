@@ -68,17 +68,9 @@ namespace AnonyIsland
                     string comments = "";
                     foreach (CNNewsComment comment in refresh_comments)
                     {
-                        if ((App.LoginedUser != null) && (App.LoginedUser.Name == comment.AuthorName))
-                        {
-                            comments += ChatBoxTool.Send(comment.AuthorAvatar,
-                                comment.AuthorName, comment.Content, comment.PublishTime);
-                        }
-                        else
-                        {
-                            comments += ChatBoxTool.Receive(comment.AuthorAvatar,
-                            comment.AuthorName,
-                            comment.Content, comment.PublishTime, comment.ID);
-                        }
+                        comments += ChatBoxTool.Receive(comment.AuthorAvatar,
+                        comment.AuthorName,
+                        comment.Content, comment.PublishTime, comment.ID);
                     }
                     comments += "<a id='ok'></a>";
 
@@ -101,47 +93,7 @@ namespace AnonyIsland
                 this.Frame.GoBack();
             }
         }
-        /// <summary>
-        /// 发表评论
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="args"></param>
-        private async void MyComment_QuerySubmitted(AutoSuggestBox sender, AutoSuggestBoxQuerySubmittedEventArgs args)
-        {
-            if (App.LoginedUser == null)
-            {
-                await (new MessageDialog("请先登录!")).ShowAsync();
-                return;
-            }
-            if (!MyComment.Text.Equals(""))
-            {
-                MyComment.IsEnabled = false;
-                string comment = MyComment.Text;
-                MyComment.Text = "正在发送评论...";
-                bool result = await UserService.AddNewsComment(_news.ID, comment, _at_comment_id);
-                if (result)
-                {
-                    _totalHtml = _totalHtml.Replace("<a id='ok'></a>", "") + ChatBoxTool.Send(App.LoginedUser.Avatar, App.LoginedUser.Name, comment, DateTime.Now.ToString()) + "<a id='ok'></a>";
-                    NewsComment.NavigateToString(_totalHtml);
-                }
-                else
-                {
-                    await(new MessageDialog("评论失败!")).ShowAsync();
-                }
-                MyComment.IsEnabled = true;
-                MyComment.Text = "";
-            }
-        }
-        /// <summary>
-        /// 点击昵称 头像 进行@操作
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void NewsComment_ScriptNotify(object sender, NotifyEventArgs e)
-        {
-            MyComment.Text += "@" + e.Value.Split('-')[0] + " ";
-            _at_comment_id = e.Value.Split('-')[1];  //@评论的id
-        }
+        
         /// <summary>
         /// 点击刷新
         /// </summary>
@@ -164,17 +116,9 @@ namespace AnonyIsland
                 string comments = "";
                 foreach (CNNewsComment comment in refresh_comments)
                 {
-                    if ((App.LoginedUser != null) && (App.LoginedUser.Name == comment.AuthorName))
-                    {
-                        comments += ChatBoxTool.Send(comment.AuthorAvatar,
-                            comment.AuthorName, comment.Content, comment.PublishTime);
-                    }
-                    else
-                    {
-                        comments += ChatBoxTool.Receive(comment.AuthorAvatar,
-                        comment.AuthorName,
-                        comment.Content, comment.PublishTime, comment.ID);
-                    }
+                    comments += ChatBoxTool.Receive(comment.AuthorAvatar,
+                    comment.AuthorName,
+                    comment.Content, comment.PublishTime, comment.ID);
                 }
                 comments += "<a id='ok'></a>";
 
