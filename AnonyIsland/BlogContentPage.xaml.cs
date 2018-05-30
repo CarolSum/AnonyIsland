@@ -34,10 +34,10 @@ namespace AnonyIsland
         public BlogContentPage()
         {
             this.InitializeComponent();
-            if (App.AlwaysShowNavigation)
-            {
-                Home.Visibility = Visibility.Collapsed;
-            }
+            //if (App.AlwaysShowNavigation)
+            //{
+            //    Home.Visibility = Visibility.Collapsed;
+            //}
             RegisterForShare();
         }
         private void RegisterForShare()
