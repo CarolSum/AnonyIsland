@@ -39,6 +39,11 @@ namespace AnonyIsland
         private CNBlog _blog;
         string _commentHtml = "";
 
+        private void HideScrollbar(ref string html)
+        {
+            html += "<style>body{-ms-overflow-style:none;}</style>";
+        }
+
         public BlogContentPage()
         {
             this.InitializeComponent();
@@ -121,6 +126,7 @@ namespace AnonyIsland
                         {
                             blog_body += "<style>body{background-color:black;color:white;}</style>";
                         }
+                        HideScrollbar(ref blog_body);
                         BlogContent.NavigateToString(blog_body);
                     }
 
@@ -130,6 +136,7 @@ namespace AnonyIsland
                     {
                         _commentHtml += "<style>body{background-color:black;color:white;}</style>";
                     }
+                    HideScrollbar(ref _commentHtml);
                     BlogComment.NavigateToString(_commentHtml);
                     List<CNBlogComment> list_comments = await BlogService.GetBlogCommentsAsync(_blog.ID, 1, 199);
 
@@ -145,6 +152,7 @@ namespace AnonyIsland
 
                         _commentHtml = _commentHtml.Replace("<a id='ok'></a>", "") + comments + "<a id='ok'></a>";
                         Debug.Write(_commentHtml);
+                        HideScrollbar(ref _commentHtml);
                         BlogComment.NavigateToString(_commentHtml);
                     }
 
@@ -174,6 +182,7 @@ namespace AnonyIsland
             string blog_body = await BlogService.GetBlogContentAsync(_blog.ID);
             if (blog_body != null)
             {
+                HideScrollbar(ref blog_body);
                 BlogContent.NavigateToString(blog_body);
                 Loading.IsActive = false;
             }

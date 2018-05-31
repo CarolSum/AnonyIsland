@@ -38,6 +38,12 @@ namespace AnonyIsland
                 Home.Visibility = Visibility.Collapsed;
             }
         }
+
+        private void HideScrollbar(ref string html)
+        {
+            html += "<style>body{-ms-overflow-style:none;}</style>";
+        }
+
         /// <summary>
         /// 页面加载
         /// </summary>
@@ -59,6 +65,8 @@ namespace AnonyIsland
                 {
                     _totalHtml += "<style>body{background-color:black;color:white;}</style>";
                 }
+
+                HideScrollbar(ref _totalHtml);
                 NewsComment.NavigateToString(_totalHtml);
 
                 List<CNNewsComment> refresh_comments = await NewsService.GetNewsCommentsAysnc(_news.ID, 1, 200);
@@ -76,6 +84,7 @@ namespace AnonyIsland
 
                     _totalHtml = _totalHtml.Replace("<a id='ok'></a>", "") + comments + "<a id='ok'></a>";
 
+                    HideScrollbar(ref _totalHtml);
                     NewsComment.NavigateToString(_totalHtml);
                     Loading.IsActive = false;
                 } 
@@ -107,6 +116,7 @@ namespace AnonyIsland
             {
                 _totalHtml += "<style>body{background-color:black;color:white;}</style>";
             }
+            HideScrollbar(ref _totalHtml);
             NewsComment.NavigateToString(_totalHtml);
 
             List<CNNewsComment> refresh_comments = await NewsService.GetNewsCommentsAysnc(_news.ID, 1, 200);
@@ -124,6 +134,7 @@ namespace AnonyIsland
 
                 _totalHtml = _totalHtml.Replace("<a id='ok'></a>", "") + comments + "<a id='ok'></a>";
 
+                HideScrollbar(ref _totalHtml);
                 NewsComment.NavigateToString(_totalHtml);
                 Loading.IsActive = false;
             }

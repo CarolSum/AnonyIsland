@@ -30,6 +30,16 @@ namespace AnonyIsland
     {
         private static string _image_bridge = "http://sysu.at:9011/img?url=";
 
+        public void HideWebviewScrollbar(WebView webview)
+        {
+            webview.LoadCompleted += async (s, args) =>
+                await webview.InvokeScriptAsync("eval", new string[]
+                {
+                     "document.body.style.overflowY='hidden';" +
+                     "document.body.style.overflowX='hidden';"
+                });
+        }
+
         /// <summary>
         /// 当前显示新闻
         /// </summary>
@@ -89,6 +99,7 @@ namespace AnonyIsland
                     //news_content = Regex.Replace(news_content, pattern, m => $"<img src=\"{_image_bridge}{m.Groups[1].Value}\"");
 
                     NewsContent.NavigateToString(news_content);
+                    HideWebviewScrollbar(NewsComment);
                 }
 
                 // 获取评论数据
@@ -98,6 +109,7 @@ namespace AnonyIsland
                     _commentsTotalHtml += "<style>body{background-color:black;color:white;}</style>";
                 }
                 NewsComment.NavigateToString(_commentsTotalHtml);
+                HideWebviewScrollbar(NewsComment);
 
                 List<CNNewsComment> refresh_comments = await NewsService.GetNewsCommentsAysnc(_news.ID, 1, 200);
 
@@ -115,6 +127,8 @@ namespace AnonyIsland
                     _commentsTotalHtml = _commentsTotalHtml.Replace("<a id='ok'></a>", "") + comments + "<a id='ok'></a>";
 
                     NewsComment.NavigateToString(_commentsTotalHtml);
+                    HideWebviewScrollbar(NewsComment);
+
                     Loading.IsActive = false;
                 }
 
