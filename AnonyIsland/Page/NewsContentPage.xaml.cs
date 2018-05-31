@@ -116,7 +116,7 @@ namespace AnonyIsland
                 string[] args = e.Value.Split(new[] { "-" }, StringSplitOptions.None);
                 if (args.Length == 2)
                 {
-                    Frame.Navigate(typeof(UserHome), new object[] { args[0], args[1] });
+                    Frame.Navigate(typeof(UserHomePage), new object[] { args[0], args[1] });
                 }
             }
         }

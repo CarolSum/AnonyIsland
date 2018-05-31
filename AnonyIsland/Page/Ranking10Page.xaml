@@ -1,5 +1,5 @@
 ﻿<Page
-    x:Class="AnonyIsland.Ranking48Page"
+    x:Class="AnonyIsland.Ranking10Page"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
@@ -17,7 +17,7 @@
             x:Name="bgGrid"
             Grid.RowSpan="2"
             Canvas.ZIndex="-1"
-            Source="Assets/bg.png"
+            Source="/Assets/bg.png"
             Stretch="Fill" />
 
         <StackPanel>
@@ -33,18 +33,18 @@
                 Padding="100,0,0,0"
                 FontSize="30"
                 Foreground="White"
-                Text="48小时阅读榜" />
+                Text="10天推荐榜" />
         </StackPanel>
 
         <ListView
-            Name="Ranking48ListView"
+            Name="Ranking10ListView"
             Grid.Row="1"
             Padding="100,0,100,0"
             CanReorderItems="True"
             Canvas.ZIndex="1"
             IsItemClickEnabled="True"
-            ItemClick="View48ListView_ItemClick"
-            ItemsSource="{x:Bind _list48Views}"
+            ItemClick="View10ListView_ItemClick"
+            ItemsSource="{x:Bind _list10Views}"
             ScrollViewer.HorizontalScrollBarVisibility="Hidden"
             ScrollViewer.VerticalScrollBarVisibility="Hidden"
             SelectionMode="None">

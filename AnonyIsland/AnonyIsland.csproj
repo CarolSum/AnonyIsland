@@ -100,13 +100,13 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AboutDialog.xaml.cs">
+    <Compile Include="Page\AboutDialog.xaml.cs">
       <DependentUpon>AboutDialog.xaml</DependentUpon>
     </Compile>
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
-    <Compile Include="BlogContentPage.xaml.cs">
+    <Compile Include="Page\BlogContentPage.xaml.cs">
       <DependentUpon>BlogContentPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Data\Cn10TopDiggList.cs" />
@@ -116,14 +116,14 @@
     <Compile Include="Data\CnTopNewsList.cs" />
     <Compile Include="Data\CnUserBlogList.cs" />
     <Compile Include="Data\Delegates.cs" />
-    <Compile Include="HomePage.xaml.cs">
+    <Compile Include="Page\HomePage.xaml.cs">
       <DependentUpon>HomePage.xaml</DependentUpon>
     </Compile>
     <Compile Include="HTTP\BaseService.cs" />
     <Compile Include="HTTP\BlogService.cs" />
     <Compile Include="HTTP\NewsService.cs" />
     <Compile Include="HTTP\SearchService.cs" />
-    <Compile Include="MainPage.xaml.cs">
+    <Compile Include="Page\MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Models\CNBlog.cs" />
@@ -131,31 +131,31 @@
     <Compile Include="Models\CNBloger.cs" />
     <Compile Include="Models\CNNews.cs" />
     <Compile Include="Models\CNNewsComment.cs" />
-    <Compile Include="NewsContentPage.xaml.cs">
+    <Compile Include="Page\NewsContentPage.xaml.cs">
       <DependentUpon>NewsContentPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="NewsPage.xaml.cs">
+    <Compile Include="Page\NewsPage.xaml.cs">
       <DependentUpon>NewsPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Ranking10Page.xaml.cs">
+    <Compile Include="Page\Ranking10Page.xaml.cs">
       <DependentUpon>Ranking10Page.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Ranking48Page.xaml.cs">
+    <Compile Include="Page\Ranking48Page.xaml.cs">
       <DependentUpon>Ranking48Page.xaml</DependentUpon>
     </Compile>
-    <Compile Include="RankingNewsPage.xaml.cs">
+    <Compile Include="Page\RankingNewsPage.xaml.cs">
       <DependentUpon>RankingNewsPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="SearchPage.xaml.cs">
+    <Compile Include="Page\SearchPage.xaml.cs">
       <DependentUpon>SearchPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="SettingDialog.xaml.cs">
+    <Compile Include="Page\SettingDialog.xaml.cs">
       <DependentUpon>SettingDialog.xaml</DependentUpon>
     </Compile>
     <Compile Include="Tools\CommentTool.cs" />
     <Compile Include="Tools\FrostedGlassEffect.cs" />
-    <Compile Include="UserHome.xaml.cs">
-      <DependentUpon>UserHome.xaml</DependentUpon>
+    <Compile Include="Page\UserHomePage.xaml.cs">
+      <DependentUpon>UserHomePage.xaml</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>
@@ -181,51 +181,51 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Page Include="AboutDialog.xaml">
+    <Page Include="Page\AboutDialog.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="BlogContentPage.xaml">
+    <Page Include="Page\BlogContentPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="HomePage.xaml">
+    <Page Include="Page\HomePage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="MainPage.xaml">
+    <Page Include="Page\MainPage.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="NewsContentPage.xaml">
+    <Page Include="Page\NewsContentPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="NewsPage.xaml">
+    <Page Include="Page\NewsPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Ranking10Page.xaml">
+    <Page Include="Page\Ranking10Page.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Ranking48Page.xaml">
+    <Page Include="Page\Ranking48Page.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="RankingNewsPage.xaml">
+    <Page Include="Page\RankingNewsPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="SearchPage.xaml">
+    <Page Include="Page\SearchPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="SettingDialog.xaml">
+    <Page Include="Page\SettingDialog.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="UserHome.xaml">
+    <Page Include="Page\UserHomePage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -247,6 +247,7 @@
       <Version>1.21.0</Version>
     </PackageReference>
   </ItemGroup>
+  <ItemGroup />
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
     <VisualStudioVersion>14.0</VisualStudioVersion>
   </PropertyGroup>

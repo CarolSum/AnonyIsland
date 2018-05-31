@@ -1,11 +1,12 @@
 ﻿<Page
-    x:Class="AnonyIsland.BlogContentPage"
+    x:Class="AnonyIsland.NewsContentPage"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:local="using:AnonyIsland"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d">
+
 
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
         <Grid.RowDefinitions>
@@ -16,7 +17,7 @@
         <Image
             Grid.RowSpan="2"
             Canvas.ZIndex="0"
-            Source="Assets/detailBG.png"
+            Source="/Assets/detailBG.png"
             Stretch="Fill" />
 
         <RelativePanel MinHeight="180" Padding="80,0,80,0">
@@ -35,7 +36,7 @@
                 Foreground="Black"
                 RelativePanel.AlignVerticalCenterWithPanel="True"
                 RelativePanel.RightOf="Back"
-                Text="详情" />
+                Text="新闻正文" />
             <Button
                 Name="Share"
                 Background="Transparent"
@@ -62,38 +63,29 @@
                         Margin="0,10,0,0"
                         HorizontalAlignment="Center"
                         FontSize="25"
-                        Text="微信客户端.NET版"
+                        Text="微软Surface Pro 4京东天猫全面预订：6688元起"
                         TextWrapping="Wrap" />
                     <StackPanel
                         Margin="0,10,0,10"
                         HorizontalAlignment="Center"
                         Orientation="Horizontal">
-                        <Image
-                            Name="Avatar"
-                            Width="20"
-                            Margin="0"
-                            VerticalAlignment="Center" />
-                        <HyperlinkButton
-                            Name="AuthorName"
-                            Padding="10,0,0,0"
-                            VerticalAlignment="Center"
-                            Click="AuthorName_Click"
-                            Content="owtotwo"
-                            Foreground="Gray" />
+                        <TextBlock
+                            Name="NewsSource"
+                            Foreground="Gray"
+                            Text="来源 新浪科技" />
                         <TextBlock
                             Name="PublishTime"
                             Padding="10,0,0,0"
                             VerticalAlignment="Center"
                             Foreground="Gray"
                             Text="发表于 2018-05-30 11:11:11" />
-
                         <SymbolIcon Margin="10,0,0,0" Symbol="Like" />
                         <TextBlock
                             Name="Diggs"
                             Padding="10,0,2,0"
                             VerticalAlignment="Center"
                             Foreground="Gray"
-                            Text="(10)" />
+                            Text="(10)推荐" />
 
                         <SymbolIcon Margin="10,0,0,0" Symbol="Comment" />
                         <TextBlock
@@ -115,14 +107,14 @@
                 </StackPanel>
 
                 <WebView
-                    Name="BlogContent"
+                    Name="NewsContent"
                     Grid.Row="1"
                     Margin="10,0,0,0"
                     DefaultBackgroundColor="Transparent" />
             </Grid>
 
             <WebView
-                Name="BlogComment"
+                Name="NewsComment"
                 Grid.Column="1"
                 DefaultBackgroundColor="Transparent"
                 ScriptNotify="CommentUserClik_Handler" />

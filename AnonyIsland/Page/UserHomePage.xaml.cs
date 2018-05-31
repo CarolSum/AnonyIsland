@@ -11,7 +11,7 @@ namespace AnonyIsland
     /// <summary>
     /// 可用于自身或导航至 Frame 内部的空白页。
     /// </summary>
-    public sealed partial class UserHome : Page
+    public sealed partial class UserHomePage : Page
     {
         /// <summary>
         /// 当前博主的blog_app
@@ -23,7 +23,7 @@ namespace AnonyIsland
         /// </summary>
         private CnUserBlogList _listBlogs;
 
-        public UserHome()
+        public UserHomePage()
         {
             InitializeComponent();
             FrostedGlassEffect.Initialize(bgGrid);
