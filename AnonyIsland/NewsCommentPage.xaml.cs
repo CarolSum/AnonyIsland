@@ -128,14 +128,6 @@ namespace AnonyIsland
                 Loading.IsActive = false;
             }
         }
-        /// <summary>
-        /// 打开主菜单
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void Home_Click(object sender, RoutedEventArgs e)
-        {
-            ((Window.Current.Content as Frame).Content as MainPage).ShowNavigationBarOneTime();
-        }
+  
     }
 }

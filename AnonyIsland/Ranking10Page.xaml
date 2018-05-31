@@ -14,7 +14,7 @@
             <RowDefinition Height="auto"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
-        <Grid Grid.RowSpan="2" x:Name="bgGrid" Canvas.ZIndex="-1"></Grid>
+        <Image Grid.RowSpan="2" Source="Assets/bg.png" Stretch="Fill" Canvas.ZIndex="-1" x:Name="bgGrid" ></Image>
 
         <StackPanel>
             <TextBlock x:Name="AppTitle" Text="AnonyIsland" FontSize="56" FontStyle="Italic" Foreground="White"  Padding="100,50,50,20" Canvas.ZIndex="1"></TextBlock>

@@ -10,5 +10,47 @@
     PrimaryButtonText="关闭"
     mc:Ignorable="d">
 
-    <Grid>        <Grid.ColumnDefinitions>            <ColumnDefinition Width="auto" />            <ColumnDefinition Width="*" />        </Grid.ColumnDefinitions>        <Grid.RowDefinitions>            <RowDefinition Height="auto" />            <RowDefinition Height="auto" />            <RowDefinition Height="auto" />        </Grid.RowDefinitions>        <TextBlock            Grid.Row="2"            Grid.Column="0"            VerticalAlignment="Center"            Text="清空登录信息" />        <Button            Name="ClearLoginInfos"            Grid.Row="2"            Grid.Column="1"            Width="90"            Margin="25,5,5,5"            Click="Button_Click"            Content="清空" />        <TextBlock            Grid.Row="1"            Grid.Column="0"            VerticalAlignment="Center"            Text="博客每次加载" />        <ComboBox            Name="BlogCount"            Grid.Row="1"            Grid.Column="1"            Width="90"            Margin="25,5,5,5"            SelectionChanged="ComboBox_SelectionChanged">            <ComboBoxItem>10</ComboBoxItem>            <ComboBoxItem>20</ComboBoxItem>            <ComboBoxItem>50</ComboBoxItem>        </ComboBox>        <TextBlock            Grid.Row="0"            Grid.Column="0"            VerticalAlignment="Center"            Text="新闻每次加载" />        <ComboBox            Name="NewsCount"            Grid.Row="0"            Grid.Column="1"            Width="90"            Margin="25,5,5,5"            SelectionChanged="ComboBox_SelectionChanged">            <ComboBoxItem>10</ComboBoxItem>            <ComboBoxItem>20</ComboBoxItem>            <ComboBoxItem>50</ComboBoxItem>        </ComboBox>    </Grid>
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="auto" />
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto" />
+            <RowDefinition Height="auto" />
+        </Grid.RowDefinitions>
+       
+        <TextBlock
+            Grid.Row="1"
+            Grid.Column="0"
+            VerticalAlignment="Center"
+            Text="博客每次加载" />
+        <ComboBox
+            Name="BlogCount"
+            Grid.Row="1"
+            Grid.Column="1"
+            Width="90"
+            Margin="25,5,5,5"
+            SelectionChanged="ComboBox_SelectionChanged">
+            <ComboBoxItem>10</ComboBoxItem>
+            <ComboBoxItem>20</ComboBoxItem>
+            <ComboBoxItem>50</ComboBoxItem>
+        </ComboBox>
+        <TextBlock
+            Grid.Row="0"
+            Grid.Column="0"
+            VerticalAlignment="Center"
+            Text="新闻每次加载" />
+        <ComboBox
+            Name="NewsCount"
+            Grid.Row="0"
+            Grid.Column="1"
+            Width="90"
+            Margin="25,5,5,5"
+            SelectionChanged="ComboBox_SelectionChanged">
+            <ComboBoxItem>10</ComboBoxItem>
+            <ComboBoxItem>20</ComboBoxItem>
+            <ComboBoxItem>50</ComboBoxItem>
+        </ComboBox>
+    </Grid>
 </ContentDialog>

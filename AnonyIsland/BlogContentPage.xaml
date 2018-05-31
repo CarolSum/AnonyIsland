@@ -108,11 +108,11 @@
                     Grid.Row="1"
                     Name="BlogContent"
                     Margin="10,0,0,0" 
-                    DefaultBackgroundColor="Transparent"
+                    DefaultBackgroundColor="Transparent" ScrollViewer.VerticalScrollBarVisibility="Hidden"
                     />
             </Grid>
             
-            <WebView Name="BlogComment" Grid.Column="1" DefaultBackgroundColor="Transparent"/>
+            <WebView Name="BlogComment" Grid.Column="1" DefaultBackgroundColor="Transparent" ScrollViewer.VerticalScrollBarVisibility="Hidden"/>
         </Grid>
        
         <ProgressRing

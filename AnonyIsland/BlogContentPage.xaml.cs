@@ -186,11 +186,6 @@ namespace AnonyIsland
         }
 
 
-        private void Home_Click(object sender, RoutedEventArgs e)
-        {
-            ((Window.Current.Content as Frame).Content as MainPage).ShowNavigationBarOneTime();
-        }
-
         private void Share_Click(object sender, RoutedEventArgs e)
         {
             Windows.ApplicationModel.DataTransfer.DataTransferManager.ShowShareUI();
