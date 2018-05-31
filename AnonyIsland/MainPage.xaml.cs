@@ -194,5 +194,55 @@ namespace AnonyIsland
         {
             this.Frame.Navigate(typeof(BlogContentPage), new object[] { e.ClickedItem });
         }
+
+
+        private void NavView_Loaded(object sender, RoutedEventArgs e)
+        {
+            // set the initial SelectedItem 
+            foreach (NavigationViewItemBase item in NavView.MenuItems)
+            {
+                if (item is NavigationViewItem && item.Tag.ToString() == "home")
+                {
+                    NavView.SelectedItem = item;
+                    break;
+                }
+            }
+        }
+
+        private void NavView_ItemInvoked(NavigationView sender, NavigationViewItemInvokedEventArgs args)
+        {
+            if (args.IsSettingsInvoked)
+            {
+                ContentFrame.Navigate(typeof(HomePage));
+            }
+            else
+            {
+                // find NavigationViewItem with Content that equals InvokedItem
+                var item = sender.MenuItems.OfType<NavigationViewItem>().First(x => (string)x.Content == (string)args.InvokedItem);
+                NavView_Navigate(item as NavigationViewItem);
+            }
+        }
+
+        private void NavView_Navigate(NavigationViewItem item)
+        {
+            switch (item.Tag)
+            {
+                case "home":
+                    ContentFrame.Navigate(typeof(HomePage));
+                    break;
+
+                case "news":
+                    ContentFrame.Navigate(typeof(NewsPage));
+                    break;
+
+                case "ranks":
+                    ContentFrame.Navigate(typeof(RankingPage));
+                    break;
+
+                case "collections":
+                    ContentFrame.Navigate(typeof(CollectionPage));
+                    break;
+            }
+        }
     }
 }

@@ -18,7 +18,6 @@ namespace AnonyIsland.Tools
         font-family:微软雅黑;
         font-size:14px;
         border-top: #999 solid 2px;
-        background-color: rgba(255,255,255,0);  
         }
         /*滚动条宽度*/  
         ::-webkit-scrollbar {  

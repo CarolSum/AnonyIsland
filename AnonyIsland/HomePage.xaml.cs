@@ -17,6 +17,10 @@ using AnonyIsland.Models;
 using System.Collections.ObjectModel;
 using AnonyIsland.Data;
 using AnonyIsland.HTTP;
+using Windows.UI.Composition;
+using Windows.UI.Xaml.Hosting;
+using Microsoft.Graphics.Canvas.Effects;
+using Windows.UI;
 
 // “空白页”项模板在 http://go.microsoft.com/fwlink/?LinkId=234238 上提供
 
@@ -34,51 +38,10 @@ namespace AnonyIsland
         public HomePage()
         {
             this.InitializeComponent();
-            if (App.AlwaysShowNavigation)
-            {
-                Home.Visibility = Visibility.Collapsed;
-            }
+            initializeFrostedGlass(bgGrid);
             BlogsListView.ItemsSource = _list_blogs = new CNBlogList();
             _list_blogs.DataLoaded += _list_blogs_DataLoaded;
             _list_blogs.DataLoading += _list_blogs_DataLoading;
-        }
-
-        /// <summary>
-        /// 页面加载
-        /// </summary>
-        /// <param name="e"></param>
-        protected override void OnNavigatedTo(NavigationEventArgs e)
-        {
-            base.OnNavigatedTo(e);
-            //没有加载参数
-        }
-        /// <summary>
-        /// 关于
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private async void AboutButton_Click(object sender, RoutedEventArgs e)
-        {
-            AboutDialog ad = new AboutDialog();
-            await ad.ShowAsync();
-        }
-        /// <summary>
-        /// 点击博客条目 查看博客正文
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void BlogsListView_ItemClick(object sender, ItemClickEventArgs e)
-        {
-            this.Frame.Navigate(typeof(BlogContentPage), new object[] { e.ClickedItem });
-        }
-        /// <summary>
-        /// 点击查看博主主页
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void HyperlinkButton_Click(object sender, RoutedEventArgs e)
-        {
-            this.Frame.Navigate(typeof(UserHome), new object[] { (sender as HyperlinkButton).Tag.ToString(), (sender as HyperlinkButton).Content });
         }
 
         /// <summary>
@@ -94,36 +57,44 @@ namespace AnonyIsland
         private void _list_blogs_DataLoaded()
         {
             Loading.IsActive = false;
-            ListCount.Text = _list_blogs.TotalCount.ToString();
-        }
-        /// <summary>
-        /// 刷新
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private async void RefreshButton_Click(object sender, RoutedEventArgs e)
-        {
-            _list_blogs.DoRefresh();
-            await BlogsListView.LoadMoreItemsAsync();
-        }
-        /// <summary>
-        /// 点击推荐
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private async void Button_Click(object sender, RoutedEventArgs e)
-        {
-            await (new MessageDialog("点击查看全文再去推荐哟!")).ShowAsync();
         }
 
-        /// <summary>
-        /// 打开主菜单
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void Home_Click(object sender, RoutedEventArgs e)
+        private void initializeFrostedGlass(UIElement glassHost)
         {
-            ((Window.Current.Content as Frame).Content as MainPage).ShowNavigationBarOneTime();
+            Visual hostVisual = ElementCompositionPreview.GetElementVisual(glassHost);
+            Compositor compositor = hostVisual.Compositor;
+            var glassEffect = new GaussianBlurEffect
+            {
+                BlurAmount = 10.0f,
+                BorderMode = EffectBorderMode.Hard,
+                Source = new ArithmeticCompositeEffect
+                {
+                    MultiplyAmount = 0,
+                    Source1Amount = 0.7f,
+                    Source2Amount = 0.3f,
+                    Source1 = new CompositionEffectSourceParameter("backdropBrush"),
+                    Source2 = new ColorSourceEffect
+                    {
+                        Color = Color.FromArgb(255, 245, 245, 245)
+                    }
+                }
+            };
+            var effectFactory = compositor.CreateEffectFactory(glassEffect);
+            var backdropBrush = compositor.CreateHostBackdropBrush();
+            var effectBrush = effectFactory.CreateBrush();
+            effectBrush.SetSourceParameter("backdropBrush", backdropBrush);
+            var glassVisual = compositor.CreateSpriteVisual();
+            glassVisual.Brush = effectBrush;
+            ElementCompositionPreview.SetElementChildVisual(glassHost, glassVisual);
+            var bindSizeAnimation = compositor.CreateExpressionAnimation("hostVisual.Size");
+            bindSizeAnimation.SetReferenceParameter("hostVisual", hostVisual);
+            glassVisual.StartAnimation("Size", bindSizeAnimation);
+        }
+
+        // 点击blogitem跳转到详情页
+        private void BlogsListView_ItemClick(object sender, ItemClickEventArgs e)
+        {
+            this.Frame.Navigate(typeof(BlogContentPage), new object[] { e.ClickedItem });
         }
     }
 }

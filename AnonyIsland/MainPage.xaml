@@ -258,8 +258,9 @@
         </SplitView>
     </Grid>-->
 
-    <NavigationView x:Name="NavView" AlwaysShowHeader="False" 
-                    >
+    <NavigationView x:Name="NavView" AlwaysShowHeader="False"
+                    ItemInvoked="NavView_ItemInvoked"
+                    Loaded="NavView_Loaded">
 
         <NavigationView.MenuItems>
             <NavigationViewItem x:Uid="HomeNavItem" Content="Home" Tag="home">
@@ -268,9 +269,9 @@
                 </NavigationViewItem.Icon>
             </NavigationViewItem>
             <NavigationViewItemSeparator/>
-            <NavigationViewItem x:Uid="AppsNavItem" Icon="AllApps" Content="Apps" Tag="apps"/>
-            <NavigationViewItem x:Uid="GamesNavItem" Icon="Video" Content="Games" Tag="games"/>
-            <NavigationViewItem x:Uid="MusicNavItem" Icon="Audio" Content="Music" Tag="music"/>
+            <NavigationViewItem x:Uid="GamesNavItem" Icon="Video" Content="News" Tag="news"/>
+            <NavigationViewItem x:Uid="AppsNavItem" Icon="AllApps" Content="Board" Tag="ranks"/>
+            <NavigationViewItem x:Uid="CollectionsNavItem" Icon="OutlineStar" Content="Collections" Tag="collections"/>
         </NavigationView.MenuItems>
 
         <NavigationView.AutoSuggestBox>

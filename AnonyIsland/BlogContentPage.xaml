@@ -13,7 +13,7 @@
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
 
-        <Grid Canvas.ZIndex="0" Grid.RowSpan="2" x:Name="bgGrid"></Grid>
+        <Image Canvas.ZIndex="0" Grid.RowSpan="2" Source="Assets/detailBG.png" Stretch="Fill"></Image>
         
         <RelativePanel Padding="80, 0, 80, 0" MinHeight="180">
             <Button
@@ -104,10 +104,11 @@
                     Grid.Row="1"
                     Name="BlogContent"
                     Margin="10,0,0,0" 
+                    DefaultBackgroundColor="Transparent"
                     />
             </Grid>
             
-            <WebView Name="BlogComment" Grid.Column="1" />
+            <WebView Name="BlogComment" Grid.Column="1" DefaultBackgroundColor="Transparent"/>
         </Grid>
         
         <!--<RelativePanel
