@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
+using System.Text.RegularExpressions;
 using Windows.ApplicationModel.DataTransfer;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
@@ -26,6 +27,8 @@ namespace AnonyIsland
     /// </summary>
     public sealed partial class NewsContentPage : Page
     {
+        private static string _image_bridge = "http://sysu.at:9011/img?url=";
+
         /// <summary>
         /// 当前显示新闻
         /// </summary>
@@ -82,6 +85,10 @@ namespace AnonyIsland
                     {
                         news_content += "<style>body{background-color:black;color:white;}</style>";
                     }
+                    
+                    //string pattern = "<img src=\"(.*)\"";
+                    //news_content = Regex.Replace(news_content, pattern, m => $"<img src=\"{_image_bridge}{m.Groups[1].Value}\"");
+
                     NewsContent.NavigateToString(news_content);
                 }
                 Loading.IsActive = false;
