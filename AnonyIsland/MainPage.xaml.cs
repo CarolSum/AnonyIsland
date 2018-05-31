@@ -42,7 +42,6 @@ namespace AnonyIsland
         {
             this.InitializeComponent();
             //mainNavigationList.SelectedIndex = 1;
-            ShowNavigationBar(App.AlwaysShowNavigation);
             initializeFrostedGlass(bgGrid);
             BlogsListView.ItemsSource = _list_blogs = new CNBlogList();
             _list_blogs.DataLoaded += _list_blogs_DataLoaded;
@@ -56,107 +55,12 @@ namespace AnonyIsland
         {
             Loading.IsActive = true;
         }
-        /// <summary>
-        /// 博客列表加载完毕
-        /// </summary>
+   
         private void _list_blogs_DataLoaded()
         {
             Loading.IsActive = false;
         }
-
-        #region  事件处理程序
-        /// <summary>
-        /// 导航栏隐现
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void ListBoxItem_Tapped(object sender, TappedRoutedEventArgs e)
-        {
-            //ListBoxItem tapped_item = sender as ListBoxItem;
-            //if (tapped_item != null && tapped_item.Tag != null && tapped_item.Tag.ToString().Equals("0")) //汉堡按钮
-            //{
-            //    mainSplitView.IsPaneOpen = !mainSplitView.IsPaneOpen;
-            //}
-        }
-        /// <summary>
-        /// 导航
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void mainNavigationList_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            //if (_ignoreNavigation)
-            //{
-            //    _ignoreNavigation = false;
-            //    return;
-            //}
-            //ListBoxItem tapped_item = mainNavigationList.SelectedItems[0] as ListBoxItem;
-            //if (tapped_item != null && tapped_item.Tag != null && tapped_item.Tag.ToString().Equals("1")) //首页
-            //{
-            //    mainSplitView.IsPaneOpen = false;
-            //    _preSelectNavigation = mainNavigationList.SelectedIndex;
-            //    mainFrame.Navigate(typeof(HomePage));
-            //}
-            //if (tapped_item != null && tapped_item.Tag != null && tapped_item.Tag.ToString().Equals("2")) //新闻
-            //{
-            //    mainSplitView.IsPaneOpen = false;
-            //    _preSelectNavigation = mainNavigationList.SelectedIndex;
-            //    mainFrame.Navigate(typeof(NewsPage));
-            //}
-            //if (tapped_item != null && tapped_item.Tag != null && tapped_item.Tag.ToString().Equals("3")) //排行榜
-            //{
-            //    mainSplitView.IsPaneOpen = false;
-            //    _preSelectNavigation = mainNavigationList.SelectedIndex;
-            //    mainFrame.Navigate(typeof(RankingPage));
-            //}
-            //if (tapped_item != null && tapped_item.Tag != null && tapped_item.Tag.ToString().Equals("6")) //收藏
-            //{
-            //    mainSplitView.IsPaneOpen = false;
-            //    _preSelectNavigation = mainNavigationList.SelectedIndex;
-            //    mainFrame.Navigate(typeof(CollectionPage));
-            //}
-            //if (tapped_item != null && tapped_item.Tag != null && tapped_item.Tag.ToString().Equals("7")) //搜索
-            //{
-            //    mainSplitView.IsPaneOpen = false;
-            //    SearchDialog sd = new SearchDialog();
-            //    ContentDialogResult result = await sd.ShowAsync();
-            //    if(result == ContentDialogResult.Primary)  //确定
-            //    {
-            //        _preSelectNavigation = mainNavigationList.SelectedIndex;
-            //        mainFrame.Navigate(typeof(SearchPage), new object[] { sd.KeyWords, sd.SearchType });
-            //    }
-            //    else  //取消
-            //    {
-            //        _ignoreNavigation = true;
-            //        mainNavigationList.SelectedIndex = _preSelectNavigation;
-            //    }
-            //}
-            //if (tapped_item != null && tapped_item.Tag != null && tapped_item.Tag.ToString().Equals("10")) //设置
-            //{
-            //    mainSplitView.IsPaneOpen = false;
-            //    SettingDialog st = new SettingDialog(this);
-            //    await st.ShowAsync();
-            //    //
-            //    mainNavigationList.SelectedIndex = 1;
-            //}
-        }
-        #endregion
-
-        /// <summary>
-        /// 设置主页面导航显示方式
-        /// </summary>
-        /// <param name="show"></param>
-        public void ShowNavigationBar(bool show)
-        {
-            //mainSplitView.DisplayMode = show ? SplitViewDisplayMode.CompactOverlay : SplitViewDisplayMode.Overlay;
-        }
-        /// <summary>
-        /// 打开导航栏一次
-        /// </summary>
-        public void ShowNavigationBarOneTime()
-        {
-            //mainSplitView.IsPaneOpen = true;
-        }
+       
 
         private void initializeFrostedGlass(UIElement glassHost)
         {
@@ -169,7 +73,7 @@ namespace AnonyIsland
                 Source = new ArithmeticCompositeEffect
                 {
                     MultiplyAmount = 0,
-                    Source1Amount = 0.7f,
+                    Source1Amount = 0.3f,
                     Source2Amount = 0.3f,
                     Source1 = new CompositionEffectSourceParameter("backdropBrush"),
                     Source2 = new ColorSourceEffect
@@ -179,7 +83,7 @@ namespace AnonyIsland
                 }
             };
             var effectFactory = compositor.CreateEffectFactory(glassEffect);
-            var backdropBrush = compositor.CreateHostBackdropBrush();
+            var backdropBrush = compositor.CreateBackdropBrush();
             var effectBrush = effectFactory.CreateBrush();
             effectBrush.SetSourceParameter("backdropBrush", backdropBrush);
             var glassVisual = compositor.CreateSpriteVisual();
@@ -254,6 +158,15 @@ namespace AnonyIsland
                 case "rankNews":
                     ContentFrame.Navigate(typeof(RankingNewsPage));
                     break;
+            }
+        }
+
+        private void ASB_QuerySubmitted(AutoSuggestBox sender, AutoSuggestBoxQuerySubmittedEventArgs args)
+        {
+            string txt = args.QueryText;
+            if(args.ChosenSuggestion == null && !txt.Equals(""))
+            {
+                ContentFrame.Navigate(typeof(SearchPage), new object[] { txt, 0 });
             }
         }
     }

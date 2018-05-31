@@ -70,7 +70,7 @@ namespace AnonyIsland
                 Source = new ArithmeticCompositeEffect
                 {
                     MultiplyAmount = 0,
-                    Source1Amount = 0.7f,
+                    Source1Amount = 0.3f,
                     Source2Amount = 0.3f,
                     Source1 = new CompositionEffectSourceParameter("backdropBrush"),
                     Source2 = new ColorSourceEffect
@@ -80,7 +80,7 @@ namespace AnonyIsland
                 }
             };
             var effectFactory = compositor.CreateEffectFactory(glassEffect);
-            var backdropBrush = compositor.CreateHostBackdropBrush();
+            var backdropBrush = compositor.CreateBackdropBrush();
             var effectBrush = effectFactory.CreateBrush();
             effectBrush.SetSourceParameter("backdropBrush", backdropBrush);
             var glassVisual = compositor.CreateSpriteVisual();

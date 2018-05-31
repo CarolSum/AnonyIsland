@@ -16,6 +16,10 @@ using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
 using AnonyIsland.HTTP;
 using AnonyIsland.Models;
+using Windows.UI.Xaml.Hosting;
+using Windows.UI.Composition;
+using Microsoft.Graphics.Canvas.Effects;
+using Windows.UI;
 
 // “空白页”项模板在 http://go.microsoft.com/fwlink/?LinkId=234238 上提供
 
@@ -30,52 +34,81 @@ namespace AnonyIsland
         /// 当前显示的博客列表
         /// </summary>
         private ObservableCollection<CNBlog> _list_blogs = new ObservableCollection<CNBlog>();
-        /// <summary>
-        /// 当前显示的博主列表
-        /// </summary>
-        private ObservableCollection<CNBloger> _list_blogers = new ObservableCollection<CNBloger>();
+
         public SearchPage()
         {
             this.InitializeComponent();
-            if (App.AlwaysShowNavigation)
-            {
-                Home.Visibility = Visibility.Collapsed;
-            }
-
+            initializeFrostedGlass(bgGrid);
         }
+ 
+        private void initializeFrostedGlass(UIElement glassHost)
+        {
+            Visual hostVisual = ElementCompositionPreview.GetElementVisual(glassHost);
+            Compositor compositor = hostVisual.Compositor;
+            var glassEffect = new GaussianBlurEffect
+            {
+                BlurAmount = 10.0f,
+                BorderMode = EffectBorderMode.Hard,
+                Source = new ArithmeticCompositeEffect
+                {
+                    MultiplyAmount = 0,
+                    Source1Amount = 0.3f,
+                    Source2Amount = 0.3f,
+                    Source1 = new CompositionEffectSourceParameter("backdropBrush"),
+                    Source2 = new ColorSourceEffect
+                    {
+                        Color = Color.FromArgb(255, 245, 245, 245)
+                    }
+                }
+            };
+            var effectFactory = compositor.CreateEffectFactory(glassEffect);
+            var backdropBrush = compositor.CreateBackdropBrush();
+            var effectBrush = effectFactory.CreateBrush();
+            effectBrush.SetSourceParameter("backdropBrush", backdropBrush);
+            var glassVisual = compositor.CreateSpriteVisual();
+            glassVisual.Brush = effectBrush;
+            ElementCompositionPreview.SetElementChildVisual(glassHost, glassVisual);
+            var bindSizeAnimation = compositor.CreateExpressionAnimation("hostVisual.Size");
+            bindSizeAnimation.SetReferenceParameter("hostVisual", hostVisual);
+            glassVisual.StartAnimation("Size", bindSizeAnimation);
+        }
+
+      
+        private void _list_blogs_DataLoading()
+        {
+            Loading.IsActive = true;
+        }
+    
+        private void _list_blogs_DataLoaded()
+        {
+            Loading.IsActive = false;
+        }
+
         /// <summary>
         /// 页面加载
         /// </summary>
         /// <param name="e"></param>
-        protected override void OnNavigatedTo(NavigationEventArgs e)
+        protected override async void OnNavigatedTo(NavigationEventArgs e)
         {
             base.OnNavigatedTo(e);
-            if (e.NavigationMode == NavigationMode.Back)
+            object[] parameters = e.Parameter as object[];
+            if (parameters != null && parameters.Length == 2)
             {
-                //恢复状态
-                if (App.PageState != null && App.PageState["SearchPage_PivotSelectIndex"] != null)
+                string txt = parameters[0].ToString();  //关键字
+                List<CNBlog> refresh_blogs = await SearchService.SearchBlogs(txt, 1);
+                if (refresh_blogs != null)
                 {
-                    pivot.SelectedIndex = (int)App.PageState["SearchPage_PivotSelectIndex"];
-                    SearchBox.Text = (string)App.PageState["SearchPage_SearchKeys"];
-                    SearchBox_QuerySubmitted(null, null);
-
+                    _list_blogs.Clear();
+                    refresh_blogs.ForEach((b) => _list_blogs.Add(b));
+                    Loading.IsActive = false;
                 }
             }
             else
             {
-                object[] parameters = e.Parameter as object[];
-                if (parameters != null && parameters.Length == 2)
-                {
-                    SearchBox.Text = parameters[0].ToString();  //关键字
-                    pivot.SelectedIndex = (int)parameters[1];  //0找博客  1找博主
-                    SearchBox_QuerySubmitted(null, null);
-                }
-                else
-                {
-                    Loading.IsActive = false;
-                }
+                Loading.IsActive = false;
             }
         }
+
         /// <summary>
         /// 页面离开
         /// </summary>
@@ -83,118 +116,19 @@ namespace AnonyIsland
         protected override void OnNavigatedFrom(NavigationEventArgs e)
         {
             base.OnNavigatedFrom(e);
-            if (App.PageState == null)
-            {
-                App.PageState = new Dictionary<string, object>();
-            }
-            App.PageState.Remove("SearchPage_PivotSelectIndex");
-            App.PageState.Remove("SearchPage_SearchKeys");
-            App.PageState.Add("SearchPage_SearchKeys", SearchBox.Text);
-            App.PageState.Add("SearchPage_PivotSelectIndex", pivot.SelectedIndex);
         }
-        /// <summary>
-        /// 切换搜索方式
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void Pivot_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            if ((e.AddedItems[0] as PivotItem).Header.Equals("找博客"))
-            {
-                SearchBox.PlaceholderText = "找博客关键字";
-                ListCount.Text = _list_blogs.Count.ToString();
-            }
-            else
-            {
-                SearchBox.PlaceholderText = "找博主关键字";
-                ListCount.Text = _list_blogers.Count.ToString();
-            }
-        }
-        /// <summary>
-        /// 刷新
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void RefreshButton_Click(object sender, RoutedEventArgs e)
-        {
-
-        }
-        /// <summary>
-        /// 点击查看博客正文
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
+     
+    
         private void BlogsListView_ItemClick(object sender, ItemClickEventArgs e)
         {
             this.Frame.Navigate(typeof(BlogContentPage), new object[] { e.ClickedItem });
         }
-        /// <summary>
-        /// 点击博主 查看主页博客
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void BlogerListView_ItemClick(object sender, ItemClickEventArgs e)
-        {
-            this.Frame.Navigate(typeof(UserHome), new object[] { (e.ClickedItem as CNBloger).BlogApp, (e.ClickedItem as CNBloger).BlogerName });
-        }
-        /// <summary>
-        /// 标题栏搜索框发起查询
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="args"></param>
-        private async void SearchBox_QuerySubmitted(AutoSuggestBox sender, AutoSuggestBoxQuerySubmittedEventArgs args)
-        {
-            Loading.IsActive = true;
-            if (pivot.SelectedIndex == 0)  //找博客
-            {
-                List<CNBlog> refresh_blogs = await SearchService.SearchBlogs(SearchBox.Text, 1);
-                if(refresh_blogs!=null)
-                {
-                    _list_blogs.Clear();
-                    refresh_blogs.ForEach((b) => _list_blogs.Add(b));
-                    ListCount.Text = _list_blogs.Count.ToString();
-                    Loading.IsActive = false;
-                }
-            }
-            else //找博主
-            {
-                List<CNBloger> refresh_blogers = await SearchService.SearchBloger(SearchBox.Text);
-                if(refresh_blogers!=null)
-                {
-                    _list_blogers.Clear();
-                    refresh_blogers.ForEach((b) => _list_blogers.Add(b));
-                    ListCount.Text = _list_blogers.Count.ToString();
-                    Loading.IsActive = false;
-                }
-            }
-        }
-        /// <summary>
-        /// 点击博主昵称  查看主页博客
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void HyperlinkButton_Click(object sender, RoutedEventArgs e)
-        {
-            this.Frame.Navigate(typeof(UserHome), new object[] { (sender as HyperlinkButton).Tag, (sender as HyperlinkButton).Content });
-        }
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
+       
+
         private async void Button_Click(object sender, RoutedEventArgs e)
         {
             await(new MessageDialog("先点击查看全文再推荐哟!")).ShowAsync();
         }
 
-        /// <summary>
-        /// 打开主菜单
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void Home_Click(object sender, RoutedEventArgs e)
-        {
-            ((Window.Current.Content as Frame).Content as MainPage).ShowNavigationBarOneTime();
-        }
     }
 }

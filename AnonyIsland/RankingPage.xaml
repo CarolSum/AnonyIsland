@@ -22,7 +22,6 @@
             <Button
                 Name="Home"
                 Background="Transparent"
-                Click="Home_Click"
                 Content="&#xE700;"
                 FontFamily="Segoe MDL2 Assets"
                 FontSize="24"

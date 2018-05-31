@@ -35,7 +35,7 @@
         </NavigationView.MenuItems>
 
         <NavigationView.AutoSuggestBox>
-            <AutoSuggestBox x:Name="ASB" QueryIcon="Find" />
+            <AutoSuggestBox x:Name="ASB" PlaceholderText="Search" QueryIcon="Find" QuerySubmitted="ASB_QuerySubmitted" />
         </NavigationView.AutoSuggestBox>
 
         <Frame x:Name="ContentFrame">
@@ -49,10 +49,7 @@
                     <RowDefinition Height="auto" />
                     <RowDefinition Height="*" />
                 </Grid.RowDefinitions>
-                <Grid
-                    x:Name="bgGrid"
-                    Grid.RowSpan="2"
-                    Canvas.ZIndex="-1" />
+                <Image Grid.RowSpan="2" Source="Assets/bg.png" Stretch="Fill" Canvas.ZIndex="-1" x:Name="bgGrid" ></Image>
 
                 <StackPanel>
                     <TextBlock

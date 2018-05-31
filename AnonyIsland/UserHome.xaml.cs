@@ -17,6 +17,10 @@ using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
 using AnonyIsland.Data;
+using Windows.UI.Composition;
+using Windows.UI.Xaml.Hosting;
+using Microsoft.Graphics.Canvas.Effects;
+using Windows.UI;
 
 // “空白页”项模板在 http://go.microsoft.com/fwlink/?LinkId=234238 上提供
 
@@ -38,10 +42,7 @@ namespace AnonyIsland
         public UserHome()
         {
             this.InitializeComponent();
-            if (App.AlwaysShowNavigation)
-            {
-                Home.Visibility = Visibility.Collapsed;
-            }
+            initializeFrostedGlass(bgGrid);
         }
         /// <summary>
         /// 页面加载
@@ -87,25 +88,6 @@ namespace AnonyIsland
                 this.Frame.GoBack();
             }
         }
-        /// <summary>
-        /// 查看博主主页
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void HyperlinkButton_Click(object sender, RoutedEventArgs e)
-        {
-            this.Frame.Navigate(typeof(UserHome), new object[] { (sender as HyperlinkButton).Tag.ToString(), (sender as HyperlinkButton).Content });
-        }
-        /// <summary>
-        /// 刷新
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private async void RefreshButton_Click(object sender, RoutedEventArgs e)
-        {
-            _list_blogs.DoRefresh();
-            await BlogsListView.LoadMoreItemsAsync();
-        }
 
         private void _list_blogs_DataLoading()
         {
@@ -115,26 +97,43 @@ namespace AnonyIsland
         private void _list_blogs_DataLoaded()
         {
             Loading.IsActive = false;
-            ListCount.Text = _list_blogs.TotalCount.ToString();
         }
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
+   
         private async void Button_Click(object sender, RoutedEventArgs e)
         {
             await (new MessageDialog("先点击查看全文再推荐哟!")).ShowAsync();
         }
 
-        /// <summary>
-        /// 打开主菜单
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void Home_Click(object sender, RoutedEventArgs e)
+        private void initializeFrostedGlass(UIElement glassHost)
         {
-            ((Window.Current.Content as Frame).Content as MainPage).ShowNavigationBarOneTime();
+            Visual hostVisual = ElementCompositionPreview.GetElementVisual(glassHost);
+            Compositor compositor = hostVisual.Compositor;
+            var glassEffect = new GaussianBlurEffect
+            {
+                BlurAmount = 10.0f,
+                BorderMode = EffectBorderMode.Hard,
+                Source = new ArithmeticCompositeEffect
+                {
+                    MultiplyAmount = 0,
+                    Source1Amount = 0.3f,
+                    Source2Amount = 0.3f,
+                    Source1 = new CompositionEffectSourceParameter("backdropBrush"),
+                    Source2 = new ColorSourceEffect
+                    {
+                        Color = Color.FromArgb(255, 245, 245, 245)
+                    }
+                }
+            };
+            var effectFactory = compositor.CreateEffectFactory(glassEffect);
+            var backdropBrush = compositor.CreateBackdropBrush();
+            var effectBrush = effectFactory.CreateBrush();
+            effectBrush.SetSourceParameter("backdropBrush", backdropBrush);
+            var glassVisual = compositor.CreateSpriteVisual();
+            glassVisual.Brush = effectBrush;
+            ElementCompositionPreview.SetElementChildVisual(glassHost, glassVisual);
+            var bindSizeAnimation = compositor.CreateExpressionAnimation("hostVisual.Size");
+            bindSizeAnimation.SetReferenceParameter("hostVisual", hostVisual);
+            glassVisual.StartAnimation("Size", bindSizeAnimation);
         }
     }
 }
