@@ -44,15 +44,12 @@
                                 <ColumnDefinition Width="auto"/>
                             </Grid.ColumnDefinitions>
                             
-                            <StackPanel Grid.Column="1"
-                                Padding="5,5,5,5"
+                            <StackPanel Grid.Column="1" 
+                                Padding="5,5,5,5" 
                                 VerticalAlignment="Top" HorizontalAlignment="Right">
-                                <Border BorderThickness="0" BorderBrush="{ThemeResource AppBarBorderThemeBrush}">
-                                    <StackPanel>
-                                        <TextBlock Text="{x:Bind Diggs}" FontSize="22" HorizontalAlignment="Center" Foreground="White"/>
-                                        <Button Content="推荐"  Click="Button_Click" Background="#4287e4" FontSize="16" Foreground="White"/>
-                                    </StackPanel>
-                                </Border>
+                                <TextBlock Text="{x:Bind Diggs}" FontSize="22" HorizontalAlignment="Center" Foreground="#cdcdcd" Height="35"/>
+                                <Border BorderThickness="1" BorderBrush="#cdcdcd"></Border>
+                                <Button Content="推荐"  Click="Button_Click" Background="Transparent" FontSize="16" Foreground="#cdcdcd"/>
                             </StackPanel>
 
                             <StackPanel Grid.Column="0" Margin="10,0,0,0">
