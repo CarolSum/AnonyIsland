@@ -17,6 +17,8 @@ namespace AnonyIsland.Tools
         body{
         font-family:微软雅黑;
         font-size:14px;
+        border-top: #999 solid 2px;
+        background-color: rgba(255,255,255,0);  
         }
         /*滚动条宽度*/  
         ::-webkit-scrollbar {  
@@ -48,7 +50,7 @@ namespace AnonyIsland.Tools
         }  
         textarea{width: 500px;height: 300px;border: none;padding: 5px;}  
 
-	    .chat_content_group.self {
+        .chat_content_group.self {
         text-align: right;
         }
         .chat_content_group {
@@ -68,13 +70,15 @@ namespace AnonyIsland.Tools
         background: linear-gradient(#fff,#e1e1e1);*/
         }
         .chat_content {
-        display: inline-block;
+        clear: both;
+        margin: 0;
+        display: block;
         min-height: 16px;
-        max-width: 50%;
+        max-width: 100%;
         color:#292929;
-        background: #c3f1fd;
         font-family:微软雅黑;
         font-size:14px;
+        padding-top: 10px;
         /*background: -webkit-gradient(linear,left top,left bottom,from(#cf9),to(#9c3));
         background: -webkit-linear-gradient(#cf9,#9c3);
         background: -moz-linear-gradient(#cf9,#9c3);
@@ -84,7 +88,6 @@ namespace AnonyIsland.Tools
         -webkit-border-radius: 5px;
         -moz-border-radius: 5px;
         border-radius: 5px;
-        padding: 10px 15px;
         word-break: break-all;
         /*box-shadow: 1px 1px 5px #000;*/
         line-height: 1.4;
@@ -95,7 +98,7 @@ namespace AnonyIsland.Tools
         }
         .chat_nick {
         font-size: 14px;
-        margin: 0 0 10px;
+        margin: 0 0 5px;
         color:#8b8b8b;
         }
 
@@ -135,14 +138,21 @@ namespace AnonyIsland.Tools
         }
         .imgtest img{width:100%;
         min-height:100%; text-align:center;}
+
+        .chat_time{
+            margin: 0;
+            color:#8b8b8b;
+            font-size: 12px;
+        }
 	    </style>
         </head><body>";
         //点击昵称 头像  js与C#代码进行交互  window.external.notify(...)
         static string _receiveHtml = @"<script type=""text/javascript"">window.location.hash = ""#ok"";</script> 
             <div class=""chat_content_group buddy"">   
-            <img class=""chat_content_avatar"" onclick=""window.external.notify('{3}-{5}')"" style=""cursor:pointer"" src=""{0}"" width=""40px"" height=""40px""/> 
-            <p class=""chat_nick"" style=""cursor:pointer;font-family:微软雅黑"" onclick=""window.external.notify('{4}-{6}')"">{1}</p>   
-            <p class=""chat_content"">{2}</p>
+            <img class=""chat_content_avatar"" onclick=""window.external.notify('{4}-{6}')"" style=""cursor:pointer"" src=""{0}"" width=""40px"" height=""40px""/> 
+            <p class=""chat_nick"" style=""cursor:pointer;font-family:微软雅黑"" onclick=""window.external.notify('{5}-{7}')"">{1}</p>   
+            <p class=""chat_time"">{2}</p>            
+            <p class=""chat_content"">{3}</p>
             </div>";
         static string _sendHtml = @"<script type=""text/javascript"">window.location.hash = ""#ok"";</script> 
             <div class=""chat_content_group self"">   
@@ -173,7 +183,7 @@ namespace AnonyIsland.Tools
         public static string Receive(string avator,string nickname,string content,string time,string comment_id = null)
         {
             string id = comment_id == null ? "" : comment_id;
-            return String.Format(_receiveHtml, avator, nickname + " " + time, content, nickname, nickname, id, id);
+            return String.Format(_receiveHtml, avator, nickname, time, content, nickname, nickname, id, id);
         }
         /// <summary>
         /// 聊天框发送消息

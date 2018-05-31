@@ -13,6 +13,8 @@
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
 
+        <Grid Canvas.ZIndex="0" Grid.RowSpan="2" x:Name="bgGrid"></Grid>
+        
         <RelativePanel Padding="80, 0, 80, 0" MinHeight="180">
             <Button
                 Name="Back"
@@ -28,72 +30,84 @@
 
             <Button Name="CommentBtn" Background="Transparent" Content="&#xE939;" FontFamily="Segoe MDL2 Assets"
                     RelativePanel.AlignRightWithPanel="True" FontSize="30" 
+                    Click="Comment_Click"
                     RelativePanel.AlignVerticalCenterWithPanel="True" Foreground="Black"/>
+             <Button  Name="Share" Background="Transparent" Click="Share_Click" 
+                      Content="&#xE72D;"  FontFamily="Segoe MDL2 Assets" FontSize="30" 
+                      RelativePanel.AlignVerticalCenterWithPanel="True" RelativePanel.LeftOf="CommentBtn" />
         </RelativePanel>
         <Grid Grid.Row="1" Margin="80, 0, 80, 0">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="7*"></ColumnDefinition>
                 <ColumnDefinition Width="3*"></ColumnDefinition>
             </Grid.ColumnDefinitions>
-            <StackPanel Grid.Row="1" HorizontalAlignment="Stretch">
-                <TextBlock
-                Name="BlogTitle"
-                Margin="0,10,0,0"
-                HorizontalAlignment="Center"
-                FontSize="25"
-                Text="微信客户端.NET版" />
-                <StackPanel
-                Margin="0,10,0,10"
-                HorizontalAlignment="Center"
-                Orientation="Horizontal">
-                    <Image
-                    Name="Avatar"
-                    Width="20"
-                    Margin="0"
-                    VerticalAlignment="Center" />
-                    <HyperlinkButton
-                    Name="AuthorName"
-                    Padding="10,0,0,0"
-                    VerticalAlignment="Center"
-                    Click="AuthorName_Click"
-                    Content="owtotwo"
-                    Foreground="Gray" />
+            <Grid Grid.Column="0" Margin="0,0,20,0">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+                <StackPanel Grid.Row="0" HorizontalAlignment="Stretch">
                     <TextBlock
-                    Name="PublishTime"
-                    Padding="10,0,0,0"
-                    VerticalAlignment="Center"
-                    Foreground="Gray"
-                    Text="发表于 2018-05-30 11:11:11" />
-                    <TextBlock
-                    Name="Diggs"
-                    Padding="10,0,2,0"
-                    VerticalAlignment="Center"
-                    Foreground="Gray"
-                    Text="(10)" />
-                    <SymbolIcon Symbol="Like" />
-                    <TextBlock
-                    Name="Comments"
-                    Padding="10,0,2,0"
-                    VerticalAlignment="Center"
-                    Foreground="Gray"
-                    Text="(5)" />
-                    <SymbolIcon Symbol="Comment" Tapped="SymbolIcon_Tapped" />
-                    <TextBlock
-                    Name="Views"
-                    Padding="10,0,2,0"
-                    VerticalAlignment="Center"
-                    Foreground="Gray"
-                    Text="(123)" />
-                    <SymbolIcon Symbol="View" />
-
+                        Name="BlogTitle"
+                        Margin="0,10,0,0"
+                        HorizontalAlignment="Center"
+                        FontSize="25"
+                        Text="微信客户端.NET版" />
+                    <StackPanel
+                        Margin="0,10,0,10"
+                        HorizontalAlignment="Center"
+                        Orientation="Horizontal">
+                        <Image
+                            Name="Avatar"
+                            Width="20"
+                            Margin="0"
+                            VerticalAlignment="Center" />
+                        <HyperlinkButton
+                            Name="AuthorName"
+                            Padding="10,0,0,0"
+                            VerticalAlignment="Center"
+                            Click="AuthorName_Click"
+                            Content="owtotwo"
+                            Foreground="Gray" />
+                        <TextBlock
+                            Name="PublishTime"
+                            Padding="10,0,0,0"
+                            VerticalAlignment="Center"
+                            Foreground="Gray"
+                            Text="发表于 2018-05-30 11:11:11" />
+                        <TextBlock
+                            Name="Diggs"
+                            Padding="10,0,2,0"
+                            VerticalAlignment="Center"
+                            Foreground="Gray"
+                            Text="(10)" />
+                        <SymbolIcon Symbol="Like" />
+                        <TextBlock
+                            Name="Comments"
+                            Padding="10,0,2,0"
+                            VerticalAlignment="Center"
+                            Foreground="Gray"
+                            Text="(5)" />
+                        <SymbolIcon Symbol="Comment" Tapped="SymbolIcon_Tapped" />
+                        <TextBlock
+                            Name="Views"
+                            Padding="10,0,2,0"
+                            VerticalAlignment="Center"
+                            Foreground="Gray"
+                            Text="(123)" />
+                        <SymbolIcon Symbol="View" />
+                    </StackPanel>
+                    <Rectangle Height="1" Fill="LightGray" />
                 </StackPanel>
-                <Rectangle Height="1" Fill="LightGray" />
-            </StackPanel>
-            <WebView
-                Name="BlogContent"
-                Grid.Column="0"
-                Margin="10,0,0,0" />
-            <WebView Name="BlogComment" Grid.Row="1" />
+                
+                <WebView
+                    Grid.Row="1"
+                    Name="BlogContent"
+                    Margin="10,0,0,0" 
+                    />
+            </Grid>
+            
+            <WebView Name="BlogComment" Grid.Column="1" />
         </Grid>
         
         <!--<RelativePanel
@@ -150,13 +164,6 @@
                 RelativePanel.LeftOf="Comment" />
         </RelativePanel>-->
        
-        <Grid Grid.Row="2">
-            <WebView
-                Name="aBlogContent"
-                Grid.Column="1"
-                Margin="10,0,0,0" />
-        </Grid>
-        
         <ProgressRing
             Name="Loading"
             Grid.Row="2"

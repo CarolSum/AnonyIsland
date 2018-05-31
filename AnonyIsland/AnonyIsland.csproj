@@ -189,6 +189,7 @@
     </AppxManifest>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Assets\detailBG.png" />
     <Content Include="Assets\Images\myavator.png" />
     <Content Include="Data\ReadMe.txt" />
     <Content Include="Properties\Default.rd.xml" />

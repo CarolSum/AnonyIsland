@@ -188,5 +188,11 @@ namespace AnonyIsland
             bindSizeAnimation.SetReferenceParameter("hostVisual", hostVisual);
             glassVisual.StartAnimation("Size", bindSizeAnimation);
         }
+
+        // 点击blogitem跳转到详情页
+        private void BlogsListView_ItemClick(object sender, ItemClickEventArgs e)
+        {
+            this.Frame.Navigate(typeof(BlogContentPage), new object[] { e.ClickedItem });
+        }
     }
 }

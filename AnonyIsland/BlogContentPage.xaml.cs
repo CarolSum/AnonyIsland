@@ -17,6 +17,12 @@ using Windows.UI.Popups;
 using Windows.ApplicationModel.DataTransfer;
 using AnonyIsland.HTTP;
 using AnonyIsland.Models;
+using AnonyIsland.Tools;
+using System.Diagnostics;
+using Windows.UI.Composition;
+using Windows.UI.Xaml.Hosting;
+using Microsoft.Graphics.Canvas.Effects;
+using Windows.UI;
 
 // “空白页”项模板在 http://go.microsoft.com/fwlink/?LinkId=234238 上提供
 
@@ -31,6 +37,8 @@ namespace AnonyIsland
         /// 当前查看博客
         /// </summary>
         private CNBlog _blog;
+        string _commentHtml = "";
+
         public BlogContentPage()
         {
             this.InitializeComponent();
@@ -39,7 +47,42 @@ namespace AnonyIsland
             //    Home.Visibility = Visibility.Collapsed;
             //}
             RegisterForShare();
+            //initializeFrostedGlass(bgGrid);
         }
+
+
+        private void initializeFrostedGlass(UIElement glassHost)
+        {
+            Visual hostVisual = ElementCompositionPreview.GetElementVisual(glassHost);
+            Compositor compositor = hostVisual.Compositor;
+            var glassEffect = new GaussianBlurEffect
+            {
+                BlurAmount = 10.0f,
+                BorderMode = EffectBorderMode.Hard,
+                Source = new ArithmeticCompositeEffect
+                {
+                    MultiplyAmount = 0,
+                    Source1Amount = 0.7f,
+                    Source2Amount = 0.3f,
+                    Source1 = new CompositionEffectSourceParameter("backdropBrush"),
+                    Source2 = new ColorSourceEffect
+                    {
+                        Color = Color.FromArgb(255, 245, 245, 245)
+                    }
+                }
+            };
+            var effectFactory = compositor.CreateEffectFactory(glassEffect);
+            var backdropBrush = compositor.CreateHostBackdropBrush();
+            var effectBrush = effectFactory.CreateBrush();
+            effectBrush.SetSourceParameter("backdropBrush", backdropBrush);
+            var glassVisual = compositor.CreateSpriteVisual();
+            glassVisual.Brush = effectBrush;
+            ElementCompositionPreview.SetElementChildVisual(glassHost, glassVisual);
+            var bindSizeAnimation = compositor.CreateExpressionAnimation("hostVisual.Size");
+            bindSizeAnimation.SetReferenceParameter("hostVisual", hostVisual);
+            glassVisual.StartAnimation("Size", bindSizeAnimation);
+        }
+
         private void RegisterForShare()
         {
             DataTransferManager dataTransferManager = DataTransferManager.GetForCurrentView();
@@ -47,6 +90,7 @@ namespace AnonyIsland
                 DataRequestedEventArgs>(this.ShareLinkHandler);
         }
 
+        // Todo：分享事件重写
         private void ShareLinkHandler(DataTransferManager sender, DataRequestedEventArgs args)
         {
             DataRequest request = args.Request;
@@ -87,6 +131,31 @@ namespace AnonyIsland
                         }
                         BlogContent.NavigateToString(blog_body);
                     }
+
+                    // 获取评论数据
+                    _commentHtml = ChatBoxTool.BaseChatHtml;
+                    if (App.Theme == ApplicationTheme.Dark)
+                    {
+                        _commentHtml += "<style>body{background-color:black;color:white;}</style>";
+                    }
+                    BlogComment.NavigateToString(_commentHtml);
+                    List<CNBlogComment> list_comments = await BlogService.GetBlogCommentsAsync(_blog.ID, 1, 199);
+
+                    if (list_comments != null)
+                    {
+                        string comments = "";
+                        foreach (CNBlogComment comment in list_comments)
+                        {
+                            comments += ChatBoxTool.Receive(comment.AuthorAvatar,
+                                comment.AuthorName == _blog.AuthorName ? "[博主]" + _blog.AuthorName : comment.AuthorName,
+                                comment.Content, comment.PublishTime, comment.ID);
+                        }
+
+                        _commentHtml = _commentHtml.Replace("<a id='ok'></a>", "") + comments + "<a id='ok'></a>";
+                        Debug.Write(_commentHtml);
+                        BlogComment.NavigateToString(_commentHtml);
+                    }
+
                     Loading.IsActive = false;
                 }
             }

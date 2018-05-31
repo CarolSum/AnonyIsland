@@ -277,9 +277,6 @@
             <AutoSuggestBox x:Name="ASB" QueryIcon="Find"/>
         </NavigationView.AutoSuggestBox>
     
-        <NavigationView.PaneFooter>
-        </NavigationView.PaneFooter>
-
         <Frame x:Name="ContentFrame">
             <Frame.ContentTransitions>
                 <TransitionCollection>
@@ -304,6 +301,7 @@
                   CanReorderItems="True"
                   IsItemClickEnabled="True"
                   SelectionMode="None"
+                  ItemClick="BlogsListView_ItemClick"
                   ItemsSource="{x:Bind _list_blogs}"
                   Padding="100,0,100,0"
                   >
