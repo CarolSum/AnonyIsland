@@ -145,6 +145,15 @@
     <Compile Include="NewsPage.xaml.cs">
       <DependentUpon>NewsPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Ranking10Page.xaml.cs">
+      <DependentUpon>Ranking10Page.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Ranking48Page.xaml.cs">
+      <DependentUpon>Ranking48Page.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="RankingNewsPage.xaml.cs">
+      <DependentUpon>RankingNewsPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="RankingPage.xaml.cs">
       <DependentUpon>RankingPage.xaml</DependentUpon>
     </Compile>
@@ -213,6 +222,18 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="NewsPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Ranking10Page.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Ranking48Page.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="RankingNewsPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
