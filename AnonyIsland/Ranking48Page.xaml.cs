@@ -92,11 +92,5 @@ namespace AnonyIsland
         {
             this.Frame.Navigate(typeof(BlogContentPage), new object[] { e.ClickedItem });
         }
-
-        // 点击“推荐”
-        private async void Button_Click(object sender, RoutedEventArgs e)
-        {
-            await (new MessageDialog("先点击查看全文再推荐哟!")).ShowAsync();
-        }
     }
 }

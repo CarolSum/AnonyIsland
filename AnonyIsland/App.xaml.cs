@@ -24,20 +24,16 @@ namespace AnonyIsland
     sealed partial class App : Application
     {
         #region APP状态
+
         /// <summary>
-        /// 当前登录用户  未登录时为null
+        /// 是否第一次搜索
         /// </summary>
-        internal static CNUserInfo LoginedUser
-        {
-            get; set;
-        }
+        internal static bool HaveDoSearch { get; set; } = false;
+
         /// <summary>
         /// 是否总是显示导航栏
         /// </summary>
-        internal static bool AlwaysShowNavigation
-        {
-            get; set;
-        }
+        internal static bool AlwaysShowNavigation { get; set; }
         /// <summary>
         /// 每次加载新闻条数
         /// </summary>

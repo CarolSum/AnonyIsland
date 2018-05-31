@@ -73,17 +73,6 @@ namespace AnonyIsland
             glassVisual.StartAnimation("Size", bindSizeAnimation);
         }
 
-      
-        private void _list_blogs_DataLoading()
-        {
-            Loading.IsActive = true;
-        }
-    
-        private void _list_blogs_DataLoaded()
-        {
-            Loading.IsActive = false;
-        }
-
         /// <summary>
         /// 页面加载
         /// </summary>
@@ -92,14 +81,14 @@ namespace AnonyIsland
         {
             base.OnNavigatedTo(e);
             object[] parameters = e.Parameter as object[];
-            if (parameters != null && parameters.Length == 2)
+            if (parameters != null && parameters.Length == 1)
             {
                 string txt = parameters[0].ToString();  //关键字
-                List<CNBlog> refresh_blogs = await SearchService.SearchBlogs(txt, 1);
-                if (refresh_blogs != null)
+                List<CNBlog> search_blogs = await SearchService.SearchBlogs(txt, 1);
+                if (search_blogs != null)
                 {
                     _list_blogs.Clear();
-                    refresh_blogs.ForEach((b) => _list_blogs.Add(b));
+                    search_blogs.ForEach((b) => _list_blogs.Add(b));
                     Loading.IsActive = false;
                 }
             }
@@ -123,12 +112,5 @@ namespace AnonyIsland
         {
             this.Frame.Navigate(typeof(BlogContentPage), new object[] { e.ClickedItem });
         }
-       
-
-        private async void Button_Click(object sender, RoutedEventArgs e)
-        {
-            await(new MessageDialog("先点击查看全文再推荐哟!")).ShowAsync();
-        }
-
     }
 }

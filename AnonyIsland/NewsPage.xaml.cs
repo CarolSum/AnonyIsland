@@ -109,16 +109,5 @@ namespace AnonyIsland
             Loading.IsActive = false;
             //ListCount.Text = _list_news.TotalCount.ToString();
         }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private async void Button_Click(object sender, RoutedEventArgs e)
-        {
-            await (new MessageDialog("先点击查看全文再推荐哟!")).ShowAsync();
-        }
-
     }
 }

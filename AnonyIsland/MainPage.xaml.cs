@@ -6,6 +6,7 @@ using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
+using System.Threading.Tasks;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
 using Windows.UI;
@@ -161,12 +162,18 @@ namespace AnonyIsland
             }
         }
 
-        private void ASB_QuerySubmitted(AutoSuggestBox sender, AutoSuggestBoxQuerySubmittedEventArgs args)
+        private async void ASB_QuerySubmitted(AutoSuggestBox sender, AutoSuggestBoxQuerySubmittedEventArgs args)
         {
             string txt = args.QueryText;
             if(args.ChosenSuggestion == null && !txt.Equals(""))
             {
-                ContentFrame.Navigate(typeof(SearchPage), new object[] { txt, 0 });
+                if (!App.HaveDoSearch)
+                {
+                    ContentFrame.Navigate(typeof(SearchPage), new object[] { txt });
+                    App.HaveDoSearch = true;
+                    await Task.Delay(100);
+                }
+                ContentFrame.Navigate(typeof(SearchPage), new object[] { txt });
             }
         }
     }

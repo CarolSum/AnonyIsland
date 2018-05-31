@@ -13,16 +13,9 @@ namespace AnonyIsland.HTTP
     /// </summary>
     class SearchService
     {
-        static string _url_search_bloger = "http://wcf.open.cnblogs.com/blog/bloggers/search?t={0}"; //blogger_keywords
         static string _url_search_blogs = "http://zzk.cnblogs.com/s?w={0}&t=b&p={1}";  //blog_keywords page_index
 
-        /// <summary>
-        /// 搜索博客
-        /// </summary>
-        /// <param name="keywords"></param>
-        /// <param name="page_index"></param>
-        /// <returns></returns>
-        public async static Task<List<CNBlog>> SearchBlogs(string keywords,int page_index)
+        public static async Task<List<CNBlog>> SearchBlogs(string keywords,int page_index)
         {
             try
             {
@@ -117,76 +110,6 @@ namespace AnonyIsland.HTTP
                         }
                     }
                     return list_blogs;
-                }
-                else
-                {
-                    return null;
-                }
-            }
-            catch
-            {
-                return null;
-            }
-        }
-        /// <summary>
-        /// 搜索博主
-        /// </summary>
-        /// <param name="keywords"></param>
-        /// <returns></returns>
-        public async static Task<List<CNBloger>> SearchBloger(string keywords)
-        {
-            try
-            {
-                string url = string.Format(_url_search_bloger, keywords);
-                string xml = await BaseService.SendGetRequest(url);
-
-                if (xml != null)
-                {
-                    List<CNBloger> list_bloger = new List<CNBloger>();
-                    CNBloger bloger;
-
-                    XmlDocument doc = new XmlDocument();
-                    doc.LoadXml(xml);
-
-                    XmlNode feed = doc.ChildNodes[1];
-
-                    foreach (XmlNode node in feed.ChildNodes)
-                    {
-                        if (node.Name.Equals("entry"))
-                        {
-                            bloger = new CNBloger();
-                            foreach (XmlNode node2 in node.ChildNodes)
-                            {
-                                if (node2.Name.Equals("id"))
-                                {
-                                    bloger.BlogerHome = node2.InnerText;
-                                }
-                                if (node2.Name.Equals("title"))
-                                {
-                                    bloger.BlogerName = node2.InnerText;
-                                }
-                                if (node2.Name.Equals("updated"))
-                                {
-                                    DateTime t = DateTime.Parse(node2.InnerText);
-                                    bloger.UpdateTime = "最后更新 " + t.ToString();
-                                }
-                                if (node2.Name.Equals("blogapp"))
-                                {
-                                    bloger.BlogApp = node2.InnerText;
-                                }
-                                if (node2.Name.Equals("avatar"))
-                                {
-                                    bloger.BlogerAvator = node2.InnerText.Equals("") ? "http://pic.cnblogs.com/avatar/simple_avatar.gif" : node2.InnerText;
-                                }
-                                if (node2.Name.Equals("postcount"))
-                                {
-                                    bloger.PostCount = "发表博客 " + node2.InnerText + "篇";
-                                }
-                            }
-                            list_bloger.Add(bloger);
-                        }
-                    }
-                    return list_bloger;
                 }
                 else
                 {

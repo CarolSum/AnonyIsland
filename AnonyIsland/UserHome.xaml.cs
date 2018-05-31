@@ -98,11 +98,6 @@ namespace AnonyIsland
         {
             Loading.IsActive = false;
         }
-   
-        private async void Button_Click(object sender, RoutedEventArgs e)
-        {
-            await (new MessageDialog("先点击查看全文再推荐哟!")).ShowAsync();
-        }
 
         private void initializeFrostedGlass(UIElement glassHost)
         {

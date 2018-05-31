@@ -115,7 +115,6 @@
                                 <Border BorderBrush="#cdcdcd" BorderThickness="1" />
                                 <Button
                                     Background="Transparent"
-                                    Click="Button_Click"
                                     Content="推荐"
                                     FontSize="16"
                                     Foreground="#cdcdcd" />

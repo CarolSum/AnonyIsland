@@ -81,16 +81,10 @@ namespace AnonyIsland
         {
             Loading.IsActive = true;
         }
-        
+
         private void _list_news_DataLoaded()
         {
             Loading.IsActive = false;
-        }
-
-       
-        private async void Button_Click(object sender, RoutedEventArgs e)
-        {
-            await (new MessageDialog("先点击查看全文再推荐哟!")).ShowAsync();
         }
     }
 }
