@@ -3,343 +3,138 @@
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:data="using:AnonyIsland.Models"
     xmlns:local="using:AnonyIsland"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    mc:Ignorable="d"
-    xmlns:data="using:AnonyIsland.Models">
+    mc:Ignorable="d">
 
-    <!--<Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
-        <SplitView
-            Name="mainSplitView"
-            CompactPaneLength="54"
-            DisplayMode="CompactOverlay"
-            OpenPaneLength="150">
-            <SplitView.Pane>
-                <ListBox
-                    Name="mainNavigationList"
-                    SelectionChanged="mainNavigationList_SelectionChanged"
-                    SelectionMode="Single">
-                    <ListBoxItem
-                        Name="menuItem"
-                        Tag="0"
-                        Tapped="ListBoxItem_Tapped">
-                        --><!--  汉堡按钮  --><!--
-                        <StackPanel Orientation="Horizontal">
-                            <TextBlock
-                                FontFamily="Segoe MDL2 Assets"
-                                FontSize="30"
-                                Text="&#xE700;" />
-                        </StackPanel>
-                    </ListBoxItem>
-                    <ListBoxItem
-                        Name="homeItem"
-                        Tag="1"
-                        Tapped="ListBoxItem_Tapped">
-                        --><!--  首页  --><!--
-                        <StackPanel Orientation="Horizontal">
-                            <TextBlock
-                                Padding="0,4,0,0"
-                                FontFamily="Segoe MDL2 Assets"
-                                FontSize="30"
-                                Text="&#xE80F;" />
-                            <TextBlock
-                                Margin="12,0,0,0"
-                                FontFamily="微软雅黑"
-                                FontSize="24"
-                                Text="首页" />
-                        </StackPanel>
-                    </ListBoxItem>
-                    <ListBoxItem
-                        Name="newsItem"
-                        Tag="2"
-                        Tapped="ListBoxItem_Tapped">
-                        --><!--  新闻  --><!--
-                        <StackPanel Orientation="Horizontal">
-                            <TextBlock
-                                Padding="0,4,0,0"
-                                FontFamily="Segoe MDL2 Assets"
-                                FontSize="30"
-                                Text="&#xE763;"
-                                TextAlignment="Center" />
-                            <TextBlock
-                                Margin="12,0,0,0"
-                                FontFamily="微软雅黑"
-                                FontSize="24"
-                                Text="新闻" />
-                        </StackPanel>
-                    </ListBoxItem>
-                    <ListBoxItem
-                        Name="rankItem"
-                        Tag="3"
-                        Tapped="ListBoxItem_Tapped">
-                        --><!--  排行榜  --><!--
-                        <StackPanel Orientation="Horizontal">
-                            <TextBlock
-                                Padding="0,4,0,0"
-                                FontFamily="Segoe MDL2 Assets"
-                                FontSize="30"
-                                Text="&#xE71D;"
-                                TextAlignment="Center" />
-                            <TextBlock
-                                Margin="12,0,0,0"
-                                FontFamily="微软雅黑"
-                                FontSize="24"
-                                Text="琅琊榜" />
-                        </StackPanel>
-                    </ListBoxItem>
-                    <ListBoxItem
-                        Name="flashItem"
-                        Tag="4"
-                        Tapped="ListBoxItem_Tapped"
-                        Visibility="Collapsed">
-                        --><!--  闪存  --><!--
-                        <StackPanel Orientation="Horizontal">
-                            <TextBlock
-                                Padding="0,4,0,0"
-                                FontFamily="Segoe MDL2 Assets"
-                                FontSize="30"
-                                Text="&#xE25C;"
-                                TextAlignment="Center" />
-                            <TextBlock
-                                Margin="12,0,0,0"
-                                FontFamily="微软雅黑"
-                                FontSize="24"
-                                Text="闪存" />
-                        </StackPanel>
-                    </ListBoxItem>
-                    <ListBoxItem
-                        Name="msgItem"
-                        Tag="5"
-                        Tapped="ListBoxItem_Tapped"
-                        Visibility="Collapsed">
-                        --><!--  站内信  --><!--
-                        <StackPanel Orientation="Horizontal">
-                            <TextBlock
-                                Padding="0,4,0,0"
-                                FontFamily="Segoe MDL2 Assets"
-                                FontSize="30"
-                                Text="&#xE715;"
-                                TextAlignment="Center" />
-                            <TextBlock
-                                Margin="12,0,0,0"
-                                FontFamily="微软雅黑"
-                                FontSize="24"
-                                Text="站内信" />
-                        </StackPanel>
-                    </ListBoxItem>
-                    <ListBoxItem
-                        Name="collectionItem"
-                        Tag="6"
-                        Tapped="ListBoxItem_Tapped"
-                        Visibility="Collapsed">
-                        --><!--  收藏  --><!--
-                        <StackPanel Orientation="Horizontal">
-                            <TextBlock
-                                Padding="0,4,0,0"
-                                FontFamily="Segoe MDL2 Assets"
-                                FontSize="30"
-                                Text="&#xE1CE;"
-                                TextAlignment="Center" />
-                            <TextBlock
-                                Margin="12,0,0,0"
-                                FontFamily="微软雅黑"
-                                FontSize="24"
-                                Text="收藏" />
-                        </StackPanel>
-                    </ListBoxItem>
-                    <ListBoxItem
-                        Name="searchItem"
-                        Tag="7"
-                        Tapped="ListBoxItem_Tapped">
-                        --><!--  搜索  --><!--
-                        <StackPanel Orientation="Horizontal">
-                            <TextBlock
-                                Padding="0,4,0,0"
-                                FontFamily="Segoe MDL2 Assets"
-                                FontSize="30"
-                                Text="&#xE721;"
-                                TextAlignment="Center" />
-                            <TextBlock
-                                Margin="12,0,0,0"
-                                FontFamily="微软雅黑"
-                                FontSize="24"
-                                Text="搜索" />
-                        </StackPanel>
-                    </ListBoxItem>
-                    <ListBoxItem Padding="0,10,0,10" IsEnabled="False">
-                        <StackPanel Orientation="Horizontal">
-                            <TextBlock
-                                Margin="0"
-                                Padding="0"
-                                Text="——————————————————————" />
-                        </StackPanel>
-                    </ListBoxItem>
-                    --><!--<ListBoxItem
-                        Name="LoginItem"
-                        Tag="8"
-                        Tapped="ListBoxItem_Tapped">
-                    -->
-                    <!--  登录  -->
-                    <!--
-                        <StackPanel Orientation="Horizontal">
-                            <TextBlock
-                                Name="LoginIcon"
-                                Padding="0,4,0,0"
-                                FontFamily="Segoe MDL2 Assets"
-                                FontSize="30"
-                                Text="&#xE2AF;"
-                                TextAlignment="Center" />
-                            <Image
-                                Name="Avatar"
-                                Width="35"
-                                Margin="0"
-                                VerticalAlignment="Center"
-                                Visibility="Collapsed" />
-                            <TextBlock
-                                Name="NickNameOrTip"
-                                Margin="12,0,0,0"
-                                VerticalAlignment="Center"
-                                FontFamily="微软雅黑"
-                                FontSize="24"
-                                Text="登录" />
-                        </StackPanel>
-                    </ListBoxItem>-->
-                    <!--<ListBoxItem
-                        Name="logoutItem"
-                        Tag="9"
-                        Tapped="ListBoxItem_Tapped"
-                        Visibility="Collapsed">
-                    -->
-                    <!--  注销  -->
-                    <!--
-                        <StackPanel Orientation="Horizontal">
-                            <TextBlock
-                                Padding="0,4,0,0"
-                                FontFamily="Segoe MDL2 Assets"
-                                FontSize="30"
-                                Text="&#xE25B;"
-                                TextAlignment="Center" />
-                            <TextBlock
-                                Margin="12,0,0,0"
-                                FontFamily="微软雅黑"
-                                FontSize="24"
-                                Text="注销" />
-                        </StackPanel>
-                    </ListBoxItem>--><!--
-                    <ListBoxItem
-                        Name="settingItem"
-                        Tag="10"
-                        Tapped="ListBoxItem_Tapped">
-                        --><!--  设置  --><!--
-                        <StackPanel Orientation="Horizontal">
-                            <TextBlock
-                                Padding="0,4,0,0"
-                                FontFamily="Segoe MDL2 Assets"
-                                FontSize="30"
-                                Text="&#xE713;"
-                                TextAlignment="Center" />
-                            <TextBlock
-                                Margin="12,0,0,0"
-                                FontFamily="微软雅黑"
-                                FontSize="24"
-                                Text="设置" />
-                        </StackPanel>
-                    </ListBoxItem>
-                </ListBox>
-            </SplitView.Pane>
-            <SplitView.Content>
-                <Frame Name="mainFrame">
-                    <TextBlock
-                        HorizontalAlignment="Center"
-                        VerticalAlignment="Center"
-                        Text="hello world" />
-                </Frame>
-            </SplitView.Content>
-        </SplitView>
-    </Grid>-->
-
-    <NavigationView x:Name="NavView" AlwaysShowHeader="False"
-                    ItemInvoked="NavView_ItemInvoked"
-                    Loaded="NavView_Loaded">
+    <NavigationView
+        x:Name="NavView"
+        AlwaysShowHeader="False"
+        ItemInvoked="NavView_ItemInvoked"
+        Loaded="NavView_Loaded">
 
         <NavigationView.MenuItems>
-            <NavigationViewItem x:Uid="HomeNavItem" Content="Home" Tag="home">
+            <NavigationViewItem
+                x:Uid="HomeNavItem"
+                Content="Home"
+                Tag="home">
                 <NavigationViewItem.Icon>
-                    <FontIcon Glyph="&#xE10F;"/>
+                    <FontIcon Glyph="&#xE10F;" />
                 </NavigationViewItem.Icon>
             </NavigationViewItem>
-            <NavigationViewItemSeparator/>
-            <NavigationViewItem x:Uid="GamesNavItem" Icon="Video" Content="News" Tag="news"/>
-            <NavigationViewItem x:Uid="AppsNavItem" Icon="AllApps" Content="Board" Tag="ranks"/>
-            <NavigationViewItem x:Uid="CollectionsNavItem" Icon="OutlineStar" Content="Collections" Tag="collections"/>
+            <NavigationViewItemSeparator />
+            <NavigationViewItem
+                x:Uid="GamesNavItem"
+                Content="News"
+                Icon="Video"
+                Tag="news" />
+            <NavigationViewItem
+                x:Uid="AppsNavItem"
+                Content="Board"
+                Icon="AllApps"
+                Tag="ranks" />
         </NavigationView.MenuItems>
 
         <NavigationView.AutoSuggestBox>
-            <AutoSuggestBox x:Name="ASB" QueryIcon="Find"/>
+            <AutoSuggestBox x:Name="ASB" QueryIcon="Find" />
         </NavigationView.AutoSuggestBox>
-    
+
         <Frame x:Name="ContentFrame">
             <Frame.ContentTransitions>
                 <TransitionCollection>
-                    <NavigationThemeTransition/>
+                    <NavigationThemeTransition />
                 </TransitionCollection>
             </Frame.ContentTransitions>
             <Grid>
                 <Grid.RowDefinitions>
-                    <RowDefinition Height="auto"/>
-                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="auto" />
+                    <RowDefinition Height="*" />
                 </Grid.RowDefinitions>
-                <Grid Grid.RowSpan="2" x:Name="bgGrid" Canvas.ZIndex="-1"></Grid>
+                <Grid
+                    x:Name="bgGrid"
+                    Grid.RowSpan="2"
+                    Canvas.ZIndex="-1" />
 
                 <StackPanel>
-                    <TextBlock x:Name="AppTitle" Text="AnonyIsland" FontSize="56" FontStyle="Italic" Foreground="White"  Padding="100,50,50,20" Canvas.ZIndex="1"></TextBlock>
-                    <TextBlock Text="最新" Foreground="White" FontSize="30" Padding="100,0,0,0"></TextBlock>
+                    <TextBlock
+                        x:Name="AppTitle"
+                        Padding="100,50,50,20"
+                        Canvas.ZIndex="1"
+                        FontSize="56"
+                        FontStyle="Italic"
+                        Foreground="White"
+                        Text="AnonyIsland" />
+                    <TextBlock
+                        Padding="100,0,0,0"
+                        FontSize="30"
+                        Foreground="White"
+                        Text="最新" />
                 </StackPanel>
 
-                <ListView Name="BlogsListView"
-                  Grid.Row="1"
-                  Canvas.ZIndex="1"
-                  CanReorderItems="True"
-                  IsItemClickEnabled="True"
-                  SelectionMode="None"
-                  ItemClick="BlogsListView_ItemClick"
-                  ItemsSource="{x:Bind _list_blogs}"
-                  Padding="100,0,100,0"
-                  >
+                <ListView
+                    Name="BlogsListView"
+                    Grid.Row="1"
+                    Padding="100,0,100,0"
+                    CanReorderItems="True"
+                    Canvas.ZIndex="1"
+                    IsItemClickEnabled="True"
+                    ItemClick="BlogsListView_ItemClick"
+                    ItemsSource="{x:Bind _list_blogs}"
+                    SelectionMode="None">
                     <ListView.ItemTemplate>
                         <DataTemplate x:DataType="data:CNBlog">
-                            <Grid Margin="15, 30, 15, 30">
+                            <Grid Margin="15,30,15,30">
                                 <Grid.RowDefinitions>
-                                    <RowDefinition Height="100"/>
-                                    <RowDefinition Height="*"/>
+                                    <RowDefinition Height="100" />
+                                    <RowDefinition Height="*" />
                                 </Grid.RowDefinitions>
 
                                 <Grid>
                                     <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="100"/>
-                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="100" />
+                                        <ColumnDefinition Width="*" />
                                     </Grid.ColumnDefinitions>
-                                    <Image Grid.Column="0" Source="{x:Bind AuthorAvator}" Height="100" Width="100" VerticalAlignment="Top"/>
+                                    <Image
+                                        Grid.Column="0"
+                                        Width="100"
+                                        Height="100"
+                                        VerticalAlignment="Top"
+                                        Source="{x:Bind AuthorAvator}" />
                                     <StackPanel Grid.Column="1" Margin="10,0,0,0">
-                                        <TextBlock Text="{x:Bind Title}" Foreground="White" HorizontalAlignment="Left" FontSize="24" TextWrapping="Wrap"/>
-                                        <TextBlock Text="{x:Bind AuthorName}" Foreground="#999" HorizontalAlignment="Left" FontSize="18"/>
+                                        <TextBlock
+                                            HorizontalAlignment="Left"
+                                            FontSize="24"
+                                            Foreground="White"
+                                            Text="{x:Bind Title}"
+                                            TextWrapping="Wrap" />
+                                        <TextBlock
+                                            HorizontalAlignment="Left"
+                                            FontSize="18"
+                                            Foreground="#999"
+                                            Text="{x:Bind AuthorName}" />
                                     </StackPanel>
                                 </Grid>
-                                <TextBlock Grid.Row="1" Text="{x:Bind Summary}" Foreground="White" TextWrapping="Wrap"  VerticalAlignment="Top"></TextBlock>
+                                <TextBlock
+                                    Grid.Row="1"
+                                    VerticalAlignment="Top"
+                                    Foreground="White"
+                                    Text="{x:Bind Summary}"
+                                    TextWrapping="Wrap" />
                             </Grid>
                         </DataTemplate>
                     </ListView.ItemTemplate>
                 </ListView>
 
-                <ProgressRing Grid.Row="1"
-                      Name="Loading"
-                      Width="100"
-                      Height="100"
-                      IsActive="True">
-                </ProgressRing>
+                <ProgressRing
+                    Name="Loading"
+                    Grid.Row="1"
+                    Width="100"
+                    Height="100"
+                    IsActive="True" />
             </Grid>
         </Frame>
 
     </NavigationView>
-    
+
 </Page>

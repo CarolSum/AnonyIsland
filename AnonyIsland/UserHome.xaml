@@ -89,7 +89,7 @@
                                     <TextBlock
                                         HorizontalAlignment="Center"
                                         FontSize="22"
-                                        Text="*" />
+                                        Text="{x:Bind Diggs}" />
                                     <Button
                                         Click="Button_Click"
                                         Content="推荐"

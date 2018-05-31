@@ -103,9 +103,6 @@
     <Compile Include="AboutDialog.xaml.cs">
       <DependentUpon>AboutDialog.xaml</DependentUpon>
     </Compile>
-    <Compile Include="AddWZDialog.xaml.cs">
-      <DependentUpon>AddWZDialog.xaml</DependentUpon>
-    </Compile>
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
@@ -115,19 +112,9 @@
     <Compile Include="BlogContentPage.xaml.cs">
       <DependentUpon>BlogContentPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="CollectionContent.xaml.cs">
-      <DependentUpon>CollectionContent.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="CollectionPage.xaml.cs">
-      <DependentUpon>CollectionPage.xaml</DependentUpon>
-    </Compile>
     <Compile Include="Data\CN10TopDiggList.cs" />
     <Compile Include="Data\CN48TopViewList.cs" />
-    <Compile Include="Data\CNFolloweeList.cs" />
-    <Compile Include="Data\CNFollowerList.cs" />
     <Compile Include="Data\CNHomeBlogList.cs" />
-    <Compile Include="Data\CNCollectionList.cs" />
-    <Compile Include="Data\CNMessageList.cs" />
     <Compile Include="Data\CNNewsList.cs" />
     <Compile Include="Data\CNTopBlogerList.cs" />
     <Compile Include="Data\CNTopNewsList.cs" />
@@ -140,17 +127,12 @@
     <Compile Include="HTTP\BlogService.cs" />
     <Compile Include="HTTP\NewsService.cs" />
     <Compile Include="HTTP\SearchService.cs" />
-    <Compile Include="HTTP\UserService.cs" />
     <Compile Include="MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Models\CNBlog.cs" />
     <Compile Include="Models\CNBlogComment.cs" />
     <Compile Include="Models\CNBloger.cs" />
-    <Compile Include="Models\CNCollection.cs" />
-    <Compile Include="Models\CNFlash.cs" />
-    <Compile Include="Models\CNMessage.cs" />
-    <Compile Include="Models\CNMessageItem.cs" />
     <Compile Include="Models\CNNews.cs" />
     <Compile Include="Models\CNNewsComment.cs" />
     <Compile Include="Models\CNUserInfo.cs" />
@@ -179,9 +161,6 @@
     <Compile Include="UserHome.xaml.cs">
       <DependentUpon>UserHome.xaml</DependentUpon>
     </Compile>
-    <Compile Include="UserInfoPage.xaml.cs">
-      <DependentUpon>UserInfoPage.xaml</DependentUpon>
-    </Compile>
   </ItemGroup>
   <ItemGroup>
     <AppxManifest Include="Package.appxmanifest">
@@ -191,7 +170,6 @@
   <ItemGroup>
     <Content Include="Assets\detailBG.png" />
     <Content Include="Assets\Images\myavator.png" />
-    <Content Include="Data\ReadMe.txt" />
     <Content Include="Properties\Default.rd.xml" />
     <Content Include="Assets\LockScreenLogo.scale-200.png" />
     <Content Include="Assets\SplashScreen.scale-200.png" />
@@ -210,23 +188,11 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="AddWZDialog.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
     <Page Include="BlogCommentPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="BlogContentPage.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="CollectionContent.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="CollectionPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -267,10 +233,6 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="UserHome.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="UserInfoPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
