@@ -1,14 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace AnonyIsland.Tools
 {
     static class CommentTool
     {
-        static string _receiveHtml = @"<script type=""text/javascript"">window.location.hash = ""#ok"";</script> 
+        static readonly string _receiveHtml = @"<script type=""text/javascript"">window.location.hash = ""#ok"";</script> 
             <div class=""chat_content_group buddy"">   
             <img class=""chat_content_avatar"" onclick=""window.external.notify('{4}-{5}')"" style=""cursor:pointer"" src=""{0}"" width=""40px"" height=""40px""/> 
             <p class=""chat_nick"" style=""cursor:pointer;font-family:微软雅黑"" onclick=""window.external.notify('{4}-{5}')"">{1}</p>   
@@ -108,9 +104,9 @@ namespace AnonyIsland.Tools
 	    </style>
         </head><body>";
 
-        public static string Receive(string avator, string nickname, string content, string time, string comment_id = null)
+        public static string Receive(string avator, string nickname, string content, string time, string commentId = null)
         {
-            string id = comment_id ?? "";
+            string id = commentId ?? "";
             return String.Format(_receiveHtml, avator, nickname, time, content, id, nickname);
         }
     }

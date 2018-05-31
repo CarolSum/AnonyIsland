@@ -1,25 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace AnonyIsland.Models
+﻿namespace AnonyIsland.Models
 {
     /// <summary>
     /// 新闻评论
     /// </summary>
-    class CNNewsComment
+    class CnNewsComment
     {
-        public int Index
-        {
-            get; set;
-        }
-        public string ID
-        {
-            get; set;
-        }
-        public string NewsID
+        public string Id
         {
             get; set;
         }

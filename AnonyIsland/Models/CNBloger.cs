@@ -1,20 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace AnonyIsland.Models
+﻿namespace AnonyIsland.Models
 {
     /// <summary>
     /// 博主
     /// </summary>
-    class CNBloger
+    class CnBloger
     {
-        public int Index
-        {
-            get; set;
-        }
         public string BlogerName
         {
             get; set;

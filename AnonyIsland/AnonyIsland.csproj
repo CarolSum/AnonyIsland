@@ -109,12 +109,12 @@
     <Compile Include="BlogContentPage.xaml.cs">
       <DependentUpon>BlogContentPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Data\CN10TopDiggList.cs" />
-    <Compile Include="Data\CN48TopViewList.cs" />
-    <Compile Include="Data\CNHomeBlogList.cs" />
-    <Compile Include="Data\CNNewsList.cs" />
-    <Compile Include="Data\CNTopNewsList.cs" />
-    <Compile Include="Data\CNUserBlogList.cs" />
+    <Compile Include="Data\Cn10TopDiggList.cs" />
+    <Compile Include="Data\Cn48TopViewList.cs" />
+    <Compile Include="Data\CnHomeBlogList.cs" />
+    <Compile Include="Data\CnNewsList.cs" />
+    <Compile Include="Data\CnTopNewsList.cs" />
+    <Compile Include="Data\CnUserBlogList.cs" />
     <Compile Include="Data\Delegates.cs" />
     <Compile Include="HomePage.xaml.cs">
       <DependentUpon>HomePage.xaml</DependentUpon>

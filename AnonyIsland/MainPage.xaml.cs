@@ -1,25 +1,7 @@
-﻿using AnonyIsland.Data;
-using Microsoft.Graphics.Canvas.Effects;
-using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.IO;
+﻿using System;
 using System.Linq;
-using System.Runtime.InteropServices.WindowsRuntime;
 using System.Threading.Tasks;
-using Windows.Foundation;
-using Windows.Foundation.Collections;
-using Windows.UI;
-using Windows.UI.Composition;
-using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Controls.Primitives;
-using Windows.UI.Xaml.Data;
-using Windows.UI.Xaml.Hosting;
-using Windows.UI.Xaml.Input;
-using Windows.UI.Xaml.Media;
-using Windows.UI.Xaml.Media.Imaging;
-using Windows.UI.Xaml.Navigation;
 
 //“空白页”项模板在 http://go.microsoft.com/fwlink/?LinkId=402352&clcid=0x409 上有介绍
 
@@ -31,13 +13,13 @@ namespace AnonyIsland
     public sealed partial class MainPage : Page
     {
         //private CNBlogList _list_blogs;
-        private bool _flag = false;
+        private bool _flag;
         /// <summary>
         /// 构造方法
         /// </summary>
         public MainPage()
         {
-            this.InitializeComponent();
+            InitializeComponent();
             ContentFrame.Navigate(typeof(HomePage));
         }
 

@@ -1,7 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using System.Xml;
 using AnonyIsland.Models;
@@ -13,30 +11,30 @@ namespace AnonyIsland.HTTP
     /// </summary>
     static class BlogService
     {
-        static string _url_recent_blog = "http://wcf.open.cnblogs.com/blog/sitehome/paged/{0}/{1}"; //page_index page_size
-        static string _url_48_views = "http://wcf.open.cnblogs.com/blog/48HoursTopViewPosts/{0}";  //item_count
-        static string _url_10_diggs = "http://wcf.open.cnblogs.com/blog/TenDaysTopDiggPosts/{0}";  //item_count
-        static string _url_user_blog = "http://wcf.open.cnblogs.com/blog/u/{0}/posts/{1}/{2}";  //blog_app page_index page_size
-        static string _url_recommend_bloger = "http://wcf.open.cnblogs.com/blog/bloggers/recommend/{0}/{1}";  //page_index page_size
-        static string _url_blog_content = "http://wcf.open.cnblogs.com/blog/post/body/{0}";  //post_id
-        static string _url_blog_comment = "http://wcf.open.cnblogs.com/blog/post/{0}/comments/{1}/{2}";  //post_id page_index page_size
+        static readonly string _urlRecentBlog = "http://wcf.open.cnblogs.com/blog/sitehome/paged/{0}/{1}"; //page_index page_size
+        static readonly string _url48Views = "http://wcf.open.cnblogs.com/blog/48HoursTopViewPosts/{0}";  //item_count
+        static readonly string _url10Diggs = "http://wcf.open.cnblogs.com/blog/TenDaysTopDiggPosts/{0}";  //item_count
+        static readonly string _urlUserBlog = "http://wcf.open.cnblogs.com/blog/u/{0}/posts/{1}/{2}";  //blog_app page_index page_size
+        static readonly string _urlRecommendBloger = "http://wcf.open.cnblogs.com/blog/bloggers/recommend/{0}/{1}";  //page_index page_size
+        static readonly string _urlBlogContent = "http://wcf.open.cnblogs.com/blog/post/body/{0}";  //post_id
+        static readonly string _urlBlogComment = "http://wcf.open.cnblogs.com/blog/post/{0}/comments/{1}/{2}";  //post_id page_index page_size
 
         /// <summary>
         /// 分页获取首页博客
         /// </summary>
-        /// <param name="page_index"></param>
-        /// <param name="page_size"></param>
+        /// <param name="pageIndex"></param>
+        /// <param name="pageSize"></param>
         /// <returns></returns>
-        public async static Task<List<CNBlog>> GetRecentBlogsAsync(int page_index,int page_size)
+        public async static Task<List<CnBlog>> GetRecentBlogsAsync(int pageIndex,int pageSize)
         {
             try
             {
-                string url = string.Format(_url_recent_blog, page_index, page_size);
+                string url = string.Format(_urlRecentBlog, pageIndex, pageSize);
                 string xml = await BaseService.SendGetRequest(url);
                 if (xml != null)
                 {
-                    List<CNBlog> list_blogs = new List<CNBlog>();
-                    CNBlog cnblog;
+                    List<CnBlog> listBlogs = new List<CnBlog>();
+                    CnBlog cnblog;
                     XmlDocument doc = new XmlDocument();
                     doc.LoadXml(xml);
                     XmlNode feed = doc.ChildNodes[1];
@@ -44,12 +42,12 @@ namespace AnonyIsland.HTTP
                     {
                         if (node.Name.Equals("entry"))
                         {
-                            cnblog = new CNBlog();
+                            cnblog = new CnBlog();
                             foreach (XmlNode node2 in node.ChildNodes)
                             {
                                 if (node2.Name.Equals("id"))
                                 {
-                                    cnblog.ID = node2.InnerText;
+                                    cnblog.Id = node2.InnerText;
                                 }
                                 if (node2.Name.Equals("title"))
                                 {
@@ -62,7 +60,7 @@ namespace AnonyIsland.HTTP
                                 if (node2.Name.Equals("published"))
                                 {
                                     DateTime t = DateTime.Parse(node2.InnerText);
-                                    cnblog.PublishTime = "发表于 " + t.ToString();
+                                    cnblog.PublishTime = "发表于 " + t;
                                 }
                                 if (node2.Name.Equals("updated"))
                                 {
@@ -95,15 +93,13 @@ namespace AnonyIsland.HTTP
                                     cnblog.Comments = "["+node2.InnerText+"]";
                                 }
                             }
-                            list_blogs.Add(cnblog);
+                            listBlogs.Add(cnblog);
                         }
                     }
-                    return list_blogs;
+                    return listBlogs;
                 }
-                else
-                {
-                    return null;
-                }
+
+                return null;
             }
             catch
             {
@@ -113,13 +109,13 @@ namespace AnonyIsland.HTTP
         /// <summary>
         /// 获取指定博客正文
         /// </summary>
-        /// <param name="post_id"></param>
+        /// <param name="postId"></param>
         /// <returns></returns>
-        public async static Task<string> GetBlogContentAsync(string post_id)
+        public async static Task<string> GetBlogContentAsync(string postId)
         {
             try
             {
-                string url = string.Format(_url_blog_content, post_id);
+                string url = string.Format(_urlBlogContent, postId);
                 string xml = await BaseService.SendGetRequest(url);
                 if (xml != null)
                 {
@@ -130,15 +126,11 @@ namespace AnonyIsland.HTTP
                     {
                         return "<style>body{font-family:微软雅黑;font-size=14px}</style>" + doc.ChildNodes[1].InnerText;
                     }
-                    else
-                    {
-                        return null;
-                    }
-                }
-                else
-                {
+
                     return null;
                 }
+
+                return null;
             }
             catch
             {
@@ -148,20 +140,20 @@ namespace AnonyIsland.HTTP
         /// <summary>
         /// 根据博主blog_app获取博客列表
         /// </summary>
-        /// <param name="blog_app"></param>
-        /// <param name="page_index"></param>
-        /// <param name="page_size"></param>
+        /// <param name="blogApp"></param>
+        /// <param name="pageIndex"></param>
+        /// <param name="pageSize"></param>
         /// <returns></returns>
-        public async static Task<List<CNBlog>> GetBlogsByUserAsync(string blog_app,int page_index,int page_size)
+        public async static Task<List<CnBlog>> GetBlogsByUserAsync(string blogApp,int pageIndex,int pageSize)
         {
             try
             {
-                string url = string.Format(_url_user_blog, blog_app, page_index, page_size);
+                string url = string.Format(_urlUserBlog, blogApp, pageIndex, pageSize);
                 string xml = await BaseService.SendGetRequest(url);
                 if (xml != null)
                 {
-                    List<CNBlog> list_blogs = new List<CNBlog>();
-                    CNBlog cnblog;
+                    List<CnBlog> listBlogs = new List<CnBlog>();
+                    CnBlog cnblog;
                     XmlDocument doc = new XmlDocument();
                     doc.LoadXml(xml);
                     XmlNode feed = doc.ChildNodes[1];
@@ -169,12 +161,12 @@ namespace AnonyIsland.HTTP
                     {
                         if (node.Name.Equals("entry"))
                         {
-                            cnblog = new CNBlog();
+                            cnblog = new CnBlog();
                             foreach (XmlNode node2 in node.ChildNodes)
                             {
                                 if (node2.Name.Equals("id"))
                                 {
-                                    cnblog.ID = node2.InnerText;
+                                    cnblog.Id = node2.InnerText;
                                 }
                                 if (node2.Name.Equals("title"))
                                 {
@@ -187,7 +179,7 @@ namespace AnonyIsland.HTTP
                                 if (node2.Name.Equals("published"))
                                 {
                                     DateTime t = DateTime.Parse(node2.InnerText);
-                                    cnblog.PublishTime = "发表于 " + t.ToString();
+                                    cnblog.PublishTime = "发表于 " + t;
                                 }
                                 if (node2.Name.Equals("updated"))
                                 {
@@ -217,15 +209,13 @@ namespace AnonyIsland.HTTP
                                 }
                             }
                             cnblog.BlogApp = cnblog.AuthorHome.Split('/')[3];
-                            list_blogs.Add(cnblog);
+                            listBlogs.Add(cnblog);
                         }
                     }
-                    return list_blogs;
+                    return listBlogs;
                 }
-                else
-                {
-                    return null;
-                }
+
+                return null;
             }
             catch
             {
@@ -235,35 +225,35 @@ namespace AnonyIsland.HTTP
         /// <summary>
         /// 根据博客id获取评论
         /// </summary>
-        /// <param name="post_id"></param>
-        /// <param name="page_index"></param>
-        /// <param name="page_size"></param>
+        /// <param name="postId"></param>
+        /// <param name="pageIndex"></param>
+        /// <param name="pageSize"></param>
         /// <returns></returns>
-        public async static Task<List<CNBlogComment>> GetBlogCommentsAsync(string post_id,int page_index,int page_size)
+        public async static Task<List<CnBlogComment>> GetBlogCommentsAsync(string postId,int pageIndex,int pageSize)
         {
             try
             {
-                string url = string.Format(_url_blog_comment, post_id, page_index, page_size);
+                string url = string.Format(_urlBlogComment, postId, pageIndex, pageSize);
                 string xml = await BaseService.SendGetRequest(url);
                 if (xml != null)
                 {
                     XmlDocument doc = new XmlDocument();
                     doc.LoadXml(xml);
 
-                    List<CNBlogComment> list_comments = new List<CNBlogComment>();
-                    CNBlogComment comment;
+                    List<CnBlogComment> listComments = new List<CnBlogComment>();
+                    CnBlogComment comment;
                     XmlNode feed = doc.ChildNodes[1];
 
                     foreach (XmlNode node in feed.ChildNodes)
                     {
                         if (node.Name.Equals("entry"))
                         {
-                            comment = new CNBlogComment();
+                            comment = new CnBlogComment();
                             foreach (XmlNode node2 in node.ChildNodes)
                             {
                                 if (node2.Name.Equals("id"))
                                 {
-                                    comment.ID = node2.InnerText;
+                                    comment.Id = node2.InnerText;
                                 }
                                 if (node2.Name.Equals("published"))
                                 {
@@ -278,22 +268,20 @@ namespace AnonyIsland.HTTP
                                 {
                                     comment.AuthorName = node2.ChildNodes[0].InnerText;
                                     comment.AuthorHome = node2.ChildNodes[1].InnerText;
-                                    comment.AuthorAvatar = "http://pic.cnblogs.com/avatar/simple_avatar.gif";  //api中没有头像url
+                                    comment.AuthorAvatar = "http://pic.cnblogs.com/avatar/simple_avatar.gif";
                                 }
                                 if (node2.Name.Equals("content"))
                                 {
                                     comment.Content = node2.InnerText;
                                 }
                             }
-                            list_comments.Add(comment);
+                            listComments.Add(comment);
                         }
                     }
-                    return list_comments;
+                    return listComments;
                 }
-                else
-                {
-                    return null;
-                }
+
+                return null;
             }
             catch
             {
@@ -303,18 +291,18 @@ namespace AnonyIsland.HTTP
         /// <summary>
         /// 获取48小时阅读排行榜
         /// </summary>
-        /// <param name="item_count"></param>
+        /// <param name="itemCount"></param>
         /// <returns></returns>
-        public async static Task<List<CNBlog>> Get48TopViewsAysnc(int item_count)
+        public async static Task<List<CnBlog>> Get48TopViewsAysnc(int itemCount)
         {
             try
             {
-                string url = string.Format(_url_48_views, item_count);
+                string url = string.Format(_url48Views, itemCount);
                 string xml = await BaseService.SendGetRequest(url);
                 if(xml != null)
                 {
-                    List<CNBlog> list_blogs = new List<CNBlog>();
-                    CNBlog cnblog;
+                    List<CnBlog> listBlogs = new List<CnBlog>();
+                    CnBlog cnblog;
                     XmlDocument doc = new XmlDocument();
                     doc.LoadXml(xml);
                     XmlNode feed = doc.ChildNodes[1];
@@ -322,12 +310,12 @@ namespace AnonyIsland.HTTP
                     {
                         if (node.Name.Equals("entry"))
                         {
-                            cnblog = new CNBlog();
+                            cnblog = new CnBlog();
                             foreach (XmlNode node2 in node.ChildNodes)
                             {
                                 if (node2.Name.Equals("id"))
                                 {
-                                    cnblog.ID = node2.InnerText;
+                                    cnblog.Id = node2.InnerText;
                                 }
                                 if (node2.Name.Equals("title"))
                                 {
@@ -340,7 +328,7 @@ namespace AnonyIsland.HTTP
                                 if (node2.Name.Equals("published"))
                                 {
                                     DateTime t = DateTime.Parse(node2.InnerText);
-                                    cnblog.PublishTime = "发表于 " + t.ToString();
+                                    cnblog.PublishTime = "发表于 " + t;
                                 }
                                 if (node2.Name.Equals("updated"))
                                 {
@@ -377,15 +365,13 @@ namespace AnonyIsland.HTTP
                                 }
                             }
                             cnblog.BlogApp = cnblog.AuthorHome.Split('/')[3];
-                            list_blogs.Add(cnblog);
+                            listBlogs.Add(cnblog);
                         }
                     }
-                    return list_blogs;
+                    return listBlogs;
                 }
-                else
-                {
-                    return null;
-                }
+
+                return null;
             }
             catch
             {
@@ -395,19 +381,19 @@ namespace AnonyIsland.HTTP
         /// <summary>
         /// 十天推荐榜
         /// </summary>
-        /// <param name="item_count"></param>
+        /// <param name="itemCount"></param>
         /// <returns></returns>
-        public async static Task<List<CNBlog>> Get10TopDiggsAysnc(int item_count)
+        public async static Task<List<CnBlog>> Get10TopDiggsAysnc(int itemCount)
         {
             try
             {
-                string url = string.Format(_url_10_diggs, item_count);
+                string url = string.Format(_url10Diggs, itemCount);
                 string xml = await BaseService.SendGetRequest(url);
 
                 if (xml != null)
                 {
-                    List<CNBlog> list_blogs = new List<CNBlog>();
-                    CNBlog cnblog;
+                    List<CnBlog> listBlogs = new List<CnBlog>();
+                    CnBlog cnblog;
                     XmlDocument doc = new XmlDocument();
                     doc.LoadXml(xml);
                     XmlNode feed = doc.ChildNodes[1];
@@ -415,12 +401,12 @@ namespace AnonyIsland.HTTP
                     {
                         if (node.Name.Equals("entry"))
                         {
-                            cnblog = new CNBlog();
+                            cnblog = new CnBlog();
                             foreach (XmlNode node2 in node.ChildNodes)
                             {
                                 if (node2.Name.Equals("id"))
                                 {
-                                    cnblog.ID = node2.InnerText;
+                                    cnblog.Id = node2.InnerText;
                                 }
                                 if (node2.Name.Equals("title"))
                                 {
@@ -433,7 +419,7 @@ namespace AnonyIsland.HTTP
                                 if (node2.Name.Equals("published"))
                                 {
                                     DateTime t = DateTime.Parse(node2.InnerText);
-                                    cnblog.PublishTime = "发表于 " + t.ToString();
+                                    cnblog.PublishTime = "发表于 " + t;
                                 }
                                 if (node2.Name.Equals("updated"))
                                 {
@@ -470,15 +456,13 @@ namespace AnonyIsland.HTTP
                                 }
                             }
                             cnblog.BlogApp = cnblog.AuthorHome.Split('/')[3];
-                            list_blogs.Add(cnblog);
+                            listBlogs.Add(cnblog);
                         }
                     }
-                    return list_blogs;
+                    return listBlogs;
                 }
-                else
-                {
-                    return null;
-                }
+
+                return null;
             }
             catch
             {
@@ -488,19 +472,19 @@ namespace AnonyIsland.HTTP
         /// <summary>
         /// 获取推荐博主
         /// </summary>
-        /// <param name="page_index"></param>
-        /// <param name="page_size"></param>
+        /// <param name="pageIndex"></param>
+        /// <param name="pageSize"></param>
         /// <returns></returns>
-        public async static Task<List<CNBloger>> GetTopDiggBlogers(int page_index,int page_size)
+        public async static Task<List<CnBloger>> GetTopDiggBlogers(int pageIndex,int pageSize)
         {
             try
             {
-                string url = string.Format(_url_recommend_bloger, page_index, page_size);
+                string url = string.Format(_urlRecommendBloger, pageIndex, pageSize);
                 string xml = await BaseService.SendGetRequest(url);
                 if (xml != null)
                 {
-                    List<CNBloger> list_blogers = new List<CNBloger>();
-                    CNBloger bloger;
+                    List<CnBloger> listBlogers = new List<CnBloger>();
+                    CnBloger bloger;
                     XmlDocument doc = new XmlDocument();
                     doc.LoadXml(xml);
 
@@ -509,7 +493,7 @@ namespace AnonyIsland.HTTP
                     {
                         if (node.Name.Equals("entry"))
                         {
-                            bloger = new CNBloger();
+                            bloger = new CnBloger();
                             foreach (XmlNode node2 in node.ChildNodes)
                             {
                                 if (node2.Name.Equals("id"))
@@ -523,7 +507,7 @@ namespace AnonyIsland.HTTP
                                 if(node2.Name.Equals("updated"))
                                 {
                                     DateTime t = DateTime.Parse(node2.InnerText);
-                                    bloger.UpdateTime = "最后更新 " + t.ToString();
+                                    bloger.UpdateTime = "最后更新 " + t;
                                 }
                                 if(node2.Name.Equals("blogapp"))
                                 {
@@ -538,15 +522,13 @@ namespace AnonyIsland.HTTP
                                     bloger.PostCount = "发表博客 " + node2.InnerText + "篇";
                                 }
                             }
-                            list_blogers.Add(bloger);
+                            listBlogers.Add(bloger);
                         }
                     }
-                    return list_blogers;
+                    return listBlogers;
                 }
-                else
-                {
-                    return null;
-                }
+
+                return null;
             }
             catch
             {

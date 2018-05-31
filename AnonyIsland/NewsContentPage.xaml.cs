@@ -1,19 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Runtime.InteropServices.WindowsRuntime;
-using System.Text.RegularExpressions;
 using Windows.ApplicationModel.DataTransfer;
-using Windows.Foundation;
-using Windows.Foundation.Collections;
-using Windows.UI.Popups;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Controls.Primitives;
-using Windows.UI.Xaml.Data;
-using Windows.UI.Xaml.Input;
-using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
 using AnonyIsland.HTTP;
 using AnonyIsland.Models;
@@ -28,7 +17,7 @@ namespace AnonyIsland
     /// </summary>
     public sealed partial class NewsContentPage : Page
     {
-        private static string _image_bridge = "http://sysu.at:9011/img?url=";
+        private static string _imageBridge = "http://sysu.at:9011/img?url=";
 
         private void HideScrollbar(ref string html)
         {
@@ -38,19 +27,18 @@ namespace AnonyIsland
         /// <summary>
         /// 当前显示新闻
         /// </summary>
-        private CNNews _news;
+        private CnNews _news;
         private string _commentsTotalHtml = "";
 
         public NewsContentPage()
         {
-            this.InitializeComponent();
+            InitializeComponent();
             RegisterForShare();
         }
         private void RegisterForShare()
         {
             DataTransferManager dataTransferManager = DataTransferManager.GetForCurrentView();
-            dataTransferManager.DataRequested += new TypedEventHandler<DataTransferManager,
-                DataRequestedEventArgs>(this.ShareLinkHandler);
+            dataTransferManager.DataRequested += ShareLinkHandler;
         }
 
         private void ShareLinkHandler(DataTransferManager sender, DataRequestedEventArgs args)
@@ -72,7 +60,7 @@ namespace AnonyIsland
             Object[] parameters = e.Parameter as Object[];
             if(parameters != null && parameters.Length == 1)
             {
-                _news = parameters[0] as CNNews;
+                _news = parameters[0] as CnNews;
 
                 BlogTitle.Text = _news.Title;
                 NewsSource.Text = _news.SourceName;
@@ -81,14 +69,14 @@ namespace AnonyIsland
                 Views.Text = _news.Views;
                 Comments.Text = _news.Comments;
 
-                string news_content = await NewsService.GetNewsContentAsync(_news.ID);
+                string newsContent = await NewsService.GetNewsContentAsync(_news.Id);
 
-                if(news_content != null)
+                if(newsContent != null)
                 {
                     //string pattern = "<img src=\"(.*)\"";
                     //news_content = Regex.Replace(news_content, pattern, m => $"<img src=\"{_image_bridge}{m.Groups[1].Value}\"");
-                    HideScrollbar(ref news_content);
-                    NewsContent.NavigateToString(news_content);
+                    HideScrollbar(ref newsContent);
+                    NewsContent.NavigateToString(newsContent);
                 }
 
                 // 获取评论数据
@@ -96,16 +84,16 @@ namespace AnonyIsland
                 HideScrollbar(ref _commentsTotalHtml);
                 NewsComment.NavigateToString(_commentsTotalHtml);
 
-                List<CNNewsComment> refresh_comments = await NewsService.GetNewsCommentsAysnc(_news.ID, 1, 200);
+                List<CnNewsComment> refreshComments = await NewsService.GetNewsCommentsAysnc(_news.Id, 1, 200);
 
-                if (refresh_comments != null)
+                if (refreshComments != null)
                 {
                     string comments = "";
-                    foreach (CNNewsComment comment in refresh_comments)
+                    foreach (CnNewsComment comment in refreshComments)
                     {
                         comments += CommentTool.Receive(comment.AuthorAvatar,
                         comment.AuthorName,
-                        comment.Content, comment.PublishTime, comment.ID);
+                        comment.Content, comment.PublishTime, comment.Id);
                     }
                     comments += "<a id='ok'></a>";
 
@@ -125,10 +113,10 @@ namespace AnonyIsland
         {
             if (e.Value != null)
             {
-                string[] args = e.Value.Split(new string[] { "-" }, StringSplitOptions.None);
+                string[] args = e.Value.Split(new[] { "-" }, StringSplitOptions.None);
                 if (args.Length == 2)
                 {
-                    this.Frame.Navigate(typeof(UserHome), new object[] { args[0], args[1] });
+                    Frame.Navigate(typeof(UserHome), new object[] { args[0], args[1] });
                 }
             }
         }
@@ -140,9 +128,9 @@ namespace AnonyIsland
         /// <param name="e"></param>
         private void Back_Click(object sender, RoutedEventArgs e)
         {
-            if (this.Frame.CanGoBack)
+            if (Frame.CanGoBack)
             {
-                this.Frame.GoBack();
+                Frame.GoBack();
             }
         }
         
@@ -153,7 +141,7 @@ namespace AnonyIsland
         /// <param name="e"></param>
         private void Share_Click(object sender, RoutedEventArgs e)
         {
-            Windows.ApplicationModel.DataTransfer.DataTransferManager.ShowShareUI();
+            DataTransferManager.ShowShareUI();
         }
     }
 }

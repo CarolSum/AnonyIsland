@@ -2,22 +2,20 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using Windows.Foundation;
-using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Data;
 using AnonyIsland.HTTP;
 using AnonyIsland.Models;
 
 namespace AnonyIsland.Data
 {
-    class CNBlogList: ObservableCollection<CNBlog>,ISupportIncrementalLoading
+    class CnBlogList: ObservableCollection<CnBlog>,ISupportIncrementalLoading
     {
-        private bool _busy = false;
-        private bool _has_more_items = false;
-        private int _page_size = 0;
-        private int _current_page = 1;
+        private bool _busy;
+        private bool _hasMoreItems;
+        private readonly int _pageSize;
+        private int _currentPage = 1;
         public event DataLoadingEventHandler DataLoading;
         public event DataLoadedEventHandler DataLoaded;
 
@@ -30,25 +28,17 @@ namespace AnonyIsland.Data
             get
             {
                 if (_busy)
+                {
                     return false;
-                else
-                    return _has_more_items;
+                }
+
+                return _hasMoreItems;
             }
-            private set
-            {
-                _has_more_items = value;
-            }
+            private set => _hasMoreItems = value;
         }
-        public CNBlogList()
+        public CnBlogList()
         {
-            _page_size = App.BlogCountOneTime;
-            HasMoreItems = true;
-        }
-        public void DoRefresh()
-        {
-            _current_page = 1;
-            TotalCount = 0;
-            Clear();
+            _pageSize = App.BlogCountOneTime;
             HasMoreItems = true;
         }
         public IAsyncOperation<LoadMoreItemsResult> LoadMoreItemsAsync(uint count)
@@ -59,14 +49,11 @@ namespace AnonyIsland.Data
         {
             _busy = true;
             var actualCount = 0;
-            List<CNBlog> list = null;
+            List<CnBlog> list = null;
             try
             {
-                if (DataLoading != null)
-                {
-                    DataLoading();
-                }
-                list = await BlogService.GetRecentBlogsAsync(_current_page, _page_size);
+                DataLoading?.Invoke();
+                list = await BlogService.GetRecentBlogsAsync(_currentPage, _pageSize);
             }
             catch (Exception)
             {
@@ -77,18 +64,15 @@ namespace AnonyIsland.Data
             {
                 actualCount = list.Count;
                 TotalCount += actualCount;
-                _current_page++;
+                _currentPage++;
                 HasMoreItems = true;
-                list.ForEach((c) => { this.Add(c); });
+                list.ForEach(c => { Add(c); });
             }
             else
             {
                 HasMoreItems = false;
             }
-            if (DataLoaded != null)
-            {
-                DataLoaded();
-            }
+            DataLoaded?.Invoke();
             _busy = false;
             return new LoadMoreItemsResult
             {

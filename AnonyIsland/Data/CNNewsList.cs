@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using Windows.Foundation;
 using Windows.UI.Xaml.Data;
@@ -11,12 +10,12 @@ using AnonyIsland.Models;
 
 namespace AnonyIsland.Data
 {
-    class CNNewsList : ObservableCollection<CNNews>, ISupportIncrementalLoading
+    class CnNewsList : ObservableCollection<CnNews>, ISupportIncrementalLoading
     {
-        private bool _busy = false;
-        private bool _has_more_items = false;
-        private int _current_page = 1;
-        private int _page_size = 0;
+        private bool _busy;
+        private bool _hasMoreItems;
+        private int _currentPage = 1;
+        private readonly int _pageSize;
         public event DataLoadingEventHandler DataLoading;
         public event DataLoadedEventHandler DataLoaded;
 
@@ -29,25 +28,17 @@ namespace AnonyIsland.Data
             get
             {
                 if (_busy)
+                {
                     return false;
-                else
-                    return _has_more_items;
+                }
+
+                return _hasMoreItems;
             }
-            private set
-            {
-                _has_more_items = value;
-            }
+            private set => _hasMoreItems = value;
         }
-        public CNNewsList()
+        public CnNewsList()
         {
-            _page_size = App.NewsCountOneTime;
-            HasMoreItems = true;
-        }
-        public void DoRefresh()
-        {
-            _current_page = 1;
-            TotalCount = 0;
-            Clear();
+            _pageSize = App.NewsCountOneTime;
             HasMoreItems = true;
         }
         public IAsyncOperation<LoadMoreItemsResult> LoadMoreItemsAsync(uint count)
@@ -58,14 +49,11 @@ namespace AnonyIsland.Data
         {
             _busy = true;
             var actualCount = 0;
-            List<CNNews> list = null;
+            List<CnNews> list = null;
             try
             {
-                if (DataLoading != null)
-                {
-                    DataLoading();
-                }
-                list = await NewsService.GetRecentNewsAsync(_current_page, _page_size);
+                DataLoading?.Invoke();
+                list = await NewsService.GetRecentNewsAsync(_currentPage, _pageSize);
             }
             catch (Exception)
             {
@@ -76,18 +64,15 @@ namespace AnonyIsland.Data
             {
                 actualCount = list.Count;
                 TotalCount += actualCount;
-                _current_page++;
+                _currentPage++;
                 HasMoreItems = true;
-                list.ForEach((c) => { this.Add(c); });
+                list.ForEach(c => { Add(c); });
             }
             else
             {
                 HasMoreItems = false;
             }
-            if (DataLoaded != null)
-            {
-                DataLoaded();
-            }
+            DataLoaded?.Invoke();
             _busy = false;
             return new LoadMoreItemsResult
             {

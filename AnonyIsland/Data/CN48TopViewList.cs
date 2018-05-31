@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using Windows.Foundation;
 using Windows.UI.Xaml.Data;
@@ -11,11 +10,11 @@ using AnonyIsland.Models;
 
 namespace AnonyIsland.Data
 {
-    class CN48TopViewList : ObservableCollection<CNBlog>, ISupportIncrementalLoading
+    class Cn48TopViewList : ObservableCollection<CnBlog>, ISupportIncrementalLoading
     {
-        private bool _busy = false;
-        private bool _has_more_items = false;
-        private int _current_page = 1;
+        private bool _busy;
+        private bool _hasMoreItems;
+        private int _currentPage = 1;
         public event DataLoadingEventHandler DataLoading;
         public event DataLoadedEventHandler DataLoaded;
 
@@ -23,47 +22,40 @@ namespace AnonyIsland.Data
         {
             get; set;
         }
+
         public bool HasMoreItems
         {
             get
             {
                 if (_busy)
+                {
                     return false;
-                else
-                    return _has_more_items;
+                }
+
+                return _hasMoreItems;
             }
-            private set
-            {
-                _has_more_items = value;
-            }
+            private set => _hasMoreItems = value;
         }
-        public CN48TopViewList()
+
+        public Cn48TopViewList()
         {
             HasMoreItems = true;
         }
-        public void DoRefresh()
-        {
-            _current_page = 1;
-            TotalCount = 0;
-            Clear();
-            HasMoreItems = true;
-        }
+
         public IAsyncOperation<LoadMoreItemsResult> LoadMoreItemsAsync(uint count)
         {
             return InnerLoadMoreItemsAsync(count).AsAsyncOperation();
         }
+
         private async Task<LoadMoreItemsResult> InnerLoadMoreItemsAsync(uint expectedCount)
         {
             _busy = true;
             var actualCount = 0;
-            List<CNBlog> list = null;
+            List<CnBlog> list = null;
             try
             {
-                if (DataLoading != null)
-                {
-                    DataLoading();
-                }
-                list = await BlogService.Get48TopViewsAysnc(_current_page * 20);
+                DataLoading?.Invoke();
+                list = await BlogService.Get48TopViewsAysnc(_currentPage * 20);
             }
             catch (Exception)
             {
@@ -72,16 +64,16 @@ namespace AnonyIsland.Data
 
             if (list != null && list.Any() && list.Count > TotalCount)
             {
-                int index = this.Count;
+                int index = Count;
                 if (index >= 0)
                 {
                     actualCount = list.Count - index;
                     for (int i = index; i < list.Count; ++i)
                     {
-                        this.Add(list[i]);
+                        Add(list[i]);
                     }
                     TotalCount += actualCount;
-                    _current_page++;
+                    _currentPage++;
                     HasMoreItems = true;
                 }
             }
@@ -89,10 +81,7 @@ namespace AnonyIsland.Data
             {
                 HasMoreItems = false;
             }
-            if (DataLoaded != null)
-            {
-                DataLoaded();
-            }
+            DataLoaded?.Invoke();
             _busy = false;
             return new LoadMoreItemsResult
             {

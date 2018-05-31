@@ -1,20 +1,11 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Runtime.InteropServices.WindowsRuntime;
 using Windows.ApplicationModel;
 using Windows.ApplicationModel.Activation;
-using Windows.Foundation;
-using Windows.Foundation.Collections;
+using Windows.Storage;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Controls.Primitives;
-using Windows.UI.Xaml.Data;
-using Windows.UI.Xaml.Input;
-using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
-using AnonyIsland.Models;
+using Microsoft.ApplicationInsights;
 
 namespace AnonyIsland
 {
@@ -51,11 +42,11 @@ namespace AnonyIsland
         /// </summary>
         public App()
         {
-            Microsoft.ApplicationInsights.WindowsAppInitializer.InitializeAsync(
-                Microsoft.ApplicationInsights.WindowsCollectors.Metadata |
-                Microsoft.ApplicationInsights.WindowsCollectors.Session);
-            this.InitializeComponent();
-            this.Suspending += OnSuspending;
+            WindowsAppInitializer.InitializeAsync(
+                WindowsCollectors.Metadata |
+                WindowsCollectors.Session);
+            InitializeComponent();
+            Suspending += OnSuspending;
             LoadConfig();
         }
 
@@ -126,24 +117,24 @@ namespace AnonyIsland
         /// </summary>
         private void LoadConfig()
         {
-            Windows.Storage.ApplicationDataContainer localSettings = Windows.Storage.ApplicationData.Current.LocalSettings;
+            ApplicationDataContainer localSettings = ApplicationData.Current.LocalSettings;
 
             if (localSettings.Values["NewsCountOneTime"] != null)
             {
-                App.NewsCountOneTime = int.Parse(localSettings.Values["NewsCountOneTime"].ToString());
+                NewsCountOneTime = int.Parse(localSettings.Values["NewsCountOneTime"].ToString());
             }
             else
             {
-                App.NewsCountOneTime = 20;
+                NewsCountOneTime = 20;
             }
 
             if (localSettings.Values["BlogCountOneTime"] != null)
             {
-                App.BlogCountOneTime = int.Parse(localSettings.Values["BlogCountOneTime"].ToString());
+                BlogCountOneTime = int.Parse(localSettings.Values["BlogCountOneTime"].ToString());
             }
             else
             {
-                App.BlogCountOneTime = 20;
+                BlogCountOneTime = 20;
             }
         }
     }

@@ -44,12 +44,12 @@
             Canvas.ZIndex="1"
             IsItemClickEnabled="True"
             ItemClick="View10ListView_ItemClick"
-            ItemsSource="{x:Bind _list_10Views}"
+            ItemsSource="{x:Bind _list10Views}"
             ScrollViewer.HorizontalScrollBarVisibility="Hidden"
             ScrollViewer.VerticalScrollBarVisibility="Hidden"
             SelectionMode="None">
             <ListView.ItemTemplate>
-                <DataTemplate x:DataType="data:CNBlog">
+                <DataTemplate x:DataType="data:CnBlog">
                     <Grid Margin="15,30,15,30">
                         <Grid.RowDefinitions>
                             <RowDefinition Height="auto" />

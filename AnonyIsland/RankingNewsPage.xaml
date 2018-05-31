@@ -44,12 +44,12 @@
             Canvas.ZIndex="1"
             IsItemClickEnabled="True"
             ItemClick="NewsListView_ItemClick"
-            ItemsSource="{x:Bind _list_news}"
+            ItemsSource="{x:Bind _listNews}"
             ScrollViewer.HorizontalScrollBarVisibility="Hidden"
             ScrollViewer.VerticalScrollBarVisibility="Hidden"
             SelectionMode="None">
             <ListView.ItemTemplate>
-                <DataTemplate x:DataType="data:CNNews">
+                <DataTemplate x:DataType="data:CnNews">
                     <Grid Margin="15,30,15,30">
                         <Grid.RowDefinitions>
                             <RowDefinition Height="auto" />

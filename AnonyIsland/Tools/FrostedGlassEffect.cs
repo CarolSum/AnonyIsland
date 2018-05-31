@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Windows.UI;
+﻿using Windows.UI;
 using Windows.UI.Composition;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Hosting;
@@ -13,9 +8,9 @@ namespace AnonyIsland.Tools
 {
     static class FrostedGlassEffect
     {
-        static public void Initialize(UIElement _glass_host)
+        static public void Initialize(UIElement glassHost)
         {
-            Visual hostVisual = ElementCompositionPreview.GetElementVisual(_glass_host);
+            Visual hostVisual = ElementCompositionPreview.GetElementVisual(glassHost);
             Compositor compositor = hostVisual.Compositor;
             var glassEffect = new GaussianBlurEffect
             {
@@ -39,7 +34,7 @@ namespace AnonyIsland.Tools
             effectBrush.SetSourceParameter("backdropBrush", backdropBrush);
             var glassVisual = compositor.CreateSpriteVisual();
             glassVisual.Brush = effectBrush;
-            ElementCompositionPreview.SetElementChildVisual(_glass_host, glassVisual);
+            ElementCompositionPreview.SetElementChildVisual(glassHost, glassVisual);
             var bindSizeAnimation = compositor.CreateExpressionAnimation("hostVisual.Size");
             bindSizeAnimation.SetReferenceParameter("hostVisual", hostVisual);
             glassVisual.StartAnimation("Size", bindSizeAnimation);

@@ -1,11 +1,7 @@
 ﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
 using System.Net;
-using System.Text;
 using System.Threading.Tasks;
+using Windows.Storage.Streams;
 using Windows.Web.Http;
 
 namespace AnonyIsland.HTTP
@@ -53,7 +49,7 @@ namespace AnonyIsland.HTTP
             try
             {
                 HttpRequestMessage mSent = new HttpRequestMessage(HttpMethod.Post, new Uri(url));
-                mSent.Content = new HttpStringContent(body, Windows.Storage.Streams.UnicodeEncoding.Utf8, "application/json; charset=utf-8");
+                mSent.Content = new HttpStringContent(body, UnicodeEncoding.Utf8, "application/json; charset=utf-8");
                 HttpClient client = new HttpClient();
                 HttpResponseMessage response = await client.SendRequestAsync(mSent);
                 response.EnsureSuccessStatusCode();

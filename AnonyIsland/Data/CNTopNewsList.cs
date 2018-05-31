@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using Windows.Foundation;
 using Windows.UI.Xaml.Data;
@@ -11,11 +10,11 @@ using AnonyIsland.Models;
 
 namespace AnonyIsland.Data
 {
-    class CNTopNewsList : ObservableCollection<CNNews>, ISupportIncrementalLoading
+    class CnTopNewsList : ObservableCollection<CnNews>, ISupportIncrementalLoading
     {
-        private bool _busy = false;
-        private bool _has_more_items = false;
-        private int _current_page = 1;
+        private bool _busy;
+        private bool _hasMoreItems;
+        private int _currentPage = 1;
         public event DataLoadingEventHandler DataLoading;
         public event DataLoadedEventHandler DataLoaded;
 
@@ -28,24 +27,16 @@ namespace AnonyIsland.Data
             get
             {
                 if (_busy)
+                {
                     return false;
-                else
-                    return _has_more_items;
+                }
+
+                return _hasMoreItems;
             }
-            private set
-            {
-                _has_more_items = value;
-            }
+            private set => _hasMoreItems = value;
         }
-        public CNTopNewsList()
+        public CnTopNewsList()
         {
-            HasMoreItems = true;
-        }
-        public void DoRefresh()
-        {
-            _current_page = 1;
-            TotalCount = 0;
-            Clear();
             HasMoreItems = true;
         }
         public IAsyncOperation<LoadMoreItemsResult> LoadMoreItemsAsync(uint count)
@@ -56,14 +47,11 @@ namespace AnonyIsland.Data
         {
             _busy = true;
             var actualCount = 0;
-            List<CNNews> list = null;
+            List<CnNews> list = null;
             try
             {
-                if (DataLoading != null)
-                {
-                    DataLoading();
-                }
-                list = await NewsService.GetTopDiggsAsync(_current_page, 20);
+                DataLoading?.Invoke();
+                list = await NewsService.GetTopDiggsAsync(_currentPage, 20);
             }
             catch (Exception)
             {
@@ -74,18 +62,15 @@ namespace AnonyIsland.Data
             {
                 actualCount = list.Count;
                 TotalCount += actualCount;
-                _current_page++;
+                _currentPage++;
                 HasMoreItems = true;
-                list.ForEach((c) => { this.Add(c); });
+                list.ForEach(c => { Add(c); });
             }
             else
             {
                 HasMoreItems = false;
             }
-            if (DataLoaded != null)
-            {
-                DataLoaded();
-            }
+            DataLoaded?.Invoke();
             _busy = false;
             return new LoadMoreItemsResult
             {

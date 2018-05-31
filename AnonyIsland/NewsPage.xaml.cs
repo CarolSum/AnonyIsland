@@ -1,26 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.IO;
-using System.Linq;
-using System.Runtime.InteropServices.WindowsRuntime;
-using AnonyIsland.HTTP;
-using AnonyIsland.Models;
-using Windows.Foundation;
-using Windows.Foundation.Collections;
-using Windows.UI.Popups;
-using Windows.UI.Xaml;
-using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Controls.Primitives;
-using Windows.UI.Xaml.Data;
-using Windows.UI.Xaml.Input;
-using Windows.UI.Xaml.Media;
-using Windows.UI.Xaml.Navigation;
+﻿using Windows.UI.Xaml.Controls;
 using AnonyIsland.Data;
-using Windows.UI.Composition;
-using Windows.UI.Xaml.Hosting;
-using Microsoft.Graphics.Canvas.Effects;
-using Windows.UI;
 using AnonyIsland.Tools;
 
 // “空白页”项模板在 http://go.microsoft.com/fwlink/?LinkId=234238 上提供
@@ -35,14 +14,14 @@ namespace AnonyIsland
         /// <summary>
         /// 当前页面加载的新闻列表
         /// </summary>
-        private CNNewsList _list_news;
+        private readonly CnNewsList _listNews;
         public NewsPage()
         {
-            this.InitializeComponent();
+            InitializeComponent();
             FrostedGlassEffect.Initialize(bgGrid);
-            _list_news = new CNNewsList();
-            _list_news.DataLoaded += () => Loading.IsActive = false;
-            _list_news.DataLoading += () => Loading.IsActive = true;
+            _listNews = new CnNewsList();
+            _listNews.DataLoaded += () => Loading.IsActive = false;
+            _listNews.DataLoading += () => Loading.IsActive = true;
         }
         
         /// <summary>
@@ -52,7 +31,7 @@ namespace AnonyIsland
         /// <param name="e"></param>
         private void NewsListView_ItemClick(object sender, ItemClickEventArgs e)
         {
-            this.Frame.Navigate(typeof(NewsContentPage), new object[] { e.ClickedItem });
+            Frame.Navigate(typeof(NewsContentPage), new[] { e.ClickedItem });
         }
     }
 }

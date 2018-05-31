@@ -1,28 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Runtime.InteropServices.WindowsRuntime;
-using Windows.Foundation;
-using Windows.Foundation.Collections;
+using System.Diagnostics;
+using Windows.ApplicationModel.DataTransfer;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Controls.Primitives;
-using Windows.UI.Xaml.Data;
-using Windows.UI.Xaml.Input;
-using Windows.UI.Xaml.Media;
-using Windows.UI.Xaml.Navigation;
 using Windows.UI.Xaml.Media.Imaging;
-using Windows.UI.Popups;
-using Windows.ApplicationModel.DataTransfer;
+using Windows.UI.Xaml.Navigation;
 using AnonyIsland.HTTP;
 using AnonyIsland.Models;
 using AnonyIsland.Tools;
-using System.Diagnostics;
-using Windows.UI.Composition;
-using Windows.UI.Xaml.Hosting;
-using Microsoft.Graphics.Canvas.Effects;
-using Windows.UI;
 
 // “空白页”项模板在 http://go.microsoft.com/fwlink/?LinkId=234238 上提供
 
@@ -36,7 +22,7 @@ namespace AnonyIsland
         /// <summary>
         /// 当前查看博客
         /// </summary>
-        private CNBlog _blog;
+        private CnBlog _blog;
         string _commentHtml = "";
 
         private void HideScrollbar(ref string html)
@@ -46,14 +32,14 @@ namespace AnonyIsland
 
         public BlogContentPage()
         {
-            this.InitializeComponent();
+            InitializeComponent();
             RegisterForShare();
         }
 
         private void RegisterForShare()
         {
             DataTransferManager dataTransferManager = DataTransferManager.GetForCurrentView();
-            dataTransferManager.DataRequested += this.ShareLinkHandler;
+            dataTransferManager.DataRequested += ShareLinkHandler;
         }
 
        
@@ -71,9 +57,9 @@ namespace AnonyIsland
             object[] parameters = e.Parameter as object[];
             if (parameters != null)
             {
-                if(parameters.Length==1 && (parameters[0] as CNBlog)!=null)
+                if(parameters.Length==1 && (parameters[0] as CnBlog)!=null)
                 {
-                    _blog = parameters[0] as CNBlog;
+                    _blog = parameters[0] as CnBlog;
 
                     BlogTitle.Text = _blog.Title;
                     AuthorName.Content = _blog.AuthorName;
@@ -84,27 +70,27 @@ namespace AnonyIsland
                     BitmapImage bi = new BitmapImage { UriSource = new Uri(_blog.AuthorAvator) };
                     Avatar.Source = bi;
                     AuthorName.Tag = _blog.BlogApp;
-                    string blog_body = await BlogService.GetBlogContentAsync(_blog.ID);
-                    if (blog_body != null)
+                    string blogBody = await BlogService.GetBlogContentAsync(_blog.Id);
+                    if (blogBody != null)
                     {
-                        HideScrollbar(ref blog_body);
-                        BlogContent.NavigateToString(blog_body);
+                        HideScrollbar(ref blogBody);
+                        BlogContent.NavigateToString(blogBody);
                     }
 
                     // 获取评论数据
                     _commentHtml = CommentTool.BaseChatHtml;
                     HideScrollbar(ref _commentHtml);
                     BlogComment.NavigateToString(_commentHtml);
-                    List<CNBlogComment> list_comments = await BlogService.GetBlogCommentsAsync(_blog.ID, 1, 199);
+                    List<CnBlogComment> listComments = await BlogService.GetBlogCommentsAsync(_blog.Id, 1, 199);
 
-                    if (list_comments != null)
+                    if (listComments != null)
                     {
                         string comments = "";
-                        foreach (CNBlogComment comment in list_comments)
+                        foreach (CnBlogComment comment in listComments)
                         {
                             comments += CommentTool.Receive(comment.AuthorAvatar,
                                 comment.AuthorName == _blog.AuthorName ? "[博主]" + _blog.AuthorName : comment.AuthorName,
-                                comment.Content, comment.PublishTime, comment.ID);
+                                comment.Content, comment.PublishTime, comment.Id);
                         }
 
                         _commentHtml = _commentHtml.Replace("<a id='ok'></a>", "") + comments + "<a id='ok'></a>";
@@ -121,9 +107,9 @@ namespace AnonyIsland
 
         private void Back_Click(object sender, RoutedEventArgs e)
         {
-            if (this.Frame.CanGoBack)
+            if (Frame.CanGoBack)
             {
-                this.Frame.GoBack();
+                Frame.GoBack();
             }
         }
 
@@ -131,23 +117,23 @@ namespace AnonyIsland
         {
             if (e.Value != null)
             {
-                string[] args = e.Value.Split(new string[] { "-" }, StringSplitOptions.None);
+                string[] args = e.Value.Split(new[] { "-" }, StringSplitOptions.None);
                 if (args.Length == 2)
                 {
-                    this.Frame.Navigate(typeof(UserHome), new object[] { args[0], args[1] });
+                    Frame.Navigate(typeof(UserHome), new object[] { args[0], args[1] });
                 }
             }
         }
 
         private void AuthorName_Click(object sender, RoutedEventArgs e)
         {
-            this.Frame.Navigate(typeof(UserHome), new object[] { (sender as HyperlinkButton).Tag.ToString(),(sender as HyperlinkButton).Content });
+            Frame.Navigate(typeof(UserHome), new[] { (sender as HyperlinkButton).Tag.ToString(),(sender as HyperlinkButton).Content });
         }
 
 
         private void Share_Click(object sender, RoutedEventArgs e)
         {
-            Windows.ApplicationModel.DataTransfer.DataTransferManager.ShowShareUI();
+            DataTransferManager.ShowShareUI();
         }
     }
 }
