@@ -243,8 +243,16 @@ namespace AnonyIsland
                     ContentFrame.Navigate(typeof(NewsPage));
                     break;
 
-                case "ranks":
-                    ContentFrame.Navigate(typeof(RankingPage));
+                case "rank48":
+                    ContentFrame.Navigate(typeof(Ranking48Page));
+                    break;
+
+                case "rank10":
+                    ContentFrame.Navigate(typeof(Ranking10Page));
+                    break;
+                    
+                case "rankNews":
+                    ContentFrame.Navigate(typeof(RankingNewsPage));
                     break;
             }
         }

@@ -42,10 +42,6 @@ namespace AnonyIsland
         public BlogContentPage()
         {
             this.InitializeComponent();
-            //if (App.AlwaysShowNavigation)
-            //{
-            //    Home.Visibility = Visibility.Collapsed;
-            //}
             RegisterForShare();
             //initializeFrostedGlass(bgGrid);
         }
@@ -90,7 +86,7 @@ namespace AnonyIsland
                 DataRequestedEventArgs>(this.ShareLinkHandler);
         }
 
-        // Todo：分享事件重写
+       
         private void ShareLinkHandler(DataTransferManager sender, DataRequestedEventArgs args)
         {
             DataRequest request = args.Request;
@@ -99,10 +95,6 @@ namespace AnonyIsland
             request.Data.SetWebLink(new Uri(_blog.BlogRawUrl));
         }
 
-        /// <summary>
-        /// 页面加载
-        /// </summary>
-        /// <param name="e"></param>
         protected async override void OnNavigatedTo(NavigationEventArgs e)
         {
             base.OnNavigatedTo(e);
@@ -161,11 +153,7 @@ namespace AnonyIsland
             }
         }
 
-        /// <summary>
-        /// 点击后退
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
+
         private void Back_Click(object sender, RoutedEventArgs e)
         {
             if (this.Frame.CanGoBack)
@@ -174,21 +162,12 @@ namespace AnonyIsland
             }
         }
 
-        /// <summary>
-        /// 点击标题栏上的查看评论
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
         private void Comment_Click(object sender, RoutedEventArgs e)
         {
             this.Frame.Navigate(typeof(BlogCommentPage), new object[] { _blog });
         }
 
-        /// <summary>
-        /// 点击标题栏上的刷新
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
+  
         private async void RefreshButton_Click(object sender, RoutedEventArgs e)
         {
             Loading.IsActive = true;
@@ -200,44 +179,18 @@ namespace AnonyIsland
             }
         }
 
-        /// <summary>
-        /// 点击作者  跳转到作者主页
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
+   
         private void AuthorName_Click(object sender, RoutedEventArgs e)
         {
             this.Frame.Navigate(typeof(UserHome), new object[] { (sender as HyperlinkButton).Tag.ToString(),(sender as HyperlinkButton).Content });
         }
 
-        /// <summary>
-        /// 点击评论小图标
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void SymbolIcon_Tapped(object sender, TappedRoutedEventArgs e)
-        {
-            if ((sender as SymbolIcon).Symbol == Symbol.Comment) //评论
-            {
-                this.Frame.Navigate(typeof(BlogCommentPage), new object[] { _blog });
-            }
-        }
 
-        /// <summary>
-        /// 打开主菜单
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
         private void Home_Click(object sender, RoutedEventArgs e)
         {
             ((Window.Current.Content as Frame).Content as MainPage).ShowNavigationBarOneTime();
         }
 
-        /// <summary>
-        /// 分享
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
         private void Share_Click(object sender, RoutedEventArgs e)
         {
             Windows.ApplicationModel.DataTransfer.DataTransferManager.ShowShareUI();

@@ -29,11 +29,9 @@
                 Content="News"
                 Icon="Video"
                 Tag="news" />
-            <NavigationViewItem
-                x:Uid="AppsNavItem"
-                Content="Board"
-                Icon="AllApps"
-                Tag="ranks" />
+            <NavigationViewItem x:Uid="Rank48NavItem" Content="48H Reading List" Icon="Clock" Tag="rank48"/>
+            <NavigationViewItem x:Uid="Rank10NavItem" Content="10D Rec. List" Icon="Bookmarks" Tag="rank10"/>
+            <NavigationViewItem x:Uid="RankNewsNavItem" Content="News Rank" Icon="FourBars" Tag="rankNews"/>
         </NavigationView.MenuItems>
 
         <NavigationView.AutoSuggestBox>
