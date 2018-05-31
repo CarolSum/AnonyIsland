@@ -39,10 +39,7 @@ namespace AnonyIsland
         /// 新闻推荐排行
         /// </summary>
         private CNTopNewsList _list_newsDiggs;
-        /// <summary>
-        /// 推荐博主
-        /// </summary>
-        private CNTopBlogerList _list_blogerDiggs;
+
         public RankingPage()
         {
             this.InitializeComponent();
@@ -54,7 +51,6 @@ namespace AnonyIsland
             _list_48Views = new CN48TopViewList();
             _list_10Diggs = new CN10TopDiggList();
             _list_newsDiggs = new CNTopNewsList();
-            _list_blogerDiggs = new CNTopBlogerList();
 
             _list_10Diggs.DataLoaded += _list_10Diggs_DataLoaded;
             _list_10Diggs.DataLoading += _list_10Diggs_DataLoading;
@@ -64,9 +60,6 @@ namespace AnonyIsland
 
             _list_newsDiggs.DataLoaded += _list_newsDiggs_DataLoaded;
             _list_newsDiggs.DataLoading += _list_newsDiggs_DataLoading;
-
-            _list_blogerDiggs.DataLoaded += _list_blogerDiggs_DataLoaded;
-            _list_blogerDiggs.DataLoading += _list_blogerDiggs_DataLoading;
         }
 
         /// <summary>
@@ -128,15 +121,6 @@ namespace AnonyIsland
             this.Frame.Navigate(typeof(NewsContentPage),new object[] { e.ClickedItem});
         }
         /// <summary>
-        /// 点击推荐博主 查看主页博客
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void BlogerGridView_ItemClick(object sender, ItemClickEventArgs e)
-        {
-            this.Frame.Navigate(typeof(UserHome),new object[] {(e.ClickedItem as CNBloger).BlogApp, (e.ClickedItem as CNBloger).BlogerName });
-        }
-        /// <summary>
         /// 点击博主昵称  查看主页博客
         /// </summary>
         /// <param name="sender"></param>
@@ -164,10 +148,6 @@ namespace AnonyIsland
             else if (p.SelectedIndex == 2)  //新闻推荐排行
             {
                 ListCount.Text = _list_newsDiggs.TotalCount.ToString();
-            }
-            else //推荐博主
-            {
-                ListCount.Text = _list_blogerDiggs.TotalCount.ToString();
             }
         }
 
@@ -205,16 +185,6 @@ namespace AnonyIsland
             Loading.IsActive = false;
             ListCount.Text = _list_10Diggs.TotalCount.ToString();
         }
-        private void _list_blogerDiggs_DataLoading()
-        {
-            Loading.IsActive = true;
-        }
-
-        private void _list_blogerDiggs_DataLoaded()
-        {
-            Loading.IsActive = false;
-            ListCount.Text = _list_blogerDiggs.TotalCount.ToString();
-        }
         /// <summary>
         /// 刷新
         /// </summary>
@@ -237,12 +207,6 @@ namespace AnonyIsland
                 _list_newsDiggs.DoRefresh();
                 await NewsListView.LoadMoreItemsAsync();
             }
-            else //推荐博主
-            {
-                _list_blogerDiggs.DoRefresh();
-                await BlogerGridView.LoadMoreItemsAsync();
-            }
-        
         }
         /// <summary>
         /// 
