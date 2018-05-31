@@ -29,6 +29,8 @@
                   ItemClick="NewsListView_ItemClick"
                   ItemsSource="{x:Bind _list_news}"
                   Padding="100,0,100,0"
+                  ScrollViewer.HorizontalScrollBarVisibility="Hidden"
+                  ScrollViewer.VerticalScrollBarVisibility="Hidden"
                   >
             <ListView.ItemTemplate>
                 <DataTemplate  x:DataType="data:CNNews">

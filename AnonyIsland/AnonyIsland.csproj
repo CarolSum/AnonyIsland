@@ -106,9 +106,6 @@
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
-    <Compile Include="BlogCommentPage.xaml.cs">
-      <DependentUpon>BlogCommentPage.xaml</DependentUpon>
-    </Compile>
     <Compile Include="BlogContentPage.xaml.cs">
       <DependentUpon>BlogContentPage.xaml</DependentUpon>
     </Compile>
@@ -136,9 +133,6 @@
     <Compile Include="Models\CNNews.cs" />
     <Compile Include="Models\CNNewsComment.cs" />
     <Compile Include="Models\CNUserInfo.cs" />
-    <Compile Include="NewsCommentPage.xaml.cs">
-      <DependentUpon>NewsCommentPage.xaml</DependentUpon>
-    </Compile>
     <Compile Include="NewsContentPage.xaml.cs">
       <DependentUpon>NewsContentPage.xaml</DependentUpon>
     </Compile>
@@ -154,19 +148,13 @@
     <Compile Include="RankingNewsPage.xaml.cs">
       <DependentUpon>RankingNewsPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="RankingPage.xaml.cs">
-      <DependentUpon>RankingPage.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="SearchDialog.xaml.cs">
-      <DependentUpon>SearchDialog.xaml</DependentUpon>
-    </Compile>
     <Compile Include="SearchPage.xaml.cs">
       <DependentUpon>SearchPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="SettingDialog.xaml.cs">
       <DependentUpon>SettingDialog.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Tools\ChatBoxTool.cs" />
+    <Compile Include="Tools\CommentTool.cs" />
     <Compile Include="UserHome.xaml.cs">
       <DependentUpon>UserHome.xaml</DependentUpon>
     </Compile>
@@ -198,10 +186,6 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="BlogCommentPage.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
     <Page Include="BlogContentPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -213,10 +197,6 @@
     <Page Include="MainPage.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
-    </Page>
-    <Page Include="NewsCommentPage.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="NewsContentPage.xaml">
       <SubType>Designer</SubType>
@@ -235,14 +215,6 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="RankingNewsPage.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="RankingPage.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="SearchDialog.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

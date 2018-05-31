@@ -30,14 +30,9 @@ namespace AnonyIsland
     {
         private static string _image_bridge = "http://sysu.at:9011/img?url=";
 
-        public void HideWebviewScrollbar(WebView webview)
+        private void HideScrollbar(ref string html)
         {
-            webview.LoadCompleted += async (s, args) =>
-                await webview.InvokeScriptAsync("eval", new string[]
-                {
-                     "document.body.style.overflowY='hidden';" +
-                     "document.body.style.overflowX='hidden';"
-                });
+            html += "<style>body{-ms-overflow-style:none;}</style>";
         }
 
         /// <summary>
@@ -94,22 +89,21 @@ namespace AnonyIsland
                     {
                         news_content += "<style>body{background-color:black;color:white;}</style>";
                     }
-                    
+
                     //string pattern = "<img src=\"(.*)\"";
                     //news_content = Regex.Replace(news_content, pattern, m => $"<img src=\"{_image_bridge}{m.Groups[1].Value}\"");
-
+                    HideScrollbar(ref news_content);
                     NewsContent.NavigateToString(news_content);
-                    HideWebviewScrollbar(NewsComment);
                 }
 
                 // 获取评论数据
-                _commentsTotalHtml = ChatBoxTool.BaseChatHtml;
+                _commentsTotalHtml = CommentTool.BaseChatHtml;
                 if (App.Theme == ApplicationTheme.Dark)
                 {
                     _commentsTotalHtml += "<style>body{background-color:black;color:white;}</style>";
                 }
+                HideScrollbar(ref _commentsTotalHtml);
                 NewsComment.NavigateToString(_commentsTotalHtml);
-                HideWebviewScrollbar(NewsComment);
 
                 List<CNNewsComment> refresh_comments = await NewsService.GetNewsCommentsAysnc(_news.ID, 1, 200);
 
@@ -118,7 +112,7 @@ namespace AnonyIsland
                     string comments = "";
                     foreach (CNNewsComment comment in refresh_comments)
                     {
-                        comments += ChatBoxTool.Receive(comment.AuthorAvatar,
+                        comments += CommentTool.Receive(comment.AuthorAvatar,
                         comment.AuthorName,
                         comment.Content, comment.PublishTime, comment.ID);
                     }
@@ -126,8 +120,8 @@ namespace AnonyIsland
 
                     _commentsTotalHtml = _commentsTotalHtml.Replace("<a id='ok'></a>", "") + comments + "<a id='ok'></a>";
 
+                    HideScrollbar(ref _commentsTotalHtml);
                     NewsComment.NavigateToString(_commentsTotalHtml);
-                    HideWebviewScrollbar(NewsComment);
 
                     Loading.IsActive = false;
                 }
@@ -135,7 +129,18 @@ namespace AnonyIsland
                 Loading.IsActive = false;
             }
         }
-       
+
+        private void CommentUserClik_Handler(Object sender, NotifyEventArgs e)
+        {
+            if (e.Value != null)
+            {
+                string[] args = e.Value.Split(new string[] { "-" }, StringSplitOptions.None);
+                if (args.Length == 2)
+                {
+                    this.Frame.Navigate(typeof(UserHome), new object[] { args[0], args[1] });
+                }
+            }
+        }
 
         /// <summary>
         /// 点击标题栏后退

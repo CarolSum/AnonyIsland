@@ -15,6 +15,7 @@ using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
 using AnonyIsland.Models;
 using System.Collections.ObjectModel;
+using System.Diagnostics;
 using AnonyIsland.Data;
 using AnonyIsland.HTTP;
 using Windows.UI.Composition;

@@ -131,7 +131,7 @@ namespace AnonyIsland
                     }
 
                     // 获取评论数据
-                    _commentHtml = ChatBoxTool.BaseChatHtml;
+                    _commentHtml = CommentTool.BaseChatHtml;
                     if (App.Theme == ApplicationTheme.Dark)
                     {
                         _commentHtml += "<style>body{background-color:black;color:white;}</style>";
@@ -145,7 +145,7 @@ namespace AnonyIsland
                         string comments = "";
                         foreach (CNBlogComment comment in list_comments)
                         {
-                            comments += ChatBoxTool.Receive(comment.AuthorAvatar,
+                            comments += CommentTool.Receive(comment.AuthorAvatar,
                                 comment.AuthorName == _blog.AuthorName ? "[博主]" + _blog.AuthorName : comment.AuthorName,
                                 comment.Content, comment.PublishTime, comment.ID);
                         }
@@ -170,12 +170,18 @@ namespace AnonyIsland
             }
         }
 
-        private void Comment_Click(object sender, RoutedEventArgs e)
+        private void CommentUserClik_Handler(Object sender, NotifyEventArgs e)
         {
-            this.Frame.Navigate(typeof(BlogCommentPage), new object[] { _blog });
+            if (e.Value != null)
+            {
+                string[] args = e.Value.Split(new string[] { "-" }, StringSplitOptions.None);
+                if (args.Length == 2)
+                {
+                    this.Frame.Navigate(typeof(UserHome), new object[] { args[0], args[1] });
+                }
+            }
         }
 
-  
         private async void RefreshButton_Click(object sender, RoutedEventArgs e)
         {
             Loading.IsActive = true;
@@ -187,7 +193,6 @@ namespace AnonyIsland
                 Loading.IsActive = false;
             }
         }
-
    
         private void AuthorName_Click(object sender, RoutedEventArgs e)
         {

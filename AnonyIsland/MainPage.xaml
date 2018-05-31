@@ -29,17 +29,33 @@
                 Content="News"
                 Icon="Video"
                 Tag="news" />
-            <NavigationViewItem x:Uid="Rank48NavItem" Content="48H Reading List" Icon="Clock" Tag="rank48"/>
-            <NavigationViewItem x:Uid="Rank10NavItem" Content="10D Rec. List" Icon="Bookmarks" Tag="rank10"/>
-            <NavigationViewItem x:Uid="RankNewsNavItem" Content="News Rank" Icon="FourBars" Tag="rankNews"/>
+            <NavigationViewItem
+                x:Uid="Rank48NavItem"
+                Content="48H Reading List"
+                Icon="Clock"
+                Tag="rank48" />
+            <NavigationViewItem
+                x:Uid="Rank10NavItem"
+                Content="10D Rec. List"
+                Icon="Bookmarks"
+                Tag="rank10" />
+            <NavigationViewItem
+                x:Uid="RankNewsNavItem"
+                Content="News Rank"
+                Icon="FourBars"
+                Tag="rankNews" />
         </NavigationView.MenuItems>
 
         <NavigationView.AutoSuggestBox>
-            <AutoSuggestBox x:Name="ASB" PlaceholderText="Search" QueryIcon="Find" QuerySubmitted="ASB_QuerySubmitted" />
+            <AutoSuggestBox
+                x:Name="ASB"
+                PlaceholderText="Search"
+                QueryIcon="Find"
+                QuerySubmitted="ASB_QuerySubmitted" />
         </NavigationView.AutoSuggestBox>
 
         <Frame x:Name="ContentFrame">
-            <Frame.ContentTransitions>
+            <!--<Frame.ContentTransitions>
                 <TransitionCollection>
                     <NavigationThemeTransition />
                 </TransitionCollection>
@@ -49,7 +65,12 @@
                     <RowDefinition Height="auto" />
                     <RowDefinition Height="*" />
                 </Grid.RowDefinitions>
-                <Image Grid.RowSpan="2" Source="Assets/bg.png" Stretch="Fill" Canvas.ZIndex="-1" x:Name="bgGrid" ></Image>
+                <Image
+                    x:Name="bgGrid"
+                    Grid.RowSpan="2"
+                    Canvas.ZIndex="-1"
+                    Source="Assets/bg.png"
+                    Stretch="Fill" />
 
                 <StackPanel>
                     <TextBlock
@@ -76,6 +97,8 @@
                     IsItemClickEnabled="True"
                     ItemClick="BlogsListView_ItemClick"
                     ItemsSource="{x:Bind _list_blogs}"
+                    ScrollViewer.HorizontalScrollBarVisibility="Hidden"
+                    ScrollViewer.VerticalScrollBarVisibility="Hidden"
                     SelectionMode="None">
                     <ListView.ItemTemplate>
                         <DataTemplate x:DataType="data:CNBlog">
@@ -127,7 +150,7 @@
                     Width="100"
                     Height="100"
                     IsActive="True" />
-            </Grid>
+            </Grid>-->
         </Frame>
 
     </NavigationView>

@@ -14,9 +14,13 @@
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
 
-        <Image Canvas.ZIndex="0" Grid.RowSpan="2" Source="Assets/detailBG.png" Stretch="Fill"></Image>
+        <Image
+            Grid.RowSpan="2"
+            Canvas.ZIndex="0"
+            Source="Assets/detailBG.png"
+            Stretch="Fill" />
 
-        <RelativePanel Padding="80, 0, 80, 0" MinHeight="180">
+        <RelativePanel MinHeight="180" Padding="80,0,80,0">
             <Button
                 Name="Back"
                 Background="Transparent"
@@ -24,27 +28,34 @@
                 Content="&#xE0A6;"
                 FontFamily="Segoe MDL2 Assets"
                 FontSize="24"
+                RelativePanel.AlignLeftWithPanel="True"
+                RelativePanel.AlignVerticalCenterWithPanel="True" />
+            <TextBlock
+                Padding="20,0,0,0"
+                FontSize="56"
+                Foreground="Black"
                 RelativePanel.AlignVerticalCenterWithPanel="True"
-                RelativePanel.AlignLeftWithPanel="True" />
-            <TextBlock Text="新闻正文" FontSize="56" Foreground="Black"  Padding="20,0,0,0"
-                       RelativePanel.AlignVerticalCenterWithPanel="True" RelativePanel.RightOf="Back"></TextBlock>
-
-            <Button Name="CommentBtn" Background="Transparent" Content="&#xE939;" FontFamily="Segoe MDL2 Assets"
-                    RelativePanel.AlignRightWithPanel="True" FontSize="30" 
-                    RelativePanel.AlignVerticalCenterWithPanel="True" Foreground="Black"/>
-            <Button  Name="Share" Background="Transparent" Click="Share_Click" 
-                      Content="&#xE72D;"  FontFamily="Segoe MDL2 Assets" FontSize="30" 
-                      RelativePanel.AlignVerticalCenterWithPanel="True" RelativePanel.LeftOf="CommentBtn" />
+                RelativePanel.RightOf="Back"
+                Text="新闻正文" />
+            <Button
+                Name="Share"
+                Background="Transparent"
+                Click="Share_Click"
+                Content="&#xE72D;"
+                FontFamily="Segoe MDL2 Assets"
+                FontSize="30"
+                RelativePanel.AlignRightWithPanel="True"
+                RelativePanel.AlignVerticalCenterWithPanel="True" />
         </RelativePanel>
-        <Grid Grid.Row="1" Margin="80, 0, 80, 0">
+        <Grid Grid.Row="1" Margin="80,0,80,0">
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="7*"></ColumnDefinition>
-                <ColumnDefinition Width="3*"></ColumnDefinition>
+                <ColumnDefinition Width="7*" />
+                <ColumnDefinition Width="3*" />
             </Grid.ColumnDefinitions>
             <Grid Grid.Column="0" Margin="0,0,20,0">
                 <Grid.RowDefinitions>
-                    <RowDefinition Height="auto"/>
-                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="auto" />
+                    <RowDefinition Height="*" />
                 </Grid.RowDefinitions>
                 <StackPanel Grid.Row="0" HorizontalAlignment="Stretch">
                     <TextBlock
@@ -52,20 +63,23 @@
                         Margin="0,10,0,0"
                         HorizontalAlignment="Center"
                         FontSize="25"
-                        TextWrapping="Wrap"
-                        Text="微软Surface Pro 4京东天猫全面预订：6688元起" />
+                        Text="微软Surface Pro 4京东天猫全面预订：6688元起"
+                        TextWrapping="Wrap" />
                     <StackPanel
                         Margin="0,10,0,10"
                         HorizontalAlignment="Center"
                         Orientation="Horizontal">
-                        <TextBlock Name="NewsSource" Foreground="Gray" Text="来源 新浪科技"/>
+                        <TextBlock
+                            Name="NewsSource"
+                            Foreground="Gray"
+                            Text="来源 新浪科技" />
                         <TextBlock
                             Name="PublishTime"
                             Padding="10,0,0,0"
                             VerticalAlignment="Center"
                             Foreground="Gray"
                             Text="发表于 2018-05-30 11:11:11" />
-                        <SymbolIcon Symbol="Like" Margin="10,0,0,0"/>
+                        <SymbolIcon Margin="10,0,0,0" Symbol="Like" />
                         <TextBlock
                             Name="Diggs"
                             Padding="10,0,2,0"
@@ -73,15 +87,15 @@
                             Foreground="Gray"
                             Text="(10)推荐" />
 
-                        <SymbolIcon Symbol="Comment" Margin="10,0,0,0" />
+                        <SymbolIcon Margin="10,0,0,0" Symbol="Comment" />
                         <TextBlock
                             Name="Comments"
                             Padding="10,0,2,0"
                             VerticalAlignment="Center"
                             Foreground="Gray"
                             Text="(5)" />
-                        
-                        <SymbolIcon Symbol="View" Margin="10,0,0,0"/>
+
+                        <SymbolIcon Margin="10,0,0,0" Symbol="View" />
                         <TextBlock
                             Name="Views"
                             Padding="10,0,2,0"
@@ -93,14 +107,17 @@
                 </StackPanel>
 
                 <WebView
-                    Grid.Row="1"
                     Name="NewsContent"
-                    Margin="10,0,0,0" 
-                    DefaultBackgroundColor="Transparent"
-                    />
+                    Grid.Row="1"
+                    Margin="10,0,0,0"
+                    DefaultBackgroundColor="Transparent" />
             </Grid>
 
-            <WebView Name="NewsComment" Grid.Column="1" DefaultBackgroundColor="Transparent"/>
+            <WebView
+                Name="NewsComment"
+                Grid.Column="1"
+                DefaultBackgroundColor="Transparent"
+                ScriptNotify="CommentUserClik_Handler" />
         </Grid>
 
         <ProgressRing

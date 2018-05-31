@@ -10,84 +10,136 @@
 
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="auto"/>
-            <RowDefinition Height="*"/>
+            <RowDefinition Height="auto" />
+            <RowDefinition Height="*" />
         </Grid.RowDefinitions>
-        <Image Grid.RowSpan="2" Source="Assets/bg.png" Stretch="Fill" Canvas.ZIndex="-1" x:Name="bgGrid" ></Image>
+        <Image
+            x:Name="bgGrid"
+            Grid.RowSpan="2"
+            Canvas.ZIndex="-1"
+            Source="Assets/bg.png"
+            Stretch="Fill" />
 
-        <StackPanel Orientation="Horizontal" Padding="100,50,50,20">
+        <StackPanel Padding="100,50,50,20" Orientation="Horizontal">
             <Button
                 Name="Back"
+                VerticalAlignment="Center"
                 Background="Transparent"
                 Click="Back_Click"
                 Content="&#xE0A6;"
                 FontFamily="Segoe MDL2 Assets"
                 FontSize="30"
-                VerticalAlignment="Center"
-                Foreground="White"
-               />
-            <TextBlock Name="PageTitle" Foreground="White" FontSize="40" Padding="10,0,0,0"></TextBlock>
+                Foreground="White" />
+            <TextBlock
+                Name="PageTitle"
+                Padding="10,0,0,0"
+                FontSize="40"
+                Foreground="White" />
         </StackPanel>
 
-        <ListView Name="BlogsListView"
-                  Grid.Row="1"
-                  Canvas.ZIndex="1"
-                  CanReorderItems="True"
-                  IsItemClickEnabled="True"
-                  SelectionMode="None"
-                  ItemClick="BlogsListView_ItemClick"
-                  ItemsSource="{x:Bind _list_blogs}"
-                  Padding="100,0,100,0"
-                  >
+        <ListView
+            Name="BlogsListView"
+            Grid.Row="1"
+            Padding="100,0,100,0"
+            CanReorderItems="True"
+            Canvas.ZIndex="1"
+            IsItemClickEnabled="True"
+            ItemClick="BlogsListView_ItemClick"
+            ItemsSource="{x:Bind _list_blogs}"
+            ScrollViewer.HorizontalScrollBarVisibility="Hidden"
+            ScrollViewer.VerticalScrollBarVisibility="Hidden"
+            SelectionMode="None">
             <ListView.ItemTemplate>
-                <DataTemplate  x:DataType="data:CNBlog">
-                    <Grid Margin="15, 30, 15, 30">
+                <DataTemplate x:DataType="data:CNBlog">
+                    <Grid Margin="15,30,15,30">
                         <Grid.RowDefinitions>
-                            <RowDefinition Height="auto"/>
-                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="auto" />
+                            <RowDefinition Height="*" />
                         </Grid.RowDefinitions>
 
                         <Grid>
                             <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="*"/>
-                                <ColumnDefinition Width="auto"/>
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="auto" />
                             </Grid.ColumnDefinitions>
 
                             <StackPanel Grid.Column="0" Margin="10,0,0,0">
-                                <TextBlock Text="{x:Bind Title}" Foreground="White" HorizontalAlignment="Left" FontSize="24" TextWrapping="Wrap"/>
+                                <TextBlock
+                                    HorizontalAlignment="Left"
+                                    FontSize="24"
+                                    Foreground="White"
+                                    Text="{x:Bind Title}"
+                                    TextWrapping="Wrap" />
                                 <StackPanel Orientation="Horizontal">
-                                    <TextBlock Text="{x:Bind AuthorName}" Foreground="#999" HorizontalAlignment="Left" FontSize="18"/>
-                                    <TextBlock Text="{x:Bind PublishTime}" Foreground="#999" Margin="10,0,0,0" FontSize="18"/>
+                                    <TextBlock
+                                        HorizontalAlignment="Left"
+                                        FontSize="18"
+                                        Foreground="#999"
+                                        Text="{x:Bind AuthorName}" />
+                                    <TextBlock
+                                        Margin="10,0,0,0"
+                                        FontSize="18"
+                                        Foreground="#999"
+                                        Text="{x:Bind PublishTime}" />
                                 </StackPanel>
                                 <StackPanel Orientation="Horizontal">
-                                    <SymbolIcon Symbol="Comment" Foreground="#bbb"/>
-                                    <TextBlock Text="{x:Bind Comments}" Foreground="#999" Margin="10,0,0,0" FontSize="18"/>
+                                    <SymbolIcon Foreground="#bbb" Symbol="Comment" />
+                                    <TextBlock
+                                        Margin="10,0,0,0"
+                                        FontSize="18"
+                                        Foreground="#999"
+                                        Text="{x:Bind Comments}" />
 
-                                    <SymbolIcon Symbol="View"  Margin="10,0,0,0" Foreground="#bbb"/>
-                                    <TextBlock Text="{x:Bind Views}" Foreground="#999" Margin="10,0,0,0" FontSize="18"/>
+                                    <SymbolIcon
+                                        Margin="10,0,0,0"
+                                        Foreground="#bbb"
+                                        Symbol="View" />
+                                    <TextBlock
+                                        Margin="10,0,0,0"
+                                        FontSize="18"
+                                        Foreground="#999"
+                                        Text="{x:Bind Views}" />
                                 </StackPanel>
                             </StackPanel>
 
-                            <StackPanel Grid.Column="1" 
-                                Padding="5,5,5,5" 
-                                VerticalAlignment="Top" HorizontalAlignment="Right">
-                                <TextBlock Text="{x:Bind Diggs}" FontSize="22" HorizontalAlignment="Center" Foreground="#cdcdcd" Height="35"/>
-                                <Border BorderThickness="1" BorderBrush="#cdcdcd"></Border>
-                                <Button Content="推荐"  Click="Button_Click" Background="Transparent" FontSize="16" Foreground="#cdcdcd"/>
+                            <StackPanel
+                                Grid.Column="1"
+                                Padding="5,5,5,5"
+                                HorizontalAlignment="Right"
+                                VerticalAlignment="Top">
+                                <TextBlock
+                                    Height="35"
+                                    HorizontalAlignment="Center"
+                                    FontSize="22"
+                                    Foreground="#cdcdcd"
+                                    Text="{x:Bind Diggs}" />
+                                <Border BorderBrush="#cdcdcd" BorderThickness="1" />
+                                <Button
+                                    Background="Transparent"
+                                    Click="Button_Click"
+                                    Content="推荐"
+                                    FontSize="16"
+                                    Foreground="#cdcdcd" />
                             </StackPanel>
 
                         </Grid>
-                        <TextBlock Grid.Row="1" Text="{x:Bind Summary}" Foreground="White" TextWrapping="Wrap" Margin="5,0,0,0"  VerticalAlignment="Top"></TextBlock>
+                        <TextBlock
+                            Grid.Row="1"
+                            Margin="5,0,0,0"
+                            VerticalAlignment="Top"
+                            Foreground="White"
+                            Text="{x:Bind Summary}"
+                            TextWrapping="Wrap" />
                     </Grid>
                 </DataTemplate>
             </ListView.ItemTemplate>
         </ListView>
 
-        <ProgressRing Grid.Row="1"
-                      Name="Loading"
-                      Width="100"
-                      Height="100"
-                      IsActive="True">
-        </ProgressRing>
+        <ProgressRing
+            Name="Loading"
+            Grid.Row="1"
+            Width="100"
+            Height="100"
+            IsActive="True" />
     </Grid>
 </Page>
