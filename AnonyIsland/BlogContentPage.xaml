@@ -30,7 +30,6 @@
 
             <Button Name="CommentBtn" Background="Transparent" Content="&#xE939;" FontFamily="Segoe MDL2 Assets"
                     RelativePanel.AlignRightWithPanel="True" FontSize="30" 
-                    Click="Comment_Click"
                     RelativePanel.AlignVerticalCenterWithPanel="True" Foreground="Black"/>
              <Button  Name="Share" Background="Transparent" Click="Share_Click" 
                       Content="&#xE72D;"  FontFamily="Segoe MDL2 Assets" FontSize="30" 

@@ -8,158 +8,86 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d">
 
-    <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+    <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="auto" />
-            <RowDefinition Height="*" />
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
+        <Image Grid.RowSpan="2" Source="Assets/bg.png" Stretch="Fill" Canvas.ZIndex="-1" x:Name="bgGrid" ></Image>
 
-        <RelativePanel
-            Grid.Row="0"
-            Padding="0,9,0,9"
-            Background="{ThemeResource SystemControlHighlightAltListAccentLowBrush}">
-            <!--  顶部  -->
-            <Button
-                Name="Home"
-                Background="Transparent"
-                Content="&#xE700;"
-                FontFamily="Segoe MDL2 Assets"
-                FontSize="24"
-                RelativePanel.AlignLeftWithPanel="True"
-                RelativePanel.AlignVerticalCenterWithPanel="True" />
+        <StackPanel Orientation="Horizontal" Padding="100,50,50,20">
             <Button
                 Name="Back"
                 Background="Transparent"
                 Click="Back_Click"
                 Content="&#xE0A6;"
                 FontFamily="Segoe MDL2 Assets"
-                FontSize="24"
-                RelativePanel.AlignVerticalCenterWithPanel="True"
-                RelativePanel.RightOf="Home" />
-            <TextBlock
-                Name="PageTitle"
-                Padding="0,0,0,0"
-                FontFamily="微软雅黑"
-                FontSize="24"
-                RelativePanel.AlignVerticalCenterWithPanel="True"
-                RelativePanel.RightOf="Back"
-                Text="某某的博客" />
-            <TextBlock
-                Name="ListCount"
-                Margin="10,0,0,0"
-                FontSize="14"
-                RelativePanel.AlignTopWith="PageTitle"
-                RelativePanel.RightOf="PageTitle"
-                Text="" />
-            <Button
-                Name="RefreshButton"
-                Margin="0,0,5,0"
-                Background="Transparent"
-                Click="RefreshButton_Click"
-                Content="&#xE117;"
-                FontFamily="Segoe MDL2 Assets"
-                FontSize="24"
-                RelativePanel.AlignRightWithPanel="True"
-                RelativePanel.AlignVerticalCenterWithPanel="True" />
-        </RelativePanel>
-        <ListView
-            Name="BlogsListView"
-            Grid.Row="1"
-            Padding="10,10,10,10"
-            CanReorderItems="True"
-            IsItemClickEnabled="True"
-            ItemClick="BlogsListView_ItemClick"
-            ItemsSource="{x:Bind _list_blogs}"
-            SelectionMode="None">
-            <ListView.ItemTemplate>
-                <DataTemplate x:DataType="data:CNBlog">
-                    <Grid Padding="5,5,5,5">
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="auto" />
-                            <ColumnDefinition Width="*" />
-                        </Grid.ColumnDefinitions>
+                FontSize="30"
+                VerticalAlignment="Center"
+                Foreground="White"
+               />
+            <TextBlock Name="PageTitle" Foreground="White" FontSize="40" Padding="10,0,0,0"></TextBlock>
+        </StackPanel>
 
-                        <StackPanel
-                            Grid.Column="0"
-                            Padding="5,5,5,5"
-                            VerticalAlignment="Center">
-                            <Border BorderBrush="{ThemeResource SystemControlHighlightAltListAccentLowBrush}" BorderThickness="2">
-                                <StackPanel>
-                                    <TextBlock
-                                        HorizontalAlignment="Center"
-                                        FontSize="22"
-                                        Text="{x:Bind Diggs}" />
-                                    <Button
-                                        Click="Button_Click"
-                                        Content="推荐"
-                                        FontSize="16" />
+        <ListView Name="BlogsListView"
+                  Grid.Row="1"
+                  Canvas.ZIndex="1"
+                  CanReorderItems="True"
+                  IsItemClickEnabled="True"
+                  SelectionMode="None"
+                  ItemClick="BlogsListView_ItemClick"
+                  ItemsSource="{x:Bind _list_blogs}"
+                  Padding="100,0,100,0"
+                  >
+            <ListView.ItemTemplate>
+                <DataTemplate  x:DataType="data:CNBlog">
+                    <Grid Margin="15, 30, 15, 30">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="auto"/>
+                            <RowDefinition Height="*"/>
+                        </Grid.RowDefinitions>
+
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="auto"/>
+                            </Grid.ColumnDefinitions>
+
+                            <StackPanel Grid.Column="0" Margin="10,0,0,0">
+                                <TextBlock Text="{x:Bind Title}" Foreground="White" HorizontalAlignment="Left" FontSize="24" TextWrapping="Wrap"/>
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock Text="{x:Bind AuthorName}" Foreground="#999" HorizontalAlignment="Left" FontSize="18"/>
+                                    <TextBlock Text="{x:Bind PublishTime}" Foreground="#999" Margin="10,0,0,0" FontSize="18"/>
                                 </StackPanel>
-                            </Border>
-                        </StackPanel>
-                        <Grid Grid.Column="1" Padding="5,5,5,5">
-                            <Grid.RowDefinitions>
-                                <RowDefinition Height="auto" />
-                                <RowDefinition Height="*" />
-                                <RowDefinition Height="auto" />
-                            </Grid.RowDefinitions>
-                            <TextBlock
-                                Name="BlogTitle"
-                                Grid.Row="0"
-                                FontSize="18"
-                                FontWeight="Bold"
-                                Text="{x:Bind Title}" />
-                            <RelativePanel Grid.Row="1" Padding="0,5,5,5">
-                                <Image
-                                    Name="BlogerAvatar"
-                                    Width="60"
-                                    Margin="0,4,0,0"
-                                    RelativePanel.AlignLeftWithPanel="True"
-                                    Source="{x:Bind AuthorAvator}" />
-                                <TextBlock
-                                    Padding="10,0,0,0"
-                                    FontSize="16"
-                                    RelativePanel.AlignRightWithPanel="True"
-                                    RelativePanel.RightOf="BlogerAvatar"
-                                    Text="{x:Bind Summary}"
-                                    TextWrapping="Wrap" />
-                            </RelativePanel>
-                            <StackPanel Grid.Row="2" Orientation="Horizontal">
-                                <HyperlinkButton
-                                    Margin="0"
-                                    Padding="0"
-                                    VerticalAlignment="Center"
-                                    Click="HyperlinkButton_Click"
-                                    Content="{x:Bind AuthorName}"
-                                    FontSize="14"
-                                    Tag="{x:Bind BlogApp}" />
-                                <TextBlock
-                                    Margin="10,0,0,0"
-                                    VerticalAlignment="Center"
-                                    FontSize="14"
-                                    Text="{x:Bind PublishTime}" />
-                                <TextBlock
-                                    Margin="12,0,2,0"
-                                    VerticalAlignment="Center"
-                                    FontSize="15"
-                                    Text="{x:Bind Comments}" />
-                                <SymbolIcon Symbol="Comment" />
-                                <TextBlock
-                                    Margin="12,0,2,0"
-                                    VerticalAlignment="Center"
-                                    FontSize="15"
-                                    Text="{x:Bind Views}" />
-                                <SymbolIcon Symbol="View" />
+                                <StackPanel Orientation="Horizontal">
+                                    <SymbolIcon Symbol="Comment" Foreground="#bbb"/>
+                                    <TextBlock Text="{x:Bind Comments}" Foreground="#999" Margin="10,0,0,0" FontSize="18"/>
+
+                                    <SymbolIcon Symbol="View"  Margin="10,0,0,0" Foreground="#bbb"/>
+                                    <TextBlock Text="{x:Bind Views}" Foreground="#999" Margin="10,0,0,0" FontSize="18"/>
+                                </StackPanel>
                             </StackPanel>
+
+                            <StackPanel Grid.Column="1" 
+                                Padding="5,5,5,5" 
+                                VerticalAlignment="Top" HorizontalAlignment="Right">
+                                <TextBlock Text="{x:Bind Diggs}" FontSize="22" HorizontalAlignment="Center" Foreground="#cdcdcd" Height="35"/>
+                                <Border BorderThickness="1" BorderBrush="#cdcdcd"></Border>
+                                <Button Content="推荐"  Click="Button_Click" Background="Transparent" FontSize="16" Foreground="#cdcdcd"/>
+                            </StackPanel>
+
                         </Grid>
+                        <TextBlock Grid.Row="1" Text="{x:Bind Summary}" Foreground="White" TextWrapping="Wrap" Margin="5,0,0,0"  VerticalAlignment="Top"></TextBlock>
                     </Grid>
                 </DataTemplate>
             </ListView.ItemTemplate>
         </ListView>
-        <ProgressRing
-            Name="Loading"
-            Grid.Row="1"
-            Width="100"
-            Height="100"
-            IsActive="True" />
+
+        <ProgressRing Grid.Row="1"
+                      Name="Loading"
+                      Width="100"
+                      Height="100"
+                      IsActive="True">
+        </ProgressRing>
     </Grid>
 </Page>
