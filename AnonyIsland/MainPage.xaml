@@ -11,8 +11,8 @@
     <NavigationView
         x:Name="NavView"
         AlwaysShowHeader="False"
-        ItemInvoked="NavView_ItemInvoked"
-        Loaded="NavView_Loaded">
+        IsPaneOpen="False"
+        ItemInvoked="NavView_ItemInvoked">
 
         <NavigationView.MenuItems>
             <NavigationViewItem

@@ -85,11 +85,6 @@ namespace AnonyIsland
 
                 if(news_content != null)
                 {
-                    if (App.Theme == ApplicationTheme.Dark)  //暗主题
-                    {
-                        news_content += "<style>body{background-color:black;color:white;}</style>";
-                    }
-
                     //string pattern = "<img src=\"(.*)\"";
                     //news_content = Regex.Replace(news_content, pattern, m => $"<img src=\"{_image_bridge}{m.Groups[1].Value}\"");
                     HideScrollbar(ref news_content);
@@ -98,10 +93,6 @@ namespace AnonyIsland
 
                 // 获取评论数据
                 _commentsTotalHtml = CommentTool.BaseChatHtml;
-                if (App.Theme == ApplicationTheme.Dark)
-                {
-                    _commentsTotalHtml += "<style>body{background-color:black;color:white;}</style>";
-                }
                 HideScrollbar(ref _commentsTotalHtml);
                 NewsComment.NavigateToString(_commentsTotalHtml);
 

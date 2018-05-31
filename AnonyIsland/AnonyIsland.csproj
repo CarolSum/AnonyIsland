@@ -113,7 +113,6 @@
     <Compile Include="Data\CN48TopViewList.cs" />
     <Compile Include="Data\CNHomeBlogList.cs" />
     <Compile Include="Data\CNNewsList.cs" />
-    <Compile Include="Data\CNTopBlogerList.cs" />
     <Compile Include="Data\CNTopNewsList.cs" />
     <Compile Include="Data\CNUserBlogList.cs" />
     <Compile Include="Data\Delegates.cs" />
@@ -132,7 +131,6 @@
     <Compile Include="Models\CNBloger.cs" />
     <Compile Include="Models\CNNews.cs" />
     <Compile Include="Models\CNNewsComment.cs" />
-    <Compile Include="Models\CNUserInfo.cs" />
     <Compile Include="NewsContentPage.xaml.cs">
       <DependentUpon>NewsContentPage.xaml</DependentUpon>
     </Compile>
@@ -155,6 +153,7 @@
       <DependentUpon>SettingDialog.xaml</DependentUpon>
     </Compile>
     <Compile Include="Tools\CommentTool.cs" />
+    <Compile Include="Tools\FrostedGlassEffect.cs" />
     <Compile Include="UserHome.xaml.cs">
       <DependentUpon>UserHome.xaml</DependentUpon>
     </Compile>

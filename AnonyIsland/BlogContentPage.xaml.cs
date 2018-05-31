@@ -48,47 +48,12 @@ namespace AnonyIsland
         {
             this.InitializeComponent();
             RegisterForShare();
-            //initializeFrostedGlass(bgGrid);
-        }
-
-
-        private void initializeFrostedGlass(UIElement glassHost)
-        {
-            Visual hostVisual = ElementCompositionPreview.GetElementVisual(glassHost);
-            Compositor compositor = hostVisual.Compositor;
-            var glassEffect = new GaussianBlurEffect
-            {
-                BlurAmount = 10.0f,
-                BorderMode = EffectBorderMode.Hard,
-                Source = new ArithmeticCompositeEffect
-                {
-                    MultiplyAmount = 0,
-                    Source1Amount = 0.7f,
-                    Source2Amount = 0.3f,
-                    Source1 = new CompositionEffectSourceParameter("backdropBrush"),
-                    Source2 = new ColorSourceEffect
-                    {
-                        Color = Color.FromArgb(255, 245, 245, 245)
-                    }
-                }
-            };
-            var effectFactory = compositor.CreateEffectFactory(glassEffect);
-            var backdropBrush = compositor.CreateHostBackdropBrush();
-            var effectBrush = effectFactory.CreateBrush();
-            effectBrush.SetSourceParameter("backdropBrush", backdropBrush);
-            var glassVisual = compositor.CreateSpriteVisual();
-            glassVisual.Brush = effectBrush;
-            ElementCompositionPreview.SetElementChildVisual(glassHost, glassVisual);
-            var bindSizeAnimation = compositor.CreateExpressionAnimation("hostVisual.Size");
-            bindSizeAnimation.SetReferenceParameter("hostVisual", hostVisual);
-            glassVisual.StartAnimation("Size", bindSizeAnimation);
         }
 
         private void RegisterForShare()
         {
             DataTransferManager dataTransferManager = DataTransferManager.GetForCurrentView();
-            dataTransferManager.DataRequested += new TypedEventHandler<DataTransferManager,
-                DataRequestedEventArgs>(this.ShareLinkHandler);
+            dataTransferManager.DataRequested += this.ShareLinkHandler;
         }
 
        
@@ -122,20 +87,12 @@ namespace AnonyIsland
                     string blog_body = await BlogService.GetBlogContentAsync(_blog.ID);
                     if (blog_body != null)
                     {
-                        if (App.Theme == ApplicationTheme.Dark)  //暗主题
-                        {
-                            blog_body += "<style>body{background-color:black;color:white;}</style>";
-                        }
                         HideScrollbar(ref blog_body);
                         BlogContent.NavigateToString(blog_body);
                     }
 
                     // 获取评论数据
                     _commentHtml = CommentTool.BaseChatHtml;
-                    if (App.Theme == ApplicationTheme.Dark)
-                    {
-                        _commentHtml += "<style>body{background-color:black;color:white;}</style>";
-                    }
                     HideScrollbar(ref _commentHtml);
                     BlogComment.NavigateToString(_commentHtml);
                     List<CNBlogComment> list_comments = await BlogService.GetBlogCommentsAsync(_blog.ID, 1, 199);
@@ -182,18 +139,6 @@ namespace AnonyIsland
             }
         }
 
-        private async void RefreshButton_Click(object sender, RoutedEventArgs e)
-        {
-            Loading.IsActive = true;
-            string blog_body = await BlogService.GetBlogContentAsync(_blog.ID);
-            if (blog_body != null)
-            {
-                HideScrollbar(ref blog_body);
-                BlogContent.NavigateToString(blog_body);
-                Loading.IsActive = false;
-            }
-        }
-   
         private void AuthorName_Click(object sender, RoutedEventArgs e)
         {
             this.Frame.Navigate(typeof(UserHome), new object[] { (sender as HyperlinkButton).Tag.ToString(),(sender as HyperlinkButton).Content });

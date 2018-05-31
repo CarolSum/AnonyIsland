@@ -29,11 +29,6 @@ namespace AnonyIsland
         /// 是否第一次搜索
         /// </summary>
         internal static bool HaveDoSearch { get; set; } = false;
-
-        /// <summary>
-        /// 是否总是显示导航栏
-        /// </summary>
-        internal static bool AlwaysShowNavigation { get; set; }
         /// <summary>
         /// 每次加载新闻条数
         /// </summary>
@@ -45,17 +40,6 @@ namespace AnonyIsland
         /// 每次加载博客条数
         /// </summary>
         internal static int BlogCountOneTime
-        {
-            get; set;
-        }
-        /// <summary>
-        /// 主题
-        /// </summary>
-        internal static ApplicationTheme Theme
-        {
-            get; set;
-        }
-        internal static Dictionary<string,object> PageState
         {
             get; set;
         }
@@ -73,7 +57,6 @@ namespace AnonyIsland
             this.InitializeComponent();
             this.Suspending += OnSuspending;
             LoadConfig();
-            Application.Current.RequestedTheme = App.Theme;
         }
 
         /// <summary>
@@ -145,15 +128,6 @@ namespace AnonyIsland
         {
             Windows.Storage.ApplicationDataContainer localSettings = Windows.Storage.ApplicationData.Current.LocalSettings;
 
-            if (localSettings.Values["AlwaysShowNavigation"] != null)
-            {
-                App.AlwaysShowNavigation = (bool)localSettings.Values["AlwaysShowNavigation"];
-            }
-            else
-            {
-                App.AlwaysShowNavigation = true;
-            }
-
             if (localSettings.Values["NewsCountOneTime"] != null)
             {
                 App.NewsCountOneTime = int.Parse(localSettings.Values["NewsCountOneTime"].ToString());
@@ -170,15 +144,6 @@ namespace AnonyIsland
             else
             {
                 App.BlogCountOneTime = 20;
-            }
-
-            if (localSettings.Values["Theme"] != null)
-            {
-                App.Theme = (ApplicationTheme)Enum.Parse(typeof(ApplicationTheme),localSettings.Values["Theme"].ToString());
-            }
-            else
-            {
-                App.Theme = ApplicationTheme.Light;
             }
         }
     }
