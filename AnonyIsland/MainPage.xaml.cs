@@ -2,6 +2,7 @@
 using Microsoft.Graphics.Canvas.Effects;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
@@ -33,7 +34,7 @@ namespace AnonyIsland
 
 
         private CNBlogList _list_blogs;
-
+        private bool flag = false;
         /// <summary>
         /// 构造方法
         /// </summary>
@@ -209,11 +210,18 @@ namespace AnonyIsland
             }
         }
 
-        private void NavView_ItemInvoked(NavigationView sender, NavigationViewItemInvokedEventArgs args)
+        private async void NavView_ItemInvoked(NavigationView sender, NavigationViewItemInvokedEventArgs args)
         {
             if (args.IsSettingsInvoked)
             {
-                ContentFrame.Navigate(typeof(HomePage));
+                if (!flag)
+                {
+                    flag = true;
+                    SettingDialog st = new SettingDialog(this);
+                    await st.ShowAsync();
+                    Debug.WriteLine("1");
+                    flag = false;
+                }
             }
             else
             {

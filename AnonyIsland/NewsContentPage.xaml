@@ -7,27 +7,16 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d">
 
+
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
         <Grid.RowDefinitions>
-            <RowDefinition Height="auto" />
             <RowDefinition Height="auto" />
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
 
-        <RelativePanel
-            Grid.Row="0"
-            Padding="0,9,0,9"
-            Background="{ThemeResource SystemControlHighlightAltListAccentLowBrush}">
-            <!--  顶部  -->
-            <Button
-                Name="Home"
-                Background="Transparent"
-                Click="Home_Click"
-                Content="&#xE700;"
-                FontFamily="Segoe MDL2 Assets"
-                FontSize="24"
-                RelativePanel.AlignLeftWithPanel="True"
-                RelativePanel.AlignVerticalCenterWithPanel="True" />
+        <Image Canvas.ZIndex="0" Grid.RowSpan="2" Source="Assets/detailBG.png" Stretch="Fill"></Image>
+
+        <RelativePanel Padding="80, 0, 80, 0" MinHeight="180">
             <Button
                 Name="Back"
                 Background="Transparent"
@@ -36,99 +25,86 @@
                 FontFamily="Segoe MDL2 Assets"
                 FontSize="24"
                 RelativePanel.AlignVerticalCenterWithPanel="True"
-                RelativePanel.RightOf="Home" />
-            <TextBlock
-                Name="PageTitle"
-                Padding="10,0,0,0"
-                FontFamily="微软雅黑"
-                FontSize="24"
-                RelativePanel.AlignVerticalCenterWithPanel="True"
-                RelativePanel.RightOf="Back"
-                Text="新闻正文" />
-            <Button
-                Name="RefreshButton"
-                Margin="0,0,5,0"
-                Background="Transparent"
-                Click="RefreshButton_Click"
-                Content="&#xE117;"
-                FontFamily="Segoe MDL2 Assets"
-                FontSize="24"
-                RelativePanel.AlignRightWithPanel="True"
-                RelativePanel.AlignVerticalCenterWithPanel="True" />
-            <Button
-                Name="Comment"
-                Margin="0,0,10,0"
-                Background="Transparent"
-                Click="Comment_Click"
-                Content="&#xE939;"
-                FontFamily="Segoe MDL2 Assets"
-                FontSize="24"
-                RelativePanel.AlignVerticalCenterWithPanel="True"
-                RelativePanel.LeftOf="RefreshButton" />
-            <Button
-                Name="Share"
-                Background="Transparent"
-                Click="Share_Click"
-                Content="&#xE72D;"
-                FontFamily="Segoe MDL2 Assets"
-                FontSize="24"
-                RelativePanel.AlignVerticalCenterWithPanel="True"
-                RelativePanel.LeftOf="Comment" />
-        </RelativePanel>
-        <StackPanel Grid.Row="1">
-            <TextBlock
-                Name="BlogTitle"
-                Margin="0,10,0,0"
-                HorizontalAlignment="Center"
-                FontSize="25"
-                Text="微软Surface Pro 4京东天猫全面预订：6688元起" />
-            <StackPanel
-                Margin="0,10,0,10"
-                HorizontalAlignment="Center"
-                Orientation="Horizontal">
-                <TextBlock
-                    Name="NewsSource"
-                    Foreground="Gray"
-                    Text="来源 新浪科技" />
-                <TextBlock
-                    Name="PublishTime"
-                    Padding="10,0,0,0"
-                    Foreground="Gray"
-                    Text="发表于 2018-05-30 11:11:11" />
-                <TextBlock
-                    Name="Diggs"
-                    Padding="10,0,2,0"
-                    Foreground="Gray"
-                    Text="(42)推荐" />
-                <SymbolIcon Symbol="Like" />
-                <TextBlock
-                    Name="Comments"
-                    Padding="10,0,2,0"
-                    Foreground="Gray"
-                    Text="(10)评论" />
-                <SymbolIcon Symbol="Comment" Tapped="SymbolIcon_Tapped" />
-                <TextBlock
-                    Name="Views"
-                    Padding="10,0,2,0"
-                    Foreground="Gray"
-                    Text="(21)阅读" />
-                <SymbolIcon Symbol="View" />
-            </StackPanel>
-            <Rectangle Height="1" Fill="LightGray" />
-        </StackPanel>
-        <Grid Grid.Row="2">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="841*" />
-                <ColumnDefinition Width="659*" />
-            </Grid.ColumnDefinitions>
+                RelativePanel.AlignLeftWithPanel="True" />
+            <TextBlock Text="新闻正文" FontSize="56" Foreground="Black"  Padding="20,0,0,0"
+                       RelativePanel.AlignVerticalCenterWithPanel="True" RelativePanel.RightOf="Back"></TextBlock>
 
-            <WebView Name="NewsContent" Grid.ColumnSpan="2" />
-            <ProgressRing
-                Name="Loading"
-                Width="100"
-                Height="100"
-                Margin="700,381,41.31,381"
-                IsActive="True" />
+            <Button Name="CommentBtn" Background="Transparent" Content="&#xE939;" FontFamily="Segoe MDL2 Assets"
+                    RelativePanel.AlignRightWithPanel="True" FontSize="30" 
+                    RelativePanel.AlignVerticalCenterWithPanel="True" Foreground="Black"/>
+            <Button  Name="Share" Background="Transparent" Click="Share_Click" 
+                      Content="&#xE72D;"  FontFamily="Segoe MDL2 Assets" FontSize="30" 
+                      RelativePanel.AlignVerticalCenterWithPanel="True" RelativePanel.LeftOf="CommentBtn" />
+        </RelativePanel>
+        <Grid Grid.Row="1" Margin="80, 0, 80, 0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="7*"></ColumnDefinition>
+                <ColumnDefinition Width="3*"></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+            <Grid Grid.Column="0" Margin="0,0,20,0">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+                <StackPanel Grid.Row="0" HorizontalAlignment="Stretch">
+                    <TextBlock
+                        Name="BlogTitle"
+                        Margin="0,10,0,0"
+                        HorizontalAlignment="Center"
+                        FontSize="25"
+                        Text="微软Surface Pro 4京东天猫全面预订：6688元起" />
+                    <StackPanel
+                        Margin="0,10,0,10"
+                        HorizontalAlignment="Center"
+                        Orientation="Horizontal">
+                        <TextBlock Name="NewsSource" Foreground="Gray" Text="来源 新浪科技"/>
+                        <TextBlock
+                            Name="PublishTime"
+                            Padding="10,0,0,0"
+                            VerticalAlignment="Center"
+                            Foreground="Gray"
+                            Text="发表于 2018-05-30 11:11:11" />
+                        <TextBlock
+                            Name="Diggs"
+                            Padding="10,0,2,0"
+                            VerticalAlignment="Center"
+                            Foreground="Gray"
+                            Text="(10)推荐" />
+                        <SymbolIcon Symbol="Like" />
+                        <TextBlock
+                            Name="Comments"
+                            Padding="10,0,2,0"
+                            VerticalAlignment="Center"
+                            Foreground="Gray"
+                            Text="(5)" />
+                        <SymbolIcon Symbol="Comment" />
+                        <TextBlock
+                            Name="Views"
+                            Padding="10,0,2,0"
+                            VerticalAlignment="Center"
+                            Foreground="Gray"
+                            Text="(123)" />
+                        <SymbolIcon Symbol="View" />
+                    </StackPanel>
+                    <Rectangle Height="1" Fill="LightGray" />
+                </StackPanel>
+
+                <WebView
+                    Grid.Row="1"
+                    Name="NewsContent"
+                    Margin="10,0,0,0" 
+                    DefaultBackgroundColor="Transparent"
+                    />
+            </Grid>
+
+            <WebView Name="NewsComment" Grid.Column="1" DefaultBackgroundColor="Transparent"/>
         </Grid>
+
+        <ProgressRing
+            Name="Loading"
+            Grid.Row="2"
+            Width="100"
+            Height="100"
+            IsActive="True" />
     </Grid>
 </Page>

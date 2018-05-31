@@ -70,8 +70,7 @@ namespace AnonyIsland
         /// </summary>
         private void LoadConfig()
         {
-            AlwayShowNavigation.IsOn = App.AlwaysShowNavigation;
-            ThemeDark.IsOn = App.Theme == ApplicationTheme.Dark ? true : false;
+            //ThemeDark.IsOn = App.Theme == ApplicationTheme.Dark ? true : false;
             for (int i = 0; i < NewsCount.Items.Count; i++)
             {
                 if ((NewsCount.Items[i] as ComboBoxItem).Content.ToString() == App.NewsCountOneTime.ToString())
@@ -87,27 +86,6 @@ namespace AnonyIsland
                     BlogCount.SelectedIndex = i;
                     break;
                 }
-            }
-        }
-        /// <summary>
-        /// 开关按钮
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void ToggleSwitch_Toggled(object sender, RoutedEventArgs e)
-        {
-            if ((sender as ToggleSwitch).Name.Equals("AlwayShowNavigation"))
-            {
-                if (AlwayShowNavigation.IsOn != App.AlwaysShowNavigation)
-                {
-                    localSettings.Values["AlwaysShowNavigation"] = AlwayShowNavigation.IsOn;
-                    App.AlwaysShowNavigation = AlwayShowNavigation.IsOn;
-                    _mainPage.ShowNavigationBar(AlwayShowNavigation.IsOn); //立即生效
-                }
-            }
-            else
-            {
-                localSettings.Values["Theme"] = ThemeDark.IsOn ? ApplicationTheme.Dark.ToString() : ApplicationTheme.Light.ToString();      
             }
         }
     }
