@@ -17,6 +17,7 @@ using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
 using AnonyIsland.HTTP;
 using AnonyIsland.Models;
+using AnonyIsland.Tools;
 
 // “空白页”项模板在 http://go.microsoft.com/fwlink/?LinkId=234238 上提供
 
@@ -33,14 +34,11 @@ namespace AnonyIsland
         /// 当前显示新闻
         /// </summary>
         private CNNews _news;
+        private string _commentsTotalHtml = "";
 
         public NewsContentPage()
         {
             this.InitializeComponent();
-            if (App.AlwaysShowNavigation)
-            {
-                Home.Visibility = Visibility.Collapsed;
-            }
             RegisterForShare();
         }
         private void RegisterForShare()
@@ -57,6 +55,7 @@ namespace AnonyIsland
             request.Data.Properties.Description = "向好友分享这篇新闻";
             request.Data.SetWebLink(new Uri(_news.NewsRawUrl));
         }
+
         /// <summary>
         /// 页面加载
         /// </summary>
@@ -91,37 +90,39 @@ namespace AnonyIsland
 
                     NewsContent.NavigateToString(news_content);
                 }
-                Loading.IsActive = false;
-            }
-        }
-        /// <summary>
-        /// 点击标题栏刷新
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private async void RefreshButton_Click(object sender, RoutedEventArgs e)
-        {
-            Loading.IsActive = true;
-            string news_content = await NewsService.GetNewsContentAsync(_news.ID);
-            if (news_content != null)
-            {
-                if (App.Theme == ApplicationTheme.Dark)  //暗主题
+
+                // 获取评论数据
+                _commentsTotalHtml = ChatBoxTool.BaseChatHtml;
+                if (App.Theme == ApplicationTheme.Dark)
                 {
-                    news_content += "<style>body{background-color:black;color:white;}</style>";
+                    _commentsTotalHtml += "<style>body{background-color:black;color:white;}</style>";
                 }
-                NewsContent.NavigateToString(news_content);
+                NewsComment.NavigateToString(_commentsTotalHtml);
+
+                List<CNNewsComment> refresh_comments = await NewsService.GetNewsCommentsAysnc(_news.ID, 1, 200);
+
+                if (refresh_comments != null)
+                {
+                    string comments = "";
+                    foreach (CNNewsComment comment in refresh_comments)
+                    {
+                        comments += ChatBoxTool.Receive(comment.AuthorAvatar,
+                        comment.AuthorName,
+                        comment.Content, comment.PublishTime, comment.ID);
+                    }
+                    comments += "<a id='ok'></a>";
+
+                    _commentsTotalHtml = _commentsTotalHtml.Replace("<a id='ok'></a>", "") + comments + "<a id='ok'></a>";
+
+                    NewsComment.NavigateToString(_commentsTotalHtml);
+                    Loading.IsActive = false;
+                }
+
                 Loading.IsActive = false;
             }
         }
-        /// <summary>
-        /// 点击标题栏查看评论
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void Comment_Click(object sender, RoutedEventArgs e)
-        {
-            this.Frame.Navigate(typeof(NewsCommentPage), new object[] { _news });
-        }
+       
+
         /// <summary>
         /// 点击标题栏后退
         /// </summary>
@@ -134,29 +135,7 @@ namespace AnonyIsland
                 this.Frame.GoBack();
             }
         }
-
-        /// <summary>
-        /// 点击评论小图标
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void SymbolIcon_Tapped(object sender, TappedRoutedEventArgs e)
-        {
-            if ((sender as SymbolIcon).Symbol == Symbol.Comment)
-            {
-                this.Frame.Navigate(typeof(NewsCommentPage), new object[] { _news });
-            }
-        }
-
-        /// <summary>
-        /// 打开主菜单
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void Home_Click(object sender, RoutedEventArgs e)
-        {
-            ((Window.Current.Content as Frame).Content as MainPage).ShowNavigationBarOneTime();
-        }
+        
         /// <summary>
         /// 分享
         /// </summary>

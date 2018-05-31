@@ -8,160 +8,77 @@
     mc:Ignorable="d"
     xmlns:data="using:AnonyIsland.Models">
 
-    <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+    <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="auto"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
+        <Grid Grid.RowSpan="2" x:Name="bgGrid" Canvas.ZIndex="-1"></Grid>
 
-        <RelativePanel Grid.Row="0"
-                       Background="{ThemeResource SystemControlHighlightAltListAccentLowBrush}"
-                       Padding="0,9,0,9">
-            <!--顶部-->
-            <Button Name="Home"
-                    Content="&#xE700;"
-                    FontFamily="Segoe MDL2 Assets"
-                    FontSize="24"
-                    RelativePanel.AlignLeftWithPanel="True"
-                    RelativePanel.AlignVerticalCenterWithPanel="True"
-                    Background="Transparent"
-                    Click="Home_Click"
-                    >
-            </Button>
-            <TextBlock Name="PageTitle"
-                       Text="新闻"
-                       RelativePanel.RightOf="Home"
-                       RelativePanel.AlignVerticalCenterWithPanel="True"
-                       FontSize="24"
-                       FontFamily="微软雅黑"
-                       Padding="20,0,0,0">
-            </TextBlock>
-            <TextBlock Name="ListCount"
-                       FontSize="14"
-                       RelativePanel.RightOf="PageTitle"
-                       RelativePanel.AlignTopWith="PageTitle"
-                       Margin="10,0,0,0"
-                       Text="">
-            </TextBlock>
-            <Button Name="RefreshButton"
-                    Click="RefreshButton_Click"
-                    Content="&#xE117;"
-                    RelativePanel.AlignRightWithPanel="True"
-                    FontFamily="Segoe MDL2 Assets"
-                    FontSize="24"
-                    RelativePanel.AlignVerticalCenterWithPanel="True"
-                    Margin="0,0,5,0"
-                    Background="Transparent">
-            </Button>
-        </RelativePanel>
+        <StackPanel>
+            <TextBlock x:Name="AppTitle" Text="AnonyIsland" FontSize="56" FontStyle="Italic" Foreground="White"  Padding="100,50,50,20" Canvas.ZIndex="1"></TextBlock>
+            <TextBlock Text="新闻" Foreground="White" FontSize="30" Padding="100,0,0,0"></TextBlock>
+        </StackPanel>
+
         <ListView Name="NewsListView"
                   Grid.Row="1"
-                  Padding="10,10,10,10"
-                  SelectionMode="None"
+                  Canvas.ZIndex="1"
+                  CanReorderItems="True"
                   IsItemClickEnabled="True"
+                  SelectionMode="None"
                   ItemClick="NewsListView_ItemClick"
                   ItemsSource="{x:Bind _list_news}"
+                  Padding="100,0,100,0"
                   >
             <ListView.ItemTemplate>
-                <DataTemplate x:DataType="data:CNNews">
-                    <Grid Padding="5,5,5,5">
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="auto"/>
-                            <ColumnDefinition Width="*"/>
-                        </Grid.ColumnDefinitions>
+                <DataTemplate  x:DataType="data:CNNews">
+                    <Grid Margin="15, 30, 15, 30">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="100"/>
+                            <RowDefinition Height="*"/>
+                        </Grid.RowDefinitions>
 
-                        <StackPanel Grid.Column="0"
-                                Padding="5,5,5,5"
-                                VerticalAlignment="Center">
-                            <Border BorderThickness="2" BorderBrush="{ThemeResource SystemControlHighlightAltListAccentLowBrush}">
-                                <StackPanel>
-                                    <TextBlock Text="{x:Bind Diggs}" 
-                                   FontSize="22"
-                                   HorizontalAlignment="Center"
-                                   >
-
-                                    </TextBlock>
-                                    <Button Content="推荐" 
-                                            Click="Button_Click"
-                                        FontSize="16">
-
-                                    </Button>
-                                </StackPanel>
-                            </Border>
-                        </StackPanel>
-
-                        <Grid Grid.Column="1"
-                          Padding="5,5,5,5">
-                            <Grid.RowDefinitions>
-                                <RowDefinition Height="auto"/>
-                                <RowDefinition Height="*"/>
-                                <RowDefinition Height="auto"/>
-                            </Grid.RowDefinitions>
-                            <TextBlock Grid.Row="0"
-                                   Text="{x:Bind Title}"
-                                   FontSize="18"
-                                   Name="NewsTitle"
-                                   FontWeight="Bold">
-
-                            </TextBlock>
-                            <RelativePanel Grid.Row="1"                                  
-                                       Padding="0,5,5,5">
-                                <Image Source="{x:Bind TopicIcon}"
-                                       Width="80"
-                                       Margin="10,0,0,0"
-                                       RelativePanel.AlignRightWithPanel="True"
-                                       Name="NewsAvatar"
-                                       >
-
-                                </Image>
-                                <TextBlock Text="{x:Bind Summary}"
-                                       TextWrapping="Wrap"
-                                       
-                                       FontSize="16"
-                                       RelativePanel.LeftOf="NewsAvatar"
-                                       RelativePanel.AlignLeftWithPanel="True">
-
-                                </TextBlock>
-                            </RelativePanel>
-                            <StackPanel Orientation="Horizontal"
-                                    Grid.Row="2">
-                                <TextBlock Text="{x:Bind SourceName}"
-                                       FontSize="14"
-                                       Foreground="{ThemeResource SystemControlHighlightAltListAccentLowBrush}">
-
-                                </TextBlock>
-                                <TextBlock Text="{x:Bind PublishTime}"
-                                       FontSize="14"
-                                       Margin="10,0,0,0">
-
-                                </TextBlock>
-                                <TextBlock Text="{x:Bind Comments}"
-                                           FontSize="14"
-                                           Margin="10,0,2,0">
-                                </TextBlock>
-                                <SymbolIcon Symbol="Comment">
-
-                                </SymbolIcon>
-                                <TextBlock Text="{x:Bind Views}"
-                                           FontSize="14"
-                                           Margin="10,0,2,0">
-                                    
-                                </TextBlock>
-                                <SymbolIcon Symbol="View">
-
-                                </SymbolIcon>
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="auto"/>
+                            </Grid.ColumnDefinitions>
+                            
+                            <StackPanel Grid.Column="1" 
+                                Padding="5,5,5,5" 
+                                VerticalAlignment="Top" HorizontalAlignment="Right">
+                                <TextBlock Text="{x:Bind Diggs}" FontSize="22" HorizontalAlignment="Center" Foreground="#cdcdcd" Height="35"/>
+                                <Border BorderThickness="1" BorderBrush="#cdcdcd"></Border>
+                                <Button Content="推荐"  Click="Button_Click" Background="Transparent" FontSize="16" Foreground="#cdcdcd"/>
                             </StackPanel>
+
+                            <StackPanel Grid.Column="0" Margin="10,0,0,0">
+                                <TextBlock Text="{x:Bind Title}" Foreground="White" HorizontalAlignment="Left" FontSize="24" TextWrapping="Wrap"/>
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock Text="{x:Bind SourceName}" Foreground="#999" HorizontalAlignment="Left" FontSize="18"/>
+                                    <TextBlock Text="{x:Bind PublishTime}" Foreground="#999" Margin="10,0,0,0" FontSize="18"/>
+                                </StackPanel>
+                                <StackPanel Orientation="Horizontal">
+                                    <SymbolIcon Symbol="Comment" Foreground="#bbb"/>
+                                    <TextBlock Text="{x:Bind Comments}" Foreground="#999" Margin="10,0,0,0" FontSize="18"/>
+
+                                    <SymbolIcon Symbol="View"  Margin="10,0,0,0" Foreground="#bbb"/>
+                                    <TextBlock Text="{x:Bind Views}" Foreground="#999" Margin="10,0,0,0" FontSize="18"/>
+                                </StackPanel>
+                            </StackPanel>
+
                         </Grid>
+                        <TextBlock Grid.Row="1" Text="{x:Bind Summary}" Foreground="White" TextWrapping="Wrap"  VerticalAlignment="Top"></TextBlock>
                     </Grid>
                 </DataTemplate>
             </ListView.ItemTemplate>
         </ListView>
+
         <ProgressRing Grid.Row="1"
                       Name="Loading"
                       Width="100"
                       Height="100"
                       IsActive="True">
-            
         </ProgressRing>
     </Grid>
 </Page>

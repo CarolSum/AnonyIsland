@@ -110,60 +110,6 @@
             
             <WebView Name="BlogComment" Grid.Column="1" DefaultBackgroundColor="Transparent"/>
         </Grid>
-        
-        <!--<RelativePanel
-            Grid.Row="0"
-            Padding="0,9,0,9"
-            Background="{ThemeResource SystemControlHighlightAltListAccentLowBrush}">
-            --><!--  顶部  --><!--
-            <Button
-                Name="Home"
-                Background="Transparent"
-                Click="Home_Click"
-                Content="&#xE700;"
-                FontFamily="Segoe MDL2 Assets"
-                FontSize="24"
-                RelativePanel.AlignLeftWithPanel="True"
-                RelativePanel.AlignVerticalCenterWithPanel="True" />
-
-            <TextBlock
-                Name="PageTitle"
-                Padding="10,0,0,0"
-                FontFamily="微软雅黑"
-                FontSize="24"
-                RelativePanel.AlignVerticalCenterWithPanel="True"
-                RelativePanel.RightOf="Home"
-                Text="博客正文" />
-            <Button
-                Name="RefreshButton"
-                Margin="0,0,5,0"
-                Background="Transparent"
-                Click="RefreshButton_Click"
-                Content="&#xE117;"
-                FontFamily="Segoe MDL2 Assets"
-                FontSize="24"
-                RelativePanel.AlignRightWithPanel="True"
-                RelativePanel.AlignVerticalCenterWithPanel="True" />
-            <Button
-                Name="Comment"
-                Margin="0,0,10,0"
-                Background="Transparent"
-                Click="Comment_Click"
-                Content="&#xE939;"
-                FontFamily="Segoe MDL2 Assets"
-                FontSize="24"
-                RelativePanel.AlignVerticalCenterWithPanel="True"
-                RelativePanel.LeftOf="RefreshButton" />
-            <Button
-                Name="Share"
-                Background="Transparent"
-                Click="Share_Click"
-                Content="&#xE72D;"
-                FontFamily="Segoe MDL2 Assets"
-                FontSize="24"
-                RelativePanel.AlignVerticalCenterWithPanel="True"
-                RelativePanel.LeftOf="Comment" />
-        </RelativePanel>-->
        
         <ProgressRing
             Name="Loading"
