@@ -246,10 +246,6 @@ namespace AnonyIsland
                 case "ranks":
                     ContentFrame.Navigate(typeof(RankingPage));
                     break;
-
-                case "collections":
-                    ContentFrame.Navigate(typeof(CollectionPage));
-                    break;
             }
         }
     }
