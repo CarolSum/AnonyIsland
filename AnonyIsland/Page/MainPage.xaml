@@ -1,0 +1,61 @@
+﻿<Page
+    x:Class="AnonyIsland.MainPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:data="using:AnonyIsland.Models"
+    xmlns:local="using:AnonyIsland"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d">
+
+    <NavigationView
+        x:Name="NavView"
+        AlwaysShowHeader="False"
+        IsPaneOpen="False"
+        ItemInvoked="NavView_ItemInvoked">
+
+        <NavigationView.MenuItems>
+            <NavigationViewItem
+                x:Uid="HomeNavItem"
+                Content="Home"
+                Tag="home">
+                <NavigationViewItem.Icon>
+                    <FontIcon Glyph="&#xE10F;" />
+                </NavigationViewItem.Icon>
+            </NavigationViewItem>
+            <NavigationViewItemSeparator />
+            <NavigationViewItem
+                x:Uid="GamesNavItem"
+                Content="News"
+                Icon="Video"
+                Tag="news" />
+            <NavigationViewItem
+                x:Uid="Rank48NavItem"
+                Content="48H Reading List"
+                Icon="Clock"
+                Tag="rank48" />
+            <NavigationViewItem
+                x:Uid="Rank10NavItem"
+                Content="10D Rec. List"
+                Icon="Bookmarks"
+                Tag="rank10" />
+            <NavigationViewItem
+                x:Uid="RankNewsNavItem"
+                Content="News Rank"
+                Icon="FourBars"
+                Tag="rankNews" />
+        </NavigationView.MenuItems>
+
+        <NavigationView.AutoSuggestBox>
+            <AutoSuggestBox
+                x:Name="ASB"
+                PlaceholderText="Search"
+                QueryIcon="Find"
+                QuerySubmitted="ASB_QuerySubmitted" />
+        </NavigationView.AutoSuggestBox>
+
+        <Frame x:Name="ContentFrame" />
+
+    </NavigationView>
+
+</Page>

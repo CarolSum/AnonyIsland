@@ -1,19 +1,11 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Runtime.InteropServices.WindowsRuntime;
 using Windows.ApplicationModel;
 using Windows.ApplicationModel.Activation;
-using Windows.Foundation;
-using Windows.Foundation.Collections;
+using Windows.Storage;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Controls.Primitives;
-using Windows.UI.Xaml.Data;
-using Windows.UI.Xaml.Input;
-using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
+using Microsoft.ApplicationInsights;
 
 namespace AnonyIsland
 {
@@ -22,14 +14,40 @@ namespace AnonyIsland
     /// </summary>
     sealed partial class App : Application
     {
+        #region APP状态
+
+        /// <summary>
+        /// 是否第一次搜索
+        /// </summary>
+        internal static bool HaveDoSearch { get; set; } = false;
+        /// <summary>
+        /// 每次加载新闻条数
+        /// </summary>
+        internal static int NewsCountOneTime
+        {
+            get; set;
+        }
+        /// <summary>
+        /// 每次加载博客条数
+        /// </summary>
+        internal static int BlogCountOneTime
+        {
+            get; set;
+        }
+        #endregion
+
         /// <summary>
         /// 初始化单一实例应用程序对象。这是执行的创作代码的第一行，
         /// 已执行，逻辑上等同于 main() 或 WinMain()。
         /// </summary>
         public App()
         {
-            this.InitializeComponent();
-            this.Suspending += OnSuspending;
+            WindowsAppInitializer.InitializeAsync(
+                WindowsCollectors.Metadata |
+                WindowsCollectors.Session);
+            InitializeComponent();
+            Suspending += OnSuspending;
+            LoadConfig();
         }
 
         /// <summary>
@@ -59,18 +77,15 @@ namespace AnonyIsland
                 Window.Current.Content = rootFrame;
             }
 
-            if (e.PrelaunchActivated == false)
+            if (rootFrame.Content == null)
             {
-                if (rootFrame.Content == null)
-                {
-                    // 当导航堆栈尚未还原时，导航到第一页，
-                    // 并通过将所需信息作为导航参数传入来配置
-                    // 参数
-                    rootFrame.Navigate(typeof(MainPage), e.Arguments);
-                }
-                // 确保当前窗口处于活动状态
-                Window.Current.Activate();
+                // 当导航堆栈尚未还原时，导航到第一页，
+                // 并通过将所需信息作为导航参数传入来配置
+                // 参数
+                rootFrame.Navigate(typeof(MainPage), e.Arguments);
             }
+            // 确保当前窗口处于活动状态
+            Window.Current.Activate();
         }
 
         /// <summary>
@@ -95,6 +110,32 @@ namespace AnonyIsland
             var deferral = e.SuspendingOperation.GetDeferral();
             //TODO: 保存应用程序状态并停止任何后台活动
             deferral.Complete();
+        }
+
+        /// <summary>
+        /// 加载配置项
+        /// </summary>
+        private void LoadConfig()
+        {
+            ApplicationDataContainer localSettings = ApplicationData.Current.LocalSettings;
+
+            if (localSettings.Values["NewsCountOneTime"] != null)
+            {
+                NewsCountOneTime = int.Parse(localSettings.Values["NewsCountOneTime"].ToString());
+            }
+            else
+            {
+                NewsCountOneTime = 20;
+            }
+
+            if (localSettings.Values["BlogCountOneTime"] != null)
+            {
+                BlogCountOneTime = int.Parse(localSettings.Values["BlogCountOneTime"].ToString());
+            }
+            else
+            {
+                BlogCountOneTime = 20;
+            }
         }
     }
 }

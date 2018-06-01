@@ -7,15 +7,15 @@
   IgnorableNamespaces="uap mp">
 
   <Identity
-    Name="3f36c060-c7ff-4553-bf0f-d94e630f5b40"
-    Publisher="CN=ljh"
+    Name="bd9f46ec-eb96-4c0a-b4c2-6287bc3b7542"
+    Publisher="CN=80642"
     Version="1.0.0.0" />
 
-  <mp:PhoneIdentity PhoneProductId="3f36c060-c7ff-4553-bf0f-d94e630f5b40" PhonePublisherId="00000000-0000-0000-0000-000000000000"/>
+  <mp:PhoneIdentity PhoneProductId="bd9f46ec-eb96-4c0a-b4c2-6287bc3b7542" PhonePublisherId="00000000-0000-0000-0000-000000000000"/>
 
   <Properties>
     <DisplayName>AnonyIsland</DisplayName>
-    <PublisherDisplayName>ljh</PublisherDisplayName>
+    <PublisherDisplayName>80642</PublisherDisplayName>
     <Logo>Assets\StoreLogo.png</Logo>
   </Properties>
 
