@@ -8,17 +8,7 @@ namespace AnonyIsland.Tools
 {
     static class FrostedGlassEffect
     {
-<<<<<<< HEAD:AnonyIsland/MainPage.xaml.cs
-        public MainPage()
-        {
-            this.InitializeComponent();
-            initializeFrostedGlass(bgGrid);
-        }
-
-        private void initializeFrostedGlass(UIElement glassHost)
-=======
         static public void Initialize(UIElement glassHost)
->>>>>>> dev:AnonyIsland/Tools/FrostedGlassEffect.cs
         {
             Visual hostVisual = ElementCompositionPreview.GetElementVisual(glassHost);
             Compositor compositor = hostVisual.Compositor;
